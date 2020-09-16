@@ -1,0 +1,9 @@
+** standard nas minhas simulações
+
+.param vdd = 0.7V
+.param len = 7nm
+*numero de fins
+.param n = 3
+.option post = 2
+*define saida em .csv
+.option measform= 3

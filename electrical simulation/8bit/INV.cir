@@ -1,0 +1,6 @@
+*circuit - INVERTER
+
+.subckt INV in out vdd
+  Mp vdd in out in pmos_rvt L=len nfin=n
+  Mn out in gnd in nmos_rvt L=len nfin=n
+.ends
