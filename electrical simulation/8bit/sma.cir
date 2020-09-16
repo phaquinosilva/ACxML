@@ -1,0 +1,31 @@
+*SMA
+
+*param
+.param len = 7n
+.param n = 3
+.include INVERTER.cir
+
+.subckt SMA a b cin sum cout vdd gnd
+*DUT
+    *PMOS
+        Mp1 vdut b sc1 vdut pmos_rvt l=len nfins=n
+        Mp2 sc1 cin co vdut pmos_rvt l=len nfins=n
+        Mp3 vdut b sc2 vdut pmos_rvt l=len nfins=n
+        Mp4 sc2 a co vdut pmos_rvt l=len nfins=n
+        Mp5 vdut a sc3 vdut pmos_rvt l=len nfins=n
+        Mp6 vdut b sc3 vdut pmos_rvt l=len nfins=n
+        Mp7 sc3 co su vdut pmos_rvt l=len nfins=n
+        Mp8 vdut cin su vdut pmos_rvt l=len nfins=n
+    *NMOS
+        Mn1 co cin sd1 cin nmos_rvt l=len nfins=n
+        Mn2 sd1 a gnd a nmos_rvt l=len nfins=n
+        Mn3 co b gnd b nmos_rvt l=len nfins=n
+        Mn4 su co sd2 co nmos_rvt l=len nfins=n
+        Mn5 sd2 cin gnd cin nmos_rvt l=len nfins=n
+        Mn6 su cin se1 cin nmos_rvt l=len nfins=n
+        Mn7 se1 a se2 a nmos_rvt l=len nfins=n
+        Mn8 se2 b gnd b nmos_rvt l=len nfins=n
+    *inverter for output
+        Xsum su sum vdut gnd Inv
+        Xcout co cout vdut gnd Inv
+.ends

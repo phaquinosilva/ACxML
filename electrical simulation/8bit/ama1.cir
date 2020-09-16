@@ -1,0 +1,25 @@
+*AMA1
+
+*param
+.param len = 7nm
+.param n = 3
+.include INVERTER.cir
+
+.subckt AMA1 a b cin sum cout vdd gnd
+*DUT
+    *PMOS
+        Mp1 vdd b sc1 b pmos_rvt l=len nfins=n
+        Mp2 sc1 cin co cin pmos_rvt l=len nfins=n
+        Mp3 vdd b sc2 b pmos_rvt l=len nfins=n
+        Mp4 sc2 a co a pmos_rvt l=len nfins=n
+        Mp5 vdd co tmp1 co pmos_rvt l=len nfins=n
+        Mp6 vdd tmp1 sum tmp1 pmos_rvt l=len nfins=n
+    *NMOS
+        Mn1 co cin sd1 cin nmos_rvt l=len nfins=n
+        Mn2 sd1 a gnd a nmos_rvt l=len nfins=n
+        Mn3 co b gnd b nmos_rvt l=len nfins=n
+        Mn4 tmp1 co gnd co nmos_rvt l=len nfins=n
+        Mn5 sum tmp1 gnd tmp1 nmos_rvt l=len nfins=n
+    *inverter for correct output
+        Xcout co cout vdd2 gnd Inv
+.ends
