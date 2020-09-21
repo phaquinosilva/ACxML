@@ -1,4 +1,4 @@
-# from bistring import BitArray
+# from bitstring import BitArray
 import adders as add
 import arc_gen as primes
 import pandas as pd
@@ -36,13 +36,17 @@ def approx_sum(op_a, op_b, n_bits):
     return results
 
 # executa cada soma e organiza resultados em um df que sera escrito em
-def sum_primes(approx, num, bit_len):
-    sums = primes.generate_sums(approx, num)
+def sum_primes(num, bit_len):
+    sums = primes.generate_sums(True, num)
     s_list = []
     for s in sums:
         s_list.append(approx_sum(s[0], s[1], bit_len))
-    return pd.DataFrame(s_list)
+    results = pd.DataFrame(s_list)
+    results.to_csv('prime_sums.csv')
+    return results
+
+# calcula a error distance para cada somador
+# def calc_ed():
 
 # testes:
-# print(approx_sum(14, 6, 6))
-# print(sum_primes(True, 20, 6))
+print(sum_primes(64, 6))
