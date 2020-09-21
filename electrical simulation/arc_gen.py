@@ -19,16 +19,19 @@ def generate_sums(approx, num):
     primes = sieve(num)
     groups = []
     for i in primes:
+        # soma pode não ser comutativa
         if (approx):
             for j in primes:
-                groups.append((i, j, i+j))
+                groups.append({primes.index(i) : (i, j, i+j)})
         else:
             for j in range(primes.index(i), len(primes)):
-                groups.append((i, primes[j], i + primes[j]))
-    file = open('sums_decimal.txt', 'w')
-    for i in groups:
-        file.write(str(i[0]) + '+' + str(i[1]) + '=' + str(i[2]) + '\n')
-    file.close()
+                groups.append({primes.index(i) : (i, primes[j], i + primes[j])})
+    # NÃO PRECISO MAIS ESCREVER EM UM ARQUIVO
+    # for i in groups: print(groups.index(i))
+    # file = open('sums_decimal.txt', 'w')
+    # for i in groups:
+    #     file.write(str(i[0]) + '+' + str(i[1]) + '=' + str(i[2]) + '\n')
+    # file.close()
     return groups
 
 # assumindo que Cin = '0' em todos os casos
@@ -39,6 +42,8 @@ def generate_format(approx, num):
         bin_sums.append((format(i[0],'08b'), format(i[1],'08b'), format(i[2],'08b')))
     return bin_sums
 
+
+# gera arquivos de estímulos para HSPICE
 def gen_files(approx, num):
     sums = generate_format(approx, num)
     # index for measure definitions
@@ -67,7 +72,7 @@ def gen_files(approx, num):
                     file.write("Vb" + str(it) + " b" + str(it) + "_in gnd PWL(0n 0 1n 0 1.1n 0.7)\n")
                 it += 1
             # writes all measures for outputs
-            file.write("\n*measure definitions\n")
+            file.write("\n*measures\n")
             it = 0
             for bit in i[2][ : :-1]:
                 if (approx):
@@ -77,11 +82,8 @@ def gen_files(approx, num):
                         file.write(".measure tran s" + str(it) + "_time trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 it += 1
 
-if sys.argv[1] == 'a':
-    gen_files(True, int(sys.argv[2]))
-    print("worked")
-elif sys.argv[1] == 'e':
-    gen_files(False, int(sys.argv[2]))
-    print("worked")
-else:
-    print("invalid input")
+
+################### COISAS QUE QUERO TESTAR ###############
+# → se os parametros do HSPICE estiverem funcionando com arquivos separados,
+# fazer a redução de tensão fica mais fácil, aí altero os 0.7 aqui por vdd
+# e os tempos por 't*n'
