@@ -1,23 +1,17 @@
 *** MODELO ***
 
 **modelo preditivo
-.include ..
+.include __.pm
 
-** parametros (predefinidos para FinFET)
-.param vdd = 0.7V
-.param len = 7nm
-*numero de fins
-.param n = 3
-.option post = 2
-*define saída em .csv
-.option measform= 3
+.include param.cir
 
 ** fontes
 Vvdut vdut gnd vdd
 Vvdd1 vdd1 gnd vdd
 Vvdd2 vdd2 gnd vdd
+
 *incluir arquivo de entradas
-.include ..
+.include sources.cir
 
 ** incluir modelo de somador
 .include ..

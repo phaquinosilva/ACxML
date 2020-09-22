@@ -3,11 +3,7 @@
 *model
 .include 7nm_FF.pm
 
-*param
-.param vdd = 0.7V
-.option post = 2
-*sets format to .csv file
-.option measform= 3
+.import params.cir
 
 *sources
 Vvdut vdut gnd vdd
@@ -78,43 +74,43 @@ XFA7 a7 b7 c7 s7_in c8_in vdut gnd ema
 
 **fan-out
 *S
-Xis0 s0_in s0_in1 vdd2 gnd Inv M=2
-Xis1 s0_in1 s0 vdd2 gnd Inv M=2
-Xis2 s1_in s1_in1 vdd2 gnd Inv M=2
-Xis3 s1_in1 s1 vdd2 gnd Inv M=2
-Xis4 s2_in s2_in1 vdd2 gnd Inv M=2
-Xis5 s2_in1 s2 vdd2 gnd Inv M=2
-Xis6 s3_in s3_in1 vdd2 gnd Inv M=2
-Xis7 s3_in1 s3 vdd2 gnd Inv M=2
-Xis8 s4_in s4_in1 vdd2 gnd Inv M=2
-Xis9 s4_in1 s4 vdd2 gnd Inv M=2
-Xis10 s5_in s5_in1 vdd2 gnd Inv M=2
-Xis11 s5_in1 s5 vdd2 gnd Inv M=2
-Xis12 s6_in s6_in1 vdd2 gnd Inv M=2
-Xis13 s6_in1 s6 vdd2 gnd Inv M=2
-Xis14 s7_in s7_in1 vdd2 gnd Inv M=2
-Xis15 s7_in1 s7 vdd2 gnd Inv M=2
+Xis0 s0_in s0_in1 vdd2 gnd Inv M=4
+Xis1 s0_in1 s0 vdd2 gnd Inv M=4
+Xis2 s1_in s1_in1 vdd2 gnd Inv M=4
+Xis3 s1_in1 s1 vdd2 gnd Inv M=4
+Xis4 s2_in s2_in1 vdd2 gnd Inv M=4
+Xis5 s2_in1 s2 vdd2 gnd Inv M=4
+Xis6 s3_in s3_in1 vdd2 gnd Inv M=4
+Xis7 s3_in1 s3 vdd2 gnd Inv M=4
+Xis8 s4_in s4_in1 vdd2 gnd Inv M=4
+Xis9 s4_in1 s4 vdd2 gnd Inv M=4
+Xis10 s5_in s5_in1 vdd2 gnd Inv M=4
+Xis11 s5_in1 s5 vdd2 gnd Inv M=4
+Xis12 s6_in s6_in1 vdd2 gnd Inv M=4
+Xis13 s6_in1 s6 vdd2 gnd Inv M=4
+Xis14 s7_in s7_in1 vdd2 gnd Inv M=4
+Xis15 s7_in1 s7 vdd2 gnd Inv M=4
 *C
-Xico0 c8_in c8_in1 vdd2 gnd Inv M=2
-Xic01 c8_in1 co vdd2 gnd Inv M=2
+Xico0 c8_in c8_in1 vdd2 gnd Inv M=4
+Xic01 c8_in1 co vdd2 gnd Inv M=4
 
 **time measures depend on the inputs - also in separate files
-.measure tran q_dut integ i(Vvdut) from=0n to=20n
-.measure tran q_in integ i(Vvdd1) from=0n to=20n
-.measure tran q_out integ i(Vvdd1) from=0n to=20n
+.measure tran q_dut integ i(Vvdut) from=0n to=10n
+.measure tran q_in integ i(Vvdd1) from=0n to=10n
+.measure tran q_out integ i(Vvdd1) from=0n to=10n
 
 **prints all S outputs
 
 **prints all S outputs
-.measure tran s0_f find v(s0) at=20n
-.measure tran s1_f find v(s1) at=20n
-.measure tran s2_f find v(s2) at=20n
-.measure tran s3_f find v(s3) at=20n
-.measure tran s4_f find v(s4) at=20n
-.measure tran s5_f find v(s5) at=20n
-.measure tran s6_f find v(s6) at=20n
-.measure tran s7_f find v(s7) at=20n
+.measure tran s0_f find v(s0) at=10n
+.measure tran s1_f find v(s1) at=10n
+.measure tran s2_f find v(s2) at=10n
+.measure tran s3_f find v(s3) at=10n
+.measure tran s4_f find v(s4) at=10n
+.measure tran s5_f find v(s5) at=10n
+.measure tran s6_f find v(s6) at=10n
+.measure tran s7_f find v(s7) at=10n
 
-.tran 0.1ns 20n
+.tran 0.1ns 10n
 
 .end

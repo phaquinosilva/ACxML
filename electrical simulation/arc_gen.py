@@ -42,7 +42,6 @@ def generate_format(approx, num):
         bin_sums.append((format(i[0],'08b'), format(i[1],'08b'), format(i[2],'08b')))
     return bin_sums
 
-
 # gera arquivos de estímulos para HSPICE
 def gen_files(approx, num):
     sums = generate_format(approx, num)
@@ -74,7 +73,7 @@ def gen_files(approx, num):
             # writes all measures for outputs
             file.write("\n*measures\n")
             it = 0
-            for bit in i[2][ : :-1]:
+            for bit in i[2][::-1]:
                 if (approx):
                     file.write(".measure tran s" + str(it) + "_time trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 else:

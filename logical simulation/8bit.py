@@ -14,6 +14,7 @@ def approx_sum(op_a, op_b, n_bits):
     form = '#0' + str(n_bits + 2) + 'b'
     in_a = format(op_a, form)[2:]
     in_b = format(op_b, form)[2:]
+    # para organizar o DF
     results = {
         "a" : op_a,
         "b" : op_b,
@@ -28,7 +29,7 @@ def approx_sum(op_a, op_b, n_bits):
             cin = fa[1]
         # já que se adiciona iterativamente do LSB até o MSB, invertemos a bistring do resultado
         # converte para binário, para permitir comparação mais fácil com o exato
-        final = int(final[::-1], 2)             # esse método não considera complemento de dois
+        final = int(final[::-1], 2)             # esse método não considera complemento de dois, mas tudo bem para essa aplicação
         # b = BitArray(bin=final[::-1])
         # final = b.int                    # já esse b.int considera
         # adiciona resultados a um dict para criar o DF
@@ -49,4 +50,4 @@ def sum_primes(num, bit_len):
 # def calc_ed():
 
 # testes:
-print(sum_primes(64, 6))
+print(sum_primes(64, 7))
