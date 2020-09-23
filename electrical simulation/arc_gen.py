@@ -75,10 +75,10 @@ def gen_files(approx, num):
             it = 0
             for bit in i[2][::-1]:
                 if (approx):
-                    file.write(".measure tran s" + str(it) + "_time trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
+                    file.write(".measure tran tplh_s" + str(it) + " trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 else:
                     if (bit == '1'):
-                        file.write(".measure tran s" + str(it) + "_time trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
+                        file.write(".measure tran tplh_s" + str(it) + " trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 it += 1
 
 

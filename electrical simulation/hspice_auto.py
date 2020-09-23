@@ -1,40 +1,61 @@
 import os
 import pandas as pd
+from pathlib import Path
 
-# encontra e chama HSPICE para cada arquivo .cir do diretorio com a regex decidida por filetype
-def run_hspice(voltage, sim_time): #adder_type):
-    ## change adder in file
-    os.system('executer.sh')
-    adder_results = []
-    # iterar usando pathlib
-    for csv in os.listdir('results/'):
-        adder_results.append(organize_results(csv, sim_time, voltage))
-    return pd.DataFrame(adder_results)
+### OBSERVAÇÕES ###
+# → coloquei sim_time e voltage para facilitar na hora de realizar redução de tensão
+#
+
+# executa simulações
+def run_hspice(cell, adder_type):
+    # selecionamos a celula a ser usada
+    # e altera o FA da simulação
+    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'r') as f:
+        filedata = f.read()
+    newdata = filedata.replace('ema', cell)
+    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'w') as f:
+        f.write(newdata)
+
+    # executa simulações
+    os.system('./executer.sh ' + cell)
+
+    # retorna arquivo para formato original
+    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'r') as f:
+        filedata = f.read()
+    newdata = filedata.replace(cell, 'ema')
+    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'w') as f:
+        f.write(newdata)
+
 
 # organiza dados de um output .csv do HSPICE
-def organize_results(hspice_csv, sim_time, voltage):
-    res_df = pd.read_csv(hspice_csv, skiprows=3)
-    # remove useless tail columns
-    delay_df = res_df.filter(regex='tp')
-    power = res_df.iloc[0]['e_fa']
-    # pior caso de atraso
-    delay = delay_df.max(axis=1).iloc[0]
-    return {'delay' : delay,
-            'power' : power
-    }
+def organize_results(sim_time, voltage):
+    adder_results = []
+    p = Path('.')
+    for csv in list(p.glob('**/result_*.csv')):
+        res_df = pd.read_csv(csv, skiprows=3)
+        # seleciona colunas relevantes
+        delay_df = res_df.filter(regex='time')
+        power = res_df.iloc[0]['q_dut'] * voltage / sim_time
+        # pior caso de atraso
+        delay = delay_df.max(axis=1).iloc[0]
+        adder_results.append({'delay' : delay, 'power' : power})
+        # limpa diretório para próxima simulação
+        os.remove(csv)
+    sums_res = pd.DataFrame(adder_results)
+    delay = sums_res['delay'].max(axis=0)
+    avg_pow = sums_res['power'].mean()
+    return {'delay' : delay, 'power' : avg_pow}
 
 
-######## REVER ESTA FUNÇÃO ##########
-# eu tinha começado, mas me parece cada vez mais desnecessariamente complicado
-# def near_threshold(filename):
-    # sim_times = 0
-    # sfile = open(filename, 'r+')
-    # voltage = 0.7
-    # interval_multiplier = 1
-    # while interval_multiplier <= 10:
-        # sfile.seek(0)
-        # sfile.write(sfile.replace(str(voltage), str(voltage-0.1)))
-        # os.system('hspice ' + filename)
-        # the output is set to be a csv file
-        # output = filename.replace('.cir', '.mt0.csv')
-        # with
+def run():
+    ls_adders = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
+    add_type = ['RCA', 'CSA']
+    results = {}
+    for adder in add_type:
+        for fa in ls_adders:
+            run_hspice(fa, adder)
+            results[fa] = organize_results(10e-9, 0.7)
+    all_results = pd.DataFrame(results)
+    return all_results
+
+print(run())

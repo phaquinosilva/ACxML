@@ -2,9 +2,8 @@
 PATH="$PATH":/home/user/bin
 
 echo "Simulation executer for 8bit adders"
-mkdir sources
 mkdir results
-echo "Using "$adder_type
+adder_type=$1
 for i in $(find . -name "8bit_*.cir")
 do
   y=${i%.*}
@@ -30,18 +29,4 @@ do
   done
   echo
 done
-for i in $(find . -name "8bit_*.cir")
-do
-  sed -i "s/exa/ema/g" $i
-done
-echo "All simulations finished."
-
-## move todos os arquivos de resultados para uma pasta separada
-# echo "Moving results"
-# mkdir data_output
-# for i in $(find . -name "*.csv");
-# do
-#   mv $i data_output
-# done
-
 echo "All simulations finished."

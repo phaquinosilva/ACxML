@@ -3,7 +3,6 @@
 *model
 .include 7nm_FF.pm
 
-*param
 .include params.cir
 
 *sources
@@ -17,6 +16,11 @@ Vvdd2 vdd2 gnd vdd
 *carry in
 Vc0 c0_in gnd PWL(0n 0)
 
+*adder
+.include ema.cir
+
+.include inverter.cir
+
 *circuit - mux21
 .subckt mux21 a b sel csel q vdd gnd
   Mp1 a sel q sel pmos_rvt L=len nfin=n
@@ -24,11 +28,6 @@ Vc0 c0_in gnd PWL(0n 0)
   Mp2 b csel q csel pmos_rvt L=len nfin=n
   Mn2 b sel q sel nmos_rvt L=len nfin=n
 .ends
-
-.include inverter.cir
-
-*adder
-.include ema.cir
 
 **load
 *A
@@ -122,16 +121,6 @@ Xico1 c8_in1 co vdd2 gnd Inv M=4
 .measure tran q_dut integ i(Vvdut) from=0n to=10n
 .measure tran q_in integ i(Vvdd1) from=0n to=10n
 .measure tran q_out integ i(Vvdd1) from=0n to=10n
-
-**prints all S outputs
-.measure tran s0_f find v(s0) at=10n
-.measure tran s1_f find v(s1) at=10n
-.measure tran s2_f find v(s2) at=10n
-.measure tran s3_f find v(s3) at=10n
-.measure tran s4_f find v(s4) at=10n
-.measure tran s5_f find v(s5) at=10n
-.measure tran s6_f find v(s6) at=10n
-.measure tran s7_f find v(s7) at=10n
 
 .tran 0.1ns 10n
 
