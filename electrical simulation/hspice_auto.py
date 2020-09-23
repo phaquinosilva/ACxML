@@ -10,20 +10,20 @@ from pathlib import Path
 def run_hspice(cell, adder_type):
     # selecionamos a celula a ser usada
     # e altera o FA da simulação
-    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'r') as f:
+    with open('./8bit/8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace('ema', cell)
-    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'w') as f:
+    with open('./8bit/8bit_' + adder_type + '.cir', 'w') as f:
         f.write(newdata)
 
     # executa simulações
     os.system('./executer.sh ' + cell)
 
     # retorna arquivo para formato original
-    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'r') as f:
+    with open('./8bit/8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace(cell, 'ema')
-    with open('/home/pedro/Documentos/AC&ML/electrical simulation/8bit/8bit_' + adder_type + '.cir', 'w') as f:
+    with open('./8bit/8bit_' + adder_type + '.cir', 'w') as f:
         f.write(newdata)
 
 
@@ -34,7 +34,7 @@ def organize_results(sim_time, voltage):
     for csv in list(p.glob('**/result_*.csv')):
         res_df = pd.read_csv(csv, skiprows=3)
         # seleciona colunas relevantes
-        delay_df = res_df.filter(regex='time')
+        delay_df = res_df.filter(regex='tp')
         power = res_df.iloc[0]['q_dut'] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
@@ -55,7 +55,9 @@ def run():
         for fa in ls_adders:
             run_hspice(fa, adder)
             results[fa] = organize_results(10e-9, 0.7)
+        results[adder] = results
     all_results = pd.DataFrame(results)
+    all_results.to_csv('./8bit_results.csv')
     return all_results
 
 print(run())
