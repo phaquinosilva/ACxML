@@ -9,7 +9,7 @@ def sieve(n):
             for j in range(i*i, n, i):
                 if (j < n):
                     A[j] = False
-    primes = []
+    primes = [1]
     for i in range(2,n):
         if A[i] == True:
             primes.append(i)
@@ -82,7 +82,7 @@ def gen_files(approx, num):
                         file.write(".measure tran tplh_s" + str(it) + " trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 it += 1
 
-gen_files(True, 256)
+gen_files(True, 10)
 ################### COISAS QUE QUERO TESTAR ###############
 # → se os parametros do HSPICE estiverem funcionando com arquivos separados,
 # fazer a redução de tensão fica mais fácil, aí altero os 0.7 aqui por vdd
