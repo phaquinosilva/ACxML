@@ -2,7 +2,6 @@
 PATH="$PATH":/home/user/bin
 
 echo "Simulation executer for 8bit adders"
-mkdir results
 adder_type=$1
 for i in $(find . -name "8bit_*.cir")
 do
@@ -29,4 +28,4 @@ do
   done
   echo
 done
-echo "All simulations finished."
+echo "Simulation finished."
