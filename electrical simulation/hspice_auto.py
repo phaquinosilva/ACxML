@@ -55,9 +55,5 @@ def run():
         for fa in ls_adders:
             run_hspice(fa, adder)
             results[fa] = organize_results(10e-9, 0.7)
-        results[adder] = results
-    all_results = pd.DataFrame(results)
-    all_results.to_csv('./8bit_results.csv')
-    return all_results
-
-print(run())
+        pd.DataFrame(results).to_csv('./8bit_'+add_type+'_results.csv')
+        results = {}
