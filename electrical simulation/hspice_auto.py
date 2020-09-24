@@ -18,7 +18,7 @@ def run_hspice(cell, adder_type):
         f.write(newdata)
 
     # executa simulações
-    os.system('./executer.sh ' + cell)
+    os.system('./executer.sh ' + adder_type + ' ' + cell)
 
     # retorna arquivo para formato original
     with open('./8bit/8bit_' + adder_type + '.cir', 'r') as f:
