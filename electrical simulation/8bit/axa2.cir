@@ -1,9 +1,5 @@
 *AXA2
 
-*param
-.param len = 7nm
-.param n = 3
-
 .subckt AXA2 a b cin sum cout vdd
 *PMOS
     Mp1 vdd a sc1 a pmos_rvt l=len nfins=n

@@ -17,9 +17,9 @@ Vvdd2 vdd2 gnd vdd
 Vc0 c0_in gnd PWL(0n 0)
 
 *adder
+.include inverter.cir
 .include ema.cir
 
-.include inverter.cir
 
 **load
 *A

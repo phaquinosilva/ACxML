@@ -1,9 +1,5 @@
 *AXA3
 
-*param
-.param len = 7nm
-.param n = 3
-
 .subckt AXA3 a b cin sum cout vdd gnd
 *DUT
     *PMOS

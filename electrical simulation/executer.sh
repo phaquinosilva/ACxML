@@ -2,7 +2,6 @@
 PATH="$PATH":/home/user/bin
 
 echo "Simulation executer for 8bit adders"
-adder_type=$1
 for i in $(find . -name "8bit_*.cir")
 do
   y=${i%.*}
@@ -17,7 +16,7 @@ do
     sed -i "s+.include sources.cir+.include "$j"+g" $i
     ## roda simulação
     hspice $i
-    mv $y".mt0.csv" "result_"$y"_"$adder_type"_sum_"$s".csv"
+    mv $y".mt0.csv" "result_"$y"_"$1"_sum_"$s".csv"
     mv *.csv results
     ## retorna arquivo de simulação pro estado original para próxima iteração
     sed -i "s+.include "$j"+.include sources.cir+g" $i
@@ -28,4 +27,4 @@ do
   done
   echo
 done
-echo "Simulation finished."
+echo "Simulations finished."

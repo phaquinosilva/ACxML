@@ -1,10 +1,5 @@
 *SMA
 
-*param
-.param len = 7n
-.param n = 3
-.include INVERTER.cir
-
 .subckt SMA a b cin sum cout vdd gnd
 *DUT
     *PMOS

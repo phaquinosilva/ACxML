@@ -1,8 +1,4 @@
 **MIRROR
-*.include inverter.cir
-*param
-.param len = 7nm
-.param n = 3
 
 .subckt EMA a b cin sum cout vdd gnd
 *DUT

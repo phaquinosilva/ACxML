@@ -1,9 +1,5 @@
 **inverter
 
-*param
-.param len = 7nm
-.param n = 3
-
 *circuit - inverter
 .subckt Inv in out vdd gnd
   Mp vdd in out in pmos_rvt L=len nfin=n

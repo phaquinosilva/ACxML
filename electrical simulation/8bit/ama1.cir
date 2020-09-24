@@ -1,10 +1,5 @@
 *AMA1
 
-*param
-.param len = 7nm
-.param n = 3
-.include INVERTER.cir
-
 .subckt AMA1 a b cin sum cout vdd gnd
 *DUT
     *PMOS
