@@ -10,10 +10,10 @@ from pathlib import Path
 def run_hspice(cell, adder_type):
     # selecionamos a celula a ser usada
     # e altera o FA da simulação
-    with open('./8bit/8bit_' + adder_type + '.cir', 'r') as f:
+    with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace('ema', cell)
-    with open('./8bit/8bit_' + adder_type + '.cir', 'w') as f:
+    with open('./8bit_' + adder_type + '.cir', 'w') as f:
         f.seek(0)
         f.write(newdata)
 
@@ -21,10 +21,10 @@ def run_hspice(cell, adder_type):
     os.system('./executer.sh ' + adder_type + ' ' + cell)
 
     # retorna arquivo para formato original
-    with open('./8bit/8bit_' + adder_type + '.cir', 'r') as f:
+    with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace(cell, 'ema')
-    with open('./8bit/8bit_' + adder_type + '.cir', 'w') as f:
+    with open('./8bit_' + adder_type + '.cir', 'w') as f:
         f.seek(0)
         f.write(newdata)
 
@@ -50,14 +50,14 @@ def organize_results(sim_time, voltage, adder_type, cell):
     return {'delay' : delay, 'power' : avg_pow}
 
 def run():
-    ls_adders = ['EMA', 'EXA'] #, 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
+    ls_adders = ['ema', 'exa'] #, 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
     add_type = ['RCA', 'CSA']
     results = {}
     for adder in add_type:
         for fa in ls_adders:
-            # run_hspice(fa, adder)
+            run_hspice(fa, adder)
             results[fa] = organize_results(20e-9, 0.7, adder, fa)
-        prime = pd.DataFrame(results)#.to_csv('./8bit_'+adder+'_results.csv')
+        prime = pd.DataFrame(results).to_csv('./8bit_'+adder+'_results.csv')
         print(adder)
         print(prime)
         results = {}
