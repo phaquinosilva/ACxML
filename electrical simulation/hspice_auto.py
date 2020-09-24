@@ -44,7 +44,7 @@ def organize_results(sim_time, voltage):
         # limpa diretório para próxima simulação
         # os.remove(csv)
     sums_res = pd.DataFrame(adder_results)
-    delay = sums_res['delay'].max()
+    delay = sums_res['delay'].max(axis=0).iloc[0]
     avg_pow = sums_res['power'].mean()
     return {'delay' : delay, 'power' : avg_pow}
 
@@ -58,3 +58,5 @@ def run():
             results[fa] = organize_results(10e-9, 0.7)
         pd.DataFrame(results).to_csv('./8bit_'+adder+'_results.csv')
         results = {}
+
+run()
