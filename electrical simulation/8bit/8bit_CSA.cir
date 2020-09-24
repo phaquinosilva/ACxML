@@ -118,10 +118,10 @@ Xico1 c8_in1 co vdd2 gnd Inv M=4
 
 
 **time measures depend on the inputs - also in separate files
-.measure tran q_dut integ i(Vvdut) from=0n to=10n
-.measure tran q_in integ i(Vvdd1) from=0n to=10n
-.measure tran q_out integ i(Vvdd1) from=0n to=10n
+.measure tran q_dut integ i(Vvdut) from=0n to=20n
+.measure tran q_in integ i(Vvdd1) from=0n to=20n
+.measure tran q_out integ i(Vvdd1) from=0n to=20n
 
-.tran 0.1ns 10n
+.tran 0.1ns 20n
 
 .end

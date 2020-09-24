@@ -14,6 +14,7 @@ def run_hspice(cell, adder_type):
         filedata = f.read()
     newdata = filedata.replace('ema', cell)
     with open('./8bit/8bit_' + adder_type + '.cir', 'w') as f:
+        f.seek(0)
         f.write(newdata)
 
     # executa simulações
@@ -24,6 +25,7 @@ def run_hspice(cell, adder_type):
         filedata = f.read()
     newdata = filedata.replace(cell, 'ema')
     with open('./8bit/8bit_' + adder_type + '.cir', 'w') as f:
+        f.seek(0)
         f.write(newdata)
 
 
@@ -45,7 +47,6 @@ def organize_results(sim_time, voltage):
     delay = sums_res['delay'].max()
     avg_pow = sums_res['power'].mean()
     return {'delay' : delay, 'power' : avg_pow}
-
 
 def run():
     ls_adders = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
