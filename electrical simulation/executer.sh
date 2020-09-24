@@ -2,7 +2,7 @@
 PATH="$PATH":/home/user/bin
 
 echo "Simulation executer for 8bit adders"
-i="8bit_"$1".cir"
+i="./8bit/8bit_"$1".cir"
 y=${i%.*}
 y=${y##*/}
 echo "Simulating "$y
