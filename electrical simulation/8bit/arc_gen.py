@@ -82,7 +82,7 @@ def gen_files(approx, num):
                         file.write(".measure tran tplh_s" + str(it) + " trig v(a" + str(change) + ") val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 it += 1
 
-gen_files(True, 10)
+gen_files(True, 5)
 ################### COISAS QUE QUERO TESTAR ###############
 # → se os parametros do HSPICE estiverem funcionando com arquivos separados,
 # fazer a redução de tensão fica mais fácil, aí altero os 0.7 aqui por vdd

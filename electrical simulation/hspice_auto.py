@@ -40,9 +40,9 @@ def organize_results(sim_time, voltage):
         delay = delay_df.max(axis=1).iloc[0]
         adder_results.append({'delay' : delay, 'power' : power})
         # limpa diretório para próxima simulação
-        os.remove(csv)
+        # os.remove(csv)
     sums_res = pd.DataFrame(adder_results)
-    delay = sums_res['delay'].max(axis=0)
+    delay = sums_res['delay'].max()
     avg_pow = sums_res['power'].mean()
     return {'delay' : delay, 'power' : avg_pow}
 
@@ -55,5 +55,5 @@ def run():
         for fa in ls_adders:
             run_hspice(fa, adder)
             results[fa] = organize_results(10e-9, 0.7)
-        pd.DataFrame(results).to_csv('./8bit_'+add_type+'_results.csv')
+        pd.DataFrame(results).to_csv('./8bit_'+adder+'_results.csv')
         results = {}
