@@ -37,21 +37,18 @@ def organize_results(sim_time, voltage, adder_type, cell):
         res_df = pd.read_csv(csv, skiprows=3)
         # seleciona colunas relevantes
         # preciso lidar com os 'failed'
-        delay_df = res_df.filter(regex='time')
+        delay_df = res_df.filter(regex='tp')
         # does this work?
-        for value in delay_df:
-            if isinstance(value, str)
-                delay_df.drop(value)
         power = res_df.iloc[0]['q_dut'] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
         adder_results.append({'delay' : delay, 'power' : power})
         # os.remove(csv)
     sums_res = pd.DataFrame(adder_results)
-    delay = sums_res['delay'].max(axis=0)
     avg_pow = sums_res['power'].mean()
+    delay = sums_res['delay'].max(axis=0)
     # limpa diretório para próxima simulação
-
+    # print({'delay' : delay, 'power' : avg_pow})
     return {'delay' : delay, 'power' : avg_pow}
 
 def run():
@@ -60,14 +57,14 @@ def run():
     results = {}
     for adder in add_type:
         for fa in ls_adders:
-            run_hspice(fa, adder)
+            #run_hspice(fa, adder)
             results[fa] = organize_results(20e-9, 0.7, adder, fa)
-        prime = pd.DataFrame(results).to_csv('./8bit_'+adder+'_results.csv')
-        print(adder)
-        print(prime)
+        prime = pd.DataFrame(results)
+        prime.to_csv('./8bit_'+adder+'_results.csv')
+        # print('\n' + adder)
+        # print(prime)
         results = {}
-    # results['ema'] = organize_results(20e-9, 0.7)
 
 # run_hspice('ama1', 'RCA')
-# print(organize_results(20e-9, 0.7))
+# print(organize_results(20e-9, 0.7, 'RCA', 'exa'))
 run()
