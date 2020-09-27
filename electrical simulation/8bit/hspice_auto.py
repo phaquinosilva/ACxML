@@ -60,7 +60,7 @@ def run():
             #run_hspice(fa, adder)
             results[fa] = organize_results(20e-9, 0.7, adder, fa)
         prime = pd.DataFrame(results)
-        prime.to_csv('./8bit_'+adder+'_results.csv')
+        prime.to_csv('./results/8bit_'+adder+'_results.csv')
         # print('\n' + adder)
         # print(prime)
         results = {}
