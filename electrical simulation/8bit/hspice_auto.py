@@ -57,7 +57,7 @@ def run():
     results = {}
     for adder in add_type:
         for fa in ls_adders:
-            #run_hspice(fa, adder)
+            run_hspice(fa, adder)
             results[fa] = organize_results(20e-9, 0.7, adder, fa)
         prime = pd.DataFrame(results)
         prime.to_csv('./results/8bit_'+adder+'_results.csv')
