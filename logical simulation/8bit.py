@@ -50,4 +50,4 @@ def sum_primes(num, bit_len):
 # def calc_ed():
 
 # testes:
-print(sum_primes(64, 7))
+print(sum_primes(64, 8))

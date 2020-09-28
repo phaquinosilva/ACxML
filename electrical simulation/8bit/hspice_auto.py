@@ -34,11 +34,10 @@ def organize_results(sim_time, voltage, adder_type, cell):
     adder_results = []
     p = Path('.')
     for csv in list(p.glob('**/result_8bit_'+adder_type+'_'+cell+'*.csv')):
-        res_df = pd.read_csv(csv, skiprows=3)
+        res_df = pd.read_csv(csv, skiprows=3, na_values='failed')
         # seleciona colunas relevantes
         # preciso lidar com os 'failed'
         delay_df = res_df.filter(regex='tp')
-        # does this work?
         power = res_df.iloc[0]['q_dut'] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
