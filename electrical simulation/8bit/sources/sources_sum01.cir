@@ -20,11 +20,11 @@ Vb6 b6_in gnd PWL(0n 0)
 Vb7 b7_in gnd PWL(0n 0)
 
 *measures
-.measure tran tplh_s0 trig v(a0) val='0.5*0.7' rise=1 targ v(s0_in) val='0.5*0.7' rise=1
-.measure tran tplh_s1 trig v(a0) val='0.5*0.7' rise=1 targ v(s1_in) val='0.5*0.7' rise=1
-.measure tran tplh_s2 trig v(a0) val='0.5*0.7' rise=1 targ v(s2_in) val='0.5*0.7' rise=1
-.measure tran tplh_s3 trig v(a0) val='0.5*0.7' rise=1 targ v(s3_in) val='0.5*0.7' rise=1
-.measure tran tplh_s4 trig v(a0) val='0.5*0.7' rise=1 targ v(s4_in) val='0.5*0.7' rise=1
-.measure tran tplh_s5 trig v(a0) val='0.5*0.7' rise=1 targ v(s5_in) val='0.5*0.7' rise=1
-.measure tran tplh_s6 trig v(a0) val='0.5*0.7' rise=1 targ v(s6_in) val='0.5*0.7' rise=1
-.measure tran tplh_s7 trig v(a0) val='0.5*0.7' rise=1 targ v(s7_in) val='0.5*0.7' rise=1
+.measure tran tplh_s0 trig v(tr) val='0.5*0.7' rise=1 targ v(s0_in) val='0.5*0.7' rise=1
+.measure tran tplh_s1 trig v(tr) val='0.5*0.7' rise=1 targ v(s1_in) val='0.5*0.7' rise=1
+.measure tran tplh_s2 trig v(tr) val='0.5*0.7' rise=1 targ v(s2_in) val='0.5*0.7' rise=1
+.measure tran tplh_s3 trig v(tr) val='0.5*0.7' rise=1 targ v(s3_in) val='0.5*0.7' rise=1
+.measure tran tplh_s4 trig v(tr) val='0.5*0.7' rise=1 targ v(s4_in) val='0.5*0.7' rise=1
+.measure tran tplh_s5 trig v(tr) val='0.5*0.7' rise=1 targ v(s5_in) val='0.5*0.7' rise=1
+.measure tran tplh_s6 trig v(tr) val='0.5*0.7' rise=1 targ v(s6_in) val='0.5*0.7' rise=1
+.measure tran tplh_s7 trig v(tr) val='0.5*0.7' rise=1 targ v(s7_in) val='0.5*0.7' rise=1
