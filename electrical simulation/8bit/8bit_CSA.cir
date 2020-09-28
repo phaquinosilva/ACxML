@@ -86,7 +86,8 @@ XFA51 a5 b5 c51 s51 c61 vdut ema
 XFA61 a6 b6 c61 s61 c71 vdut ema
 XFA71 a7 b7 c71 s71 c81 vdut ema
 *mux
-Xsel c4 nc4 vdut InvM4 s40 s41 c4 nc4 s4_in vdut mux21
+Xsel c4 nc4 vdut Inv
+XM4 s40 s41 c4 nc4 s4_in vdut mux21
 XM5 s50 s51 c4 nc4 s5_in vdut mux21
 XM6 s60 s61 c4 nc4 s6_in vdut mux21
 XM7 s70 s71 c4 nc4 s7_in vdut mux21
