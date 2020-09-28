@@ -1,25 +1,25 @@
 *SMA
 
-.subckt SMA a b cin sum cout vdd gnd
+.subckt SMA a b cin sum cout vdd
 *DUT
     *PMOS
-        Mp1 vdut b sc1 vdut pmos_rvt l=len nfins=n
-        Mp2 sc1 cin co vdut pmos_rvt l=len nfins=n
-        Mp3 vdut b sc2 vdut pmos_rvt l=len nfins=n
-        Mp4 sc2 a co vdut pmos_rvt l=len nfins=n
-        Mp5 vdut a sc3 vdut pmos_rvt l=len nfins=n
-        Mp6 vdut b sc3 vdut pmos_rvt l=len nfins=n
-        Mp7 sc3 co su vdut pmos_rvt l=len nfins=n
-        Mp8 vdut cin su vdut pmos_rvt l=len nfins=n
+        Mp1 vdut b sc1 vdut pmos_rvt l=len nfin=n
+        Mp2 sc1 cin co vdut pmos_rvt l=len nfin=n
+        Mp3 vdut b sc2 vdut pmos_rvt l=len nfin=n
+        Mp4 sc2 a co vdut pmos_rvt l=len nfin=n
+        Mp5 vdut a sc3 vdut pmos_rvt l=len nfin=n
+        Mp6 vdut b sc3 vdut pmos_rvt l=len nfin=n
+        Mp7 sc3 co su vdut pmos_rvt l=len nfin=n
+        Mp8 vdut cin su vdut pmos_rvt l=len nfin=n
     *NMOS
-        Mn1 co cin sd1 cin nmos_rvt l=len nfins=n
-        Mn2 sd1 a gnd a nmos_rvt l=len nfins=n
-        Mn3 co b gnd b nmos_rvt l=len nfins=n
-        Mn4 su co sd2 co nmos_rvt l=len nfins=n
-        Mn5 sd2 cin gnd cin nmos_rvt l=len nfins=n
-        Mn6 su cin se1 cin nmos_rvt l=len nfins=n
-        Mn7 se1 a se2 a nmos_rvt l=len nfins=n
-        Mn8 se2 b gnd b nmos_rvt l=len nfins=n
+        Mn1 co cin sd1 cin nmos_rvt l=len nfin=n
+        Mn2 sd1 a gnd a nmos_rvt l=len nfin=n
+        Mn3 co b gnd b nmos_rvt l=len nfin=n
+        Mn4 su co sd2 co nmos_rvt l=len nfin=n
+        Mn5 sd2 cin gnd cin nmos_rvt l=len nfin=n
+        Mn6 su cin se1 cin nmos_rvt l=len nfin=n
+        Mn7 se1 a se2 a nmos_rvt l=len nfin=n
+        Mn8 se2 b gnd b nmos_rvt l=len nfin=n
     *inverter for output
         Xsum su sum vdut gnd Inv
         Xcout co cout vdut gnd Inv

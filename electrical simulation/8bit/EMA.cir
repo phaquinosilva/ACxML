@@ -1,6 +1,6 @@
 **MIRROR
 
-.subckt EMA a b cin sum cout vdd gnd
+.subckt EMA a b cin sum cout vdd
 *DUT
     *PMOS
         Mp1 vdd a t1 a pmos_rvt l=len nfin=n

@@ -1,6 +1,6 @@
 *AMA1
 
-.subckt AMA1 a b cin sum cout vdd gnd
+.subckt AMA1 a b cin sum cout vdd
 *DUT
     *PMOS
         Mp1 vdd b sc1 b pmos_rvt l=len nfins=n
