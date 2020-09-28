@@ -17,6 +17,6 @@
         Mn5 sc3 a sc4 a nmos_rvt l=len nfin=n
         Mn6 sc4 b gnd b nmos_rvt l=len nfin=n
     *inverter for correct output
-        Xsum su sum vdd2 gnd Inv
-        Xcout co cout vdd2 gnd Inv
+        Xsum su sum vdd2 Inv
+        Xcout co cout vdd2 Inv
 .ends

@@ -30,6 +30,6 @@
         Mnc ta2 a gnd a nmos_rvt l=len nfin=n
 
     *inverters for accurate results
-        Xsum su sum vdd gnd Inv
-        Xcout co cout vdd gnd Inv
+        Xsum su sum vdd Inv
+        Xcout co cout vdd Inv
 .ends
