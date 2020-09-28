@@ -38,9 +38,11 @@ def generate_sums(approx, num):
 def generate_format(approx, num):
     dec_sums = generate_sums(approx, num)
     bin_sums = []
+    it = 0
     for i in dec_sums:
-        print(i)
-        bin_sums.append((format(i[0],'#08b'), format(i[1],'#08b'), format(i[2],'#08b')))
+        bin_sums.append((format(i[0],'#010b')[2:], format(i[1],'#010b')[2:], format(i[2],'#010b')[2:]))
+        # print(bin_sums[it])
+        # it+=1
     return bin_sums
 
 # gera arquivos de estímulos para HSPICE
