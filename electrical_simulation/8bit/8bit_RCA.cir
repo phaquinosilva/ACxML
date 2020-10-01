@@ -15,6 +15,7 @@ Vvdd2 vdd2 gnd vdd
 
 *carry in
 Vc0 c0_in gnd PWL(0n 0)
+Vtr tr gnd PWL(0n 0 1n 0 1.1n 0.7)
 
 *adder
 .include inverter.cir
