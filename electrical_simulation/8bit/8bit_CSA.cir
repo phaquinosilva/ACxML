@@ -23,7 +23,7 @@ Vtr tr gnd PWL(0n 0 1n 0 1.1n 0.7)
 
 
 *circuit - mux21
-.subckt mux21 a b sel csel q vdd gnd
+.subckt mux21 a b sel csel q vdd
   Mp1 a sel q sel pmos_rvt L=len nfin=n
   Mn1 a csel q csel nmos_rvt L=len nfin=n
   Mp2 b csel q csel pmos_rvt L=len nfin=n

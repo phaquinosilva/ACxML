@@ -38,7 +38,7 @@ def organize_results(sim_time, voltage, adder_type, cell):
         # seleciona colunas relevantes
         # preciso lidar com os 'failed'
         delay_df = res_df.filter(regex='tp')
-        power = res_df.iloc[0]['q_dut'] * voltage / sim_time
+        power = res_df['q_dut'].iloc[0] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
         adder_results.append({'delay' : delay, 'power' : power})
