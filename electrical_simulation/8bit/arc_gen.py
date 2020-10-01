@@ -76,7 +76,7 @@ def gen_files(approx, num):
                     # low-high
                     file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                     # high-low
-                    file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' fall=1\n")
+                    file.write(".measure tran tphl_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' fall=1\n")
                 else:
                     if (bit == '1'):
                         file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
