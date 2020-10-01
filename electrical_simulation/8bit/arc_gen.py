@@ -38,18 +38,14 @@ def generate_sums(approx, num):
 def generate_format(approx, num):
     dec_sums = generate_sums(approx, num)
     bin_sums = []
-    it = 0
     for i in dec_sums:
         bin_sums.append((format(i[0],'#010b')[2:], format(i[1],'#010b')[2:], format(i[2],'#010b')[2:]))
-        # print(bin_sums[it])
-        # it+=1
     return bin_sums
 
 # gera arquivos de estímulos para HSPICE
 def gen_files(approx, num):
     sums = generate_format(approx, num)
     # index for measure definitions
-    change = 0
     # write input sources in a file
     for i in sums:
         with open("sources/sources_sum" + "{:0>2d}".format(sums.index(i)) + ".cir",'w+') as file:
@@ -61,7 +57,6 @@ def gen_files(approx, num):
                 if (bit == '0'):
                     file.write("Va" + str(it) + " a" + str(it) +"_in gnd PWL(0n 0)\n")
                 else:
-                    change = it
                     file.write("Va" + str(it) + " a" + str(it) + "_in gnd PWL(0n 0 1n 0 1.1n 0.7)\n")
                 it += 1
             # writes all input sources for A
@@ -78,13 +73,17 @@ def gen_files(approx, num):
             it = 0
             for bit in i[2][::-1]:
                 if (approx):
+                    # low-high
                     file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
+                    # high-low
+                    file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' fall=1\n")
                 else:
                     if (bit == '1'):
                         file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 it += 1
 
 gen_files(True, 5)
+
 ################### COISAS QUE QUERO TESTAR ###############
 # → se os parametros do HSPICE estiverem funcionando com arquivos separados,
 # fazer a redução de tensão fica mais fácil, aí altero os 0.7 aqui por vdd
