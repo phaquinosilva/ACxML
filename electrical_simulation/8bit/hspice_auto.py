@@ -2,14 +2,14 @@ import os
 import pandas as pd
 from pathlib import Path
 
-### OBSERVAÇÕES ###
-# → coloquei sim_time e voltage para facilitar na hora de realizar redução de tensão
+### OBSERVAcoES ###
+# → coloquei sim_time e voltage para facilitar na hora de realizar reducao de tensao
 #
 
-# executa simulações
+# executa simulacoes
 def run_hspice(cell, adder_type):
     # selecionamos a celula a ser usada
-    # e altera o FA da simulação
+    # e altera o FA da simulacao
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace('ema', cell)
@@ -17,7 +17,7 @@ def run_hspice(cell, adder_type):
         f.seek(0)
         f.write(newdata)
 
-    # executa simulações
+    # executa simulacoes
     os.system('./executer.sh ' + adder_type + ' ' + cell)
 
     # retorna arquivo para formato original
@@ -46,7 +46,7 @@ def organize_results(sim_time, voltage, adder_type, cell):
     sums_res = pd.DataFrame(adder_results)
     avg_pow = sums_res['power'].mean()
     delay = sums_res['delay'].max(axis=0)
-    # limpa diretório para próxima simulação
+    # limpa diretorio para proxima simulacao
     # print({'delay' : delay, 'power' : avg_pow})
     return {'delay' : delay, 'power' : avg_pow}
 
