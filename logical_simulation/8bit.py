@@ -29,11 +29,12 @@ def approx_sum(op_a, op_b, n_bits):
             cin = fa[1]
         # já que se adiciona iterativamente do LSB até o MSB, invertemos a bistring do resultado
         # converte para binário, para permitir comparação mais fácil com o exato
-        final = int(final[::-1], 2)             # esse método não considera complemento de dois, mas tudo bem para essa aplicação
+        final_bin = final[::-1]             # esse método não considera complemento de dois, mas tudo bem para essa aplicação
+        #final_dec = int(final_bin, 2)
         # b = BitArray(bin=final[::-1])
         # final = b.int                    # já esse b.int considera
         # adiciona resultados a um dict para criar o DF
-        results[a.__name__] = final
+        results[a.__name__] = final_bin
     return results
 
 # executa cada soma e organiza resultados em um df que sera escrito em
@@ -50,4 +51,4 @@ def sum_primes(num, bit_len):
 # def calc_ed():
 
 # testes:
-print(sum_primes(64, 8))
+print(sum_primes(5, 8))

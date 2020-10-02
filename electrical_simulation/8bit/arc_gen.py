@@ -27,11 +27,11 @@ def generate_sums(approx, num):
             for j in range(primes.index(i), len(primes)):
                 groups.append((i, primes[j], i + primes[j]))
     # NÃO PRECISO MAIS ESCREVER EM UM ARQUIVO
-    # for i in groups: print(groups.index(i))
-    # file = open('sums_decimal.txt', 'w')
-    # for i in groups:
-    #     file.write(str(i[0]) + '+' + str(i[1]) + '=' + str(i[2]) + '\n')
-    # file.close()
+    for i in groups: print(groups.index(i))
+    file = open('sums_decimal.txt', 'w')
+    for i in groups:
+        file.write("sum"+ "{:0>2d}".format(groups.index(i)) + ": " + str(i[0]) + '+' + str(i[1]) + '=' + str(i[2]) + '\n')
+    file.close()
     return groups
 
 # assumindo que Cin = '0' em todos os casos
