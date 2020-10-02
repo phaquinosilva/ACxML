@@ -47,7 +47,6 @@ def organize_results(sim_time, voltage, adder_type, cell):
     avg_pow = sums_res['power'].mean()
     delay = sums_res['delay'].max(axis=0)
     # limpa diretorio para proxima simulacao
-    # print({'delay' : delay, 'power' : avg_pow})
     return {'delay' : delay, 'power' : avg_pow}
 
 def run():
@@ -60,10 +59,7 @@ def run():
             results[fa] = organize_results(20e-9, 0.7, adder, fa)
         prime = pd.DataFrame(results)
         prime.to_csv('./results/8bit_'+adder+'_results.csv')
-        # print('\n' + adder)
         # print(prime)
         results = {}
 
-# run_hspice('ama1', 'RCA')
-# print(organize_results(20e-9, 0.7, 'RCA', 'exa'))
 run()
