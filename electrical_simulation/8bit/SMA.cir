@@ -1,16 +1,16 @@
-*SMA
+*circuit - SMA
 
 .subckt SMA a b cin sum cout vdd
 *DUT
     *PMOS
-        Mp1 vdut b sc1 vdut pmos_rvt l=len nfin=n
-        Mp2 sc1 cin co vdut pmos_rvt l=len nfin=n
-        Mp3 vdut b sc2 vdut pmos_rvt l=len nfin=n
-        Mp4 sc2 a co vdut pmos_rvt l=len nfin=n
-        Mp5 vdut a sc3 vdut pmos_rvt l=len nfin=n
-        Mp6 vdut b sc3 vdut pmos_rvt l=len nfin=n
-        Mp7 sc3 co su vdut pmos_rvt l=len nfin=n
-        Mp8 vdut cin su vdut pmos_rvt l=len nfin=n
+        Mp1 vdd b sc1 vdd pmos_rvt l=len nfin=n
+        Mp2 sc1 cin co vdd pmos_rvt l=len nfin=n
+        Mp3 vdd b sc2 vdd pmos_rvt l=len nfin=n
+        Mp4 sc2 a co vdd pmos_rvt l=len nfin=n
+        Mp5 vdd a sc3 vdd pmos_rvt l=len nfin=n
+        Mp6 vdd b sc3 vdd pmos_rvt l=len nfin=n
+        Mp7 sc3 co su vdd pmos_rvt l=len nfin=n
+        Mp8 vdd cin su vdd pmos_rvt l=len nfin=n
     *NMOS
         Mn1 co cin sd1 cin nmos_rvt l=len nfin=n
         Mn2 sd1 a gnd a nmos_rvt l=len nfin=n
@@ -21,6 +21,7 @@
         Mn7 se1 a se2 a nmos_rvt l=len nfin=n
         Mn8 se2 b gnd b nmos_rvt l=len nfin=n
     *inverter for output
-        Xsum su sum vdut Inv
-        Xcout co cout vdut Inv
+        Xsum su sum vdd Inv
+        Xcout co cout vdd Inv
 .ends
+

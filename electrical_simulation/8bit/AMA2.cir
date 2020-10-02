@@ -1,6 +1,3 @@
-*AMA2
-
-*param
 .subckt AMA2 a b cin sum cout vdd
 *DUT
     *PMOS
@@ -17,6 +14,7 @@
         Mn5 sc3 a sc4 a nmos_rvt l=len nfin=n
         Mn6 sc4 b gnd b nmos_rvt l=len nfin=n
     *inverter for correct output
-        Xsum su sum vdd2 Inv
-        Xcout co cout vdd2 Inv
+        Xsum su sum vdd Inv
+        Xcout co cout vdd Inv
 .ends
+
