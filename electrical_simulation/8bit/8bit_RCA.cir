@@ -15,7 +15,7 @@ Vvdd2 vdd2 gnd vdd
 
 *carry in
 Vc0 c0_in gnd PWL(0n 0)
-Vtr tr gnd PWL(0n 0 1n 0 1.1n 0.7)
+Vtr tr gnd PWL(0n 0 1n 0 1.1n vdd)
 
 *adder
 .include inverter.cir
@@ -96,10 +96,10 @@ Xico0 c8_in c8_in1 vdd2 Inv M=4
 Xic01 c8_in1 co vdd2 Inv M=4
 
 **time measures depend on the inputs - also in separate files
-.measure tran q_dut integ i(Vvdut) from=0n to=20n
-.measure tran q_in integ i(Vvdd1) from=0n to=20n
-.measure tran q_out integ i(Vvdd1) from=0n to=20n
+.measure tran q_dut integ i(Vvdut) from=0n to=5n
+.measure tran q_in integ i(Vvdd1) from=0n to=5n
+.measure tran q_out integ i(Vvdd1) from=0n to=5n
 
-.tran 0.1ns 20n
+.tran 0.1ns 5n
 
 .end
