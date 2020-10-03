@@ -12,13 +12,13 @@ do
   s=`echo $j | cut -c 22-23`
   echo "Starting simulation of sum "$s
   ## troca arquivo de sources e measures
-  sed -i "s+.include sources.cir+.include "$j"+g" $i
+  #sed -i "s+.include sources.cir+.include "$j"+g" $i
   ## roda simulação
   hspice $i
   mv $y".mt0.csv" "result_"$y"_"$2"_sum_"$s".csv"
   mv *.csv ./results
   ## retorna arquivo de simulação pro estado original para próxima iteração
-  sed -i "s+.include "$j"+.include sources.cir+g" $i
+  #sed -i "s+.include "$j"+.include sources.cir+g" $i
   ## sinaliza fim da simulação dessa soma
   echo "End of simulation for sum "$s
   #sleep 5

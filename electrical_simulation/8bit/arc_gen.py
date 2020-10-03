@@ -54,8 +54,8 @@ def gen_files(approx, num):
     # index for measure definitions
     # write input sources in a file
     for i in sums:
-        with open("sources/sources_sum" + "{:0>2d}".format(sums.index(i)) + ".cir",'w+') as file:
-            file.write("** sources file for sum " + "{:0>2d}".format(sums.index(i))+ '\n\n')
+        with open("sources/sources_sum" + str(sums.index(i)) + ".cir",'w+') as file:
+            file.write("** sources file for sum " + str(sums.index(i))+ '\n\n')
             # writes all input sources for A
             file.write("*8-bit input A\n")
             it = 0
