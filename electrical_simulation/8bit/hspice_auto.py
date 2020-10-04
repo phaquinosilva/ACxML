@@ -11,7 +11,7 @@ from random import sample
 #######################################################################################
 
 # executa simulacoes
-def run_hspice(adder_type, sum):
+def run_hspice(cell, adder_type, sum):
     # decide soma a ser executada
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
@@ -22,7 +22,7 @@ def run_hspice(adder_type, sum):
 
     # uhm, nesse ponto estou quaaaase me livrando do desse bash
     # executa simulacoes
-    os.system('./executer.sh ' + adder_type)
+    os.system('./executer.sh ' + adder_type + ' ' + fa + ' ' str(sum))
 
     # retorna arquivo para formato original
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
@@ -71,7 +71,7 @@ def run():
 
             # executa simulacao nas somas da amostra    
             for sum in sums:    
-                run_hspice(adder, sum)
+                run_hspice(fa, adder, sum)
             
             # retorna arquivo pro original
             with open('./8bit_' + adder + '.cir', 'r') as f:
@@ -81,7 +81,7 @@ def run():
                 f.seek(0)
                 f.write(newdata)
             
-            results[fa] = organize_results(20e-9, 0.7, adder, fa)
+            results[fa] = organize_results(5e-9, 0.7, adder, fa)
         prime = pd.DataFrame(results)
         prime.to_csv('./results/8bit_'+adder+'_results.csv')
         # print(prime)
