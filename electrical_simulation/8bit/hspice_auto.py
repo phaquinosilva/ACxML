@@ -15,19 +15,19 @@ def run_hspice(cell, adder_type, sum):
     # decide soma a ser executada
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
-    newdata = filedata.replace('sources_sumXX', 'sources_sum' + str(sum))
+    newdata = filedata.replace('sources_sumXX.cir', 'sources_sum' + str(sum) + '.cir')
     with open('./8bit_' + adder_type + '.cir', 'w') as f:
         f.seek(0)
         f.write(newdata)
 
     # uhm, nesse ponto estou quaaaase me livrando do desse bash
     # executa simulacoes
-    os.system('./executer.sh ' + adder_type + ' ' + fa + ' ' str(sum))
+    os.system('./executer.sh ' + adder_type + ' ' + cell + ' ' + str(sum))
 
     # retorna arquivo para formato original
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
-    newdata = filedata.replace('sources_sum' + str(sum), 'sources_sumXX')
+    newdata = filedata.replace('sources_sum' + str(sum) + 'cir', 'sources_sumXX.cir')
     with open('./8bit_' + adder_type + '.cir', 'w') as f:
         f.seek(0)
         f.write(newdata)
@@ -37,24 +37,29 @@ def run_hspice(cell, adder_type, sum):
 def organize_results(sim_time, voltage, adder_type, cell):
     adder_results = []
     p = Path('.')
-    for csv in list(p.glob('**/result_8bit_'+adder_type+'_'+cell+'*.csv')):
+    for csv in list(p.glob('*'+adder_type+'_'+cell+'*.csv')):
+        # print(str(csv))
         res_df = pd.read_csv(csv, skiprows=3, na_values='failed')
+        print(res_df)
         # seleciona colunas relevantes
         delay_df = res_df.filter(regex='tp')
+        #print(delay_df)
         power = res_df['q_dut'].iloc[0] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
         adder_results.append({'delay' : delay, 'power' : power})
         # limpa diretorio para proxima simulacao
         # os.remove(csv)
+    #print(adder_results)
     sums_res = pd.DataFrame(adder_results)
+    #print(sums_res)
     avg_pow = sums_res['power'].mean()
     delay = sums_res['delay'].max(axis=0)
     return {'delay' : delay, 'power' : avg_pow}
 
 def run():
     add_type = ['RCA', 'CSA']
-    ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
+    ls_adders = ['EMA'] #, 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
     results = {}
     # seleciona as somas que serao simuladas no HSPICE
     sums = sample(range(15), 4)
@@ -71,6 +76,7 @@ def run():
 
             # executa simulacao nas somas da amostra    
             for sum in sums:    
+                print(sum)
                 run_hspice(fa, adder, sum)
             
             # retorna arquivo pro original
@@ -87,4 +93,6 @@ def run():
         # print(prime)
         results = {}
 
-run()
+# print(sample(range(15),4))
+# run()
+print(organize_results(5e-9, 0.7, 'RCA', 'EMA'))
