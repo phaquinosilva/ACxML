@@ -27,7 +27,7 @@ def run_hspice(cell, adder_type, sum):
     # retorna arquivo para formato original
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
-    newdata = filedata.replace('sources_sum' + str(sum) + 'cir', 'sources_sumXX.cir')
+    newdata = filedata.replace('sources_sum' + str(sum) + '.cir', 'sources_sumXX.cir')
     with open('./8bit_' + adder_type + '.cir', 'w') as f:
         f.seek(0)
         f.write(newdata)
@@ -94,5 +94,5 @@ def run():
         results = {}
 
 # print(sample(range(15),4))
-# run()
-print(organize_results(5e-9, 0.7, 'RCA', 'EMA'))
+run()
+# print(organize_results(5e-9, 0.7, 'RCA', 'EMA'))

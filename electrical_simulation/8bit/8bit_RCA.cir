@@ -11,7 +11,7 @@ Vvdd1 vdd1 gnd vdd
 Vvdd2 vdd2 gnd vdd
 
 **inputs A and B sources in separate file
-.include sources/sources_sum5.cir
+.include sources/sources_sumXX.cir
 
 *carry in
 Vc0 c0_in gnd PWL(0n 0)

@@ -1,7 +1,7 @@
 * "simulator" "HSPICE" 
 * "version" "H-2013.03-SP1 32-BIT"
 * "format" "HSP"
-* "rundate" "15:03:23 10/04/2020 "
+* "rundate" "15:10:35 10/04/2020 "
 * "netlist" "./8bit_RCA.cir "
 * "runtitle" "**8 bit ripple carry adder"
 * time =    0.            
