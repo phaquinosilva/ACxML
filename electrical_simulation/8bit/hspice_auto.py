@@ -37,9 +37,9 @@ def run_hspice(cell, adder_type, sum):
 def organize_results(sim_time, voltage, adder_type, cell):
     adder_results = []
     p = Path('.')
-    for csv in list(p.glob('*'+adder_type+'_'+cell+'*.csv')):
+    for csv in list(p.glob('**/*_'+adder_type+'_'+cell+'_*.csv')):
         # print(str(csv))
-        res_df = pd.read_csv(csv, skiprows=3, na_values='failed')
+        res_df = pd.read_csv(csv, skiprows=3, na_values="failed")
         print(res_df)
         # seleciona colunas relevantes
         delay_df = res_df.filter(regex='tp')
@@ -59,7 +59,7 @@ def organize_results(sim_time, voltage, adder_type, cell):
 
 def run():
     add_type = ['RCA', 'CSA']
-    ls_adders = ['EMA'] #, 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
+    ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
     results = {}
     # seleciona as somas que serao simuladas no HSPICE
     sums = sample(range(15), 4)
