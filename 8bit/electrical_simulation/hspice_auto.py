@@ -2,12 +2,15 @@ import os
 import pandas as pd
 from pathlib import Path
 from random import sample
+from arc_gen import gen_files
 
 ################################# OBSERVACOES #########################################
 # -> coloquei sim_time e voltage para facilitar na hora de realizar reducao de tensao #
 # -> fazer analiticamente os caminhos criticos dos somadores                          #
 # -> selecionar 500 somas aleatoriamente para realizar simulacoes, alem dos caminhos  #
 #    criticos                                                                         #
+# -> estou confiante agora que tudo aqui funciona, e posso executar todas as          #
+#    simulacoes durante a noite e avaliar os resultados amanha                        #
 #######################################################################################
 
 # executa simulacoes
@@ -38,21 +41,17 @@ def organize_results(sim_time, voltage, adder_type, cell):
     adder_results = []
     p = Path('.')
     for csv in list(p.glob('**/*_'+adder_type+'_'+cell+'_*.csv')):
-        # print(str(csv))
         res_df = pd.read_csv(csv, skiprows=3, na_values="failed")
         print(res_df)
         # seleciona colunas relevantes
         delay_df = res_df.filter(regex='tp')
-        #print(delay_df)
-        power = res_df['q_dut'].iloc[0] * voltage / sim_time
+        power = (-1) * res_df['q_dut'].iloc[0] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
         adder_results.append({'delay' : delay, 'power' : power})
-        # limpa diretorio para proxima simulacao
-        # os.remove(csv)
-    #print(adder_results)
+        # limpa diretorio para restarem somente os arquivos relevantes
+        os.remove(csv)
     sums_res = pd.DataFrame(adder_results)
-    #print(sums_res)
     avg_pow = sums_res['power'].mean()
     delay = sums_res['delay'].max(axis=0)
     return {'delay' : delay, 'power' : avg_pow}
@@ -62,7 +61,7 @@ def run():
     ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
     results = {}
     # seleciona as somas que serao simuladas no HSPICE
-    sums = sample(range(15), 4)
+    sums = sample(range(gen_files(True, 2**8 + 1)), 500)
     for adder in add_type:
         for fa in ls_adders:
 
@@ -90,9 +89,6 @@ def run():
             results[fa] = organize_results(5e-9, 0.7, adder, fa)
         prime = pd.DataFrame(results)
         prime.to_csv('./results/8bit_'+adder+'_results.csv')
-        # print(prime)
         results = {}
 
-# print(sample(range(15),4))
 run()
-# print(organize_results(5e-9, 0.7, 'RCA', 'EMA'))

@@ -1,6 +1,6 @@
 # from bitstring import BitArray
 import adders as add
-import arc_gen as primes
+from arc_gen import generate_sums
 import pandas as pd
 
 
@@ -39,7 +39,7 @@ def approx_sum(op_a, op_b, n_bits):
 
 # executa cada soma e organiza resultados em um df que sera escrito em
 def sum_primes(num, bit_len):
-    sums = primes.generate_sums(True, num)
+    sums = generate_sums(True, num)
     s_list = []
     for s in sums:
         s_list.append(approx_sum(s[0], s[1], bit_len))
