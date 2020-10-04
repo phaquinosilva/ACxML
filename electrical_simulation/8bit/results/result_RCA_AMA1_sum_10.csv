@@ -1,0 +1,5 @@
+$DATA1 SOURCE='HSPICE' VERSION='H-2013.03-SP1 32-BIT'
+$OPTION MEASFORM=3
+.TITLE '**8 bit ripple carry adder'
+tplh_s0,tphl_s0,tplh_s1,tphl_s1,tplh_s2,tphl_s2,tplh_s3,tphl_s3,tplh_s4,tphl_s4,tplh_s5,tphl_s5,tplh_s6,tphl_s6,tplh_s7,tphl_s7,q_dut,q_in,q_out,temper,alter#
+failed, 1.297e-11,   failed, 1.296e-11,   failed,   failed,   failed,   failed,   failed,   failed,   failed,   failed,   failed,   failed,   failed,   failed,-2.869e-15,-7.381e-15,-7.381e-15,  25.0000,1
