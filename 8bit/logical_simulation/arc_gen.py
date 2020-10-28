@@ -88,5 +88,5 @@ def gen_files(approx, num):
                         file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 it += 1
 
-gen_files(True, 5)
+# gen_files(True, 5)
 
