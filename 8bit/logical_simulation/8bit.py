@@ -62,7 +62,7 @@ def sum_primes(num, bit_len):
     results.to_csv('dec_sums.csv')
     # resultados em binario
 
-    ### calcula erros por bit
+    ## calcula erros por bit
     err = pd.DataFrame(e_list, index=idx)
     error = pd.DataFrame(err.loc['sma'].sum().rename('sma'))
     for i in add_list[1:]: 
