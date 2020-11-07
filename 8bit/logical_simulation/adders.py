@@ -1,5 +1,5 @@
-# funções que simulam o comportamento lógico de cada FA aproximado
 
+# funções que simulam o comportamento lógico de cada FA aproximado
 def sma(a, b, c_in):
     sum = c_in & ~(a ^ b)
     c_out = b | a & c_in
@@ -28,3 +28,6 @@ def exact(a, b, c_in):
     sum = a ^ b ^ c_in
     c_out = a & b | (a ^ b) & c_in
     return (sum & 1, c_out & 1)
+
+def bxfa(a, b, c_in):
+    return (a & 1, b & 1)

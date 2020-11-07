@@ -1,4 +1,4 @@
-** standard nas minhas simulações
+*standard nas minhas simulações
 
 .param vdd = 0.7V
 .param len = 7nm
@@ -7,3 +7,4 @@
 .option post = 2
 *define saida em .csv
 .option measform= 3
+
