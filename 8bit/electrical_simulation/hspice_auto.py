@@ -35,7 +35,6 @@ def run_hspice(cell, adder_type, sum):
         f.seek(0)
         f.write(newdata)
 
-
 # organiza dados de um output .csv do HSPICE
 def organize_results(sim_time, voltage, adder_type, cell):
     adder_results = []
@@ -45,7 +44,10 @@ def organize_results(sim_time, voltage, adder_type, cell):
         print(res_df)
         # seleciona colunas relevantes
         delay_df = res_df.filter(regex='tp')
-        power = (-1) * res_df['q_dut'].iloc[0] * voltage / sim_time
+        if cell == "AXA2" or cell == "AXA3":
+            power = (-1) * (res_df['q_dut'].iloc[0] + res_df['q_in'].iloc[0]) * voltage / sim_time
+        else:
+            power = (-1) * res_df['q_dut'].iloc[0] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
         adder_results.append({'delay' : delay, 'power' : power})
@@ -58,7 +60,7 @@ def organize_results(sim_time, voltage, adder_type, cell):
 
 def run():
     add_type = ['RCA', 'CSA']
-    ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
+    ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3', 'BXFA']
     results = {}
     # seleciona as somas que serao simuladas no HSPICE
     sums = sample(range(gen_files(True, 2**8 + 1)), 500)
