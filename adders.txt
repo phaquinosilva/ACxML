@@ -8,7 +8,3 @@ ABC	|S	C	|S	C	|S	C	|S	C	|S	C	|S	C
 101	|0	1	|0	1	|0	1	|0	1	|0	1	|0	1
 110	|0	1	|0	1	|0	1	|0	1	|1	1	|0	1
 111	|1	1	|1	1	|0	1	|1	1	|1	1	|1	1
-
-problemas: 
-→ SMA (delay e power)
-→ AMA2 (delay)

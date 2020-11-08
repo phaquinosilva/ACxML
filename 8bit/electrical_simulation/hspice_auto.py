@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import shutil
 from pathlib import Path
 from random import sample
 from arc_gen import gen_files
@@ -25,7 +24,7 @@ def run_hspice(cell, adder_type, sum):
     
     # --> testar se isso funciona legalzinho <--
     os.system('hspice 8bit_' + adder_type + '.cir')
-    os.rename("./8bit_" + adder_type + ".mt0.csv",  "results/result_" + adder_type + "_" + cell + "_sum_" + sum + ".csv")
+    os.rename("8bit_" + adder_type + ".mt0.csv",  "results/result_" + adder_type + "_" + cell + "_sum_" + sum + ".csv")
     
     # retorna arquivo para formato original
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
