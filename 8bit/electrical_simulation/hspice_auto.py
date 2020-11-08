@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import shutil
 from pathlib import Path
 from random import sample
 from arc_gen import gen_files
@@ -7,10 +8,6 @@ from arc_gen import gen_files
 ################################# OBSERVACOES #########################################
 # -> coloquei sim_time e voltage para facilitar na hora de realizar reducao de tensao #
 # -> fazer analiticamente os caminhos criticos dos somadores                          #
-# -> selecionar 500 somas aleatoriamente para realizar simulacoes, alem dos caminhos  #
-#    criticos                                                                         #
-# -> estou confiante agora que tudo aqui funciona, e posso executar todas as          #
-#    simulacoes durante a noite e avaliar os resultados amanha                        #
 #######################################################################################
 
 # executa simulacoes
@@ -23,10 +20,13 @@ def run_hspice(cell, adder_type, sum):
         f.seek(0)
         f.write(newdata)
 
-    # uhm, nesse ponto estou quaaaase me livrando do desse bash
     # executa simulacoes
-    os.system('./executer.sh ' + adder_type + ' ' + cell + ' ' + str(sum))
-
+    # os.system('./executer.sh ' + adder_type + ' ' + cell + ' ' + str(sum))
+    
+    # --> testar se isso funciona legalzinho <--
+    os.system('hspice 8bit_' + adder_type + '.cir')
+    os.rename("./8bit_" + adder_type + ".mt0.csv",  "results/result_" + adder_type + "_" + cell + "_sum_" + sum + ".csv")
+    
     # retorna arquivo para formato original
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
         filedata = f.read()
@@ -58,6 +58,7 @@ def organize_results(sim_time, voltage, adder_type, cell):
     delay = sums_res['delay'].max(axis=0)
     return {'delay' : delay, 'power' : avg_pow}
 
+# main desse arquivo
 def run():
     add_type = ['RCA', 'CSA']
     ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3', 'BXFA']
