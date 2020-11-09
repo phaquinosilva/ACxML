@@ -1,0 +1,20 @@
+.subckt AMA2 a b cin sum cout vdd
+*DUT
+    *PMOS
+        Mp1 vdd a co a pmos_rvt l=len nfin=n
+        Mp2 vdd a sc1 a pmos_rvt l=len nfin=n
+        Mp3 vdd b sc1 b pmos_rvt l=len nfin=n
+        Mp4 sc1 co su co pmos_rvt l=len nfin=n
+        Mp5 vdd cin su cin pmos_rvt l=len nfin=n
+    *NMOS
+        Mn1 co a gnd a nmos_rvt l=len nfin=n
+        Mn2 su co sc2 co nmos_rvt l=len nfin=n
+        Mn3 sc2 cin gnd cin nmos_rvt l=len nfin=n
+        Mn4 su cin sc3 cin nmos_rvt l=len nfin=n
+        Mn5 sc3 a sc4 a nmos_rvt l=len nfin=n
+        Mn6 sc4 b gnd b nmos_rvt l=len nfin=n
+    *inverter for correct output
+        Xsum su sum vdd Inv
+        Xcout co cout vdd Inv
+.ends
+

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from pathlib import Path
 from random import sample
-from arc_gen import gen_files
+from prime_sums import gen_files
 
 ################################# OBSERVACOES #########################################
 # -> coloquei sim_time e voltage para facilitar na hora de realizar reducao de tensao #
