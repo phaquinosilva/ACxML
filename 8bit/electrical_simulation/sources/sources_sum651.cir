@@ -4,20 +4,20 @@
 Va0 a0_in gnd PWL(0n 0 1n 0 1.1n 0.7)
 Va1 a1_in gnd PWL(0n 0 1n 0 1.1n 0.7)
 Va2 a2_in gnd PWL(0n 0 1n 0 1.1n 0.7)
-Va3 a3_in gnd PWL(0n 0 1n 0 1.1n 0.7)
-Va4 a4_in gnd PWL(0n 0 1n 0 1.1n 0.7)
+Va3 a3_in gnd PWL(0n 0)
+Va4 a4_in gnd PWL(0n 0)
 Va5 a5_in gnd PWL(0n 0)
-Va6 a6_in gnd PWL(0n 0)
+Va6 a6_in gnd PWL(0n 0 1n 0 1.1n 0.7)
 Va7 a7_in gnd PWL(0n 0)
 *8-bit input B
 Vb0 b0_in gnd PWL(0n 0 1n 0 1.1n 0.7)
 Vb1 b1_in gnd PWL(0n 0 1n 0 1.1n 0.7)
 Vb2 b2_in gnd PWL(0n 0 1n 0 1.1n 0.7)
-Vb3 b3_in gnd PWL(0n 0)
-Vb4 b4_in gnd PWL(0n 0)
+Vb3 b3_in gnd PWL(0n 0 1n 0 1.1n 0.7)
+Vb4 b4_in gnd PWL(0n 0 1n 0 1.1n 0.7)
 Vb5 b5_in gnd PWL(0n 0)
-Vb6 b6_in gnd PWL(0n 0 1n 0 1.1n 0.7)
-Vb7 b7_in gnd PWL(0n 0 1n 0 1.1n 0.7)
+Vb6 b6_in gnd PWL(0n 0)
+Vb7 b7_in gnd PWL(0n 0)
 
 *measures
 .measure tran tplh_s0 trig v(tr) val='0.5*0.7' rise=1 targ v(s0_in) val='0.5*0.7' rise=1

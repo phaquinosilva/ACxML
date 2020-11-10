@@ -28,10 +28,11 @@ def generate_sums(approx, num):
         # soma pode nao ser comutativa
         if (approx):
             for j in primes:
-                groups.append((i, j, i+j))
+                groups.append((i, j, (i+j) & 0b11111111))
         else:
             for j in range(primes.index(i), len(primes)):
-                groups.append((i, primes[j], i + primes[j]))
+                soma = (i + primes[j]) & 0b11111111
+                groups.append((i, primes[j], soma))
     # ja nao preciso escrever num arquivo, mas fica aqui caso precise
     # for i in groups: print(groups.index(i))
     # file = open('sums_decimal.txt', 'w')
@@ -88,5 +89,5 @@ def gen_files(approx, num):
                         file.write(".measure tran tplh_s" + str(it) + " trig v(tr) val='0.5*0.7' rise=1 targ v(s" + str(it) + "_in) val='0.5*0.7' rise=1\n")
                 it += 1
     return len(sums)
-gen_files(True, 5)
+gen_files(True, 2**7-1)
 

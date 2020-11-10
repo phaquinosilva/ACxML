@@ -63,7 +63,7 @@ def run():
     ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3', 'BXFA']
     results = {}
     # seleciona as somas que serao simuladas no HSPICE
-    sums = sample(range(gen_files(True, 2**8 + 1)), 500)
+    sums = sample(range(gen_files(True, 2**7 - 1)), 10)
     for adder in add_type:
         for fa in ls_adders:
 
