@@ -24,7 +24,7 @@ def run_hspice(cell, adder_type, sum):
     
     # --> testar se isso funciona legalzinho <--
     os.system('hspice 8bit_' + adder_type + '.cir')
-    os.rename("8bit_" + adder_type + ".mt0.csv",  "results/result_" + adder_type + "_" + cell + "_sum_" + sum + ".csv")
+    os.rename("8bit_" + adder_type + ".mt0.csv",  "results/result_" + adder_type + "_" + cell + "_sum_" + str(sum) + ".csv")
     
     # retorna arquivo para formato original
     with open('./8bit_' + adder_type + '.cir', 'r') as f:
