@@ -43,7 +43,7 @@ def organize_results(sim_time, voltage, adder_type, cell):
         print(res_df)
         # seleciona colunas relevantes
         delay_df = res_df.filter(regex='tp')
-        if cell == "AXA2" or cell == "AXA3":
+        if cell == "AXA2" or cell == "AXA3" or cell == "EXA":
             power = (-1) * (res_df['q_dut'].iloc[0] + res_df['q_in'].iloc[0]) * voltage / sim_time
         else:
             power = (-1) * res_df['q_dut'].iloc[0] * voltage / sim_time
@@ -60,10 +60,11 @@ def organize_results(sim_time, voltage, adder_type, cell):
 # main desse arquivo
 def run():
     add_type = ['RCA', 'CSA']
-    ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3', 'BXFA']
+    #ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
+    ls_adders = ['EXA']
     results = {}
     # seleciona as somas que serao simuladas no HSPICE
-    sums = sample(range(gen_files(True, 2**7 - 1)), 10)
+    sums = range(gen_files(True, 2**7 - 1))
     for adder in add_type:
         for fa in ls_adders:
 
