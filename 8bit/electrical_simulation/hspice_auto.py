@@ -19,9 +19,6 @@ def run_hspice(cell, adder_type, sum):
         f.seek(0)
         f.write(newdata)
 
-    # executa simulacoes
-    # os.system('./executer.sh ' + adder_type + ' ' + cell + ' ' + str(sum))
-    
     # --> testar se isso funciona legalzinho <--
     os.system('hspice 8bit_' + adder_type + '.cir')
     os.rename("8bit_" + adder_type + ".mt0.csv",  "results/result_" + adder_type + "_" + cell + "_sum_" + str(sum) + ".csv")
@@ -60,8 +57,7 @@ def organize_results(sim_time, voltage, adder_type, cell):
 # main desse arquivo
 def run():
     add_type = ['RCA', 'CSA']
-    #ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
-    ls_adders = ['EXA']
+    ls_adders = ['EMA', 'EXA', 'SMA', 'AMA1', 'AMA2', 'AXA2', 'AXA3']
     results = {}
     # seleciona as somas que serao simuladas no HSPICE
     sums = range(gen_files(True, 2**7 - 1))
