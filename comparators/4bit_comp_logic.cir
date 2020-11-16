@@ -1,5 +1,6 @@
 * 4 bit binary comparator using logic gates
 
+** 1 bit comparator
 * a, b, greater, lesser, equal
 .subckt 1b_comp a b g l e vdd
     * inverters
@@ -20,4 +21,10 @@
     Mp5 z g e g pmos_rvt L=len nfin=n
     Mn4 e l gnd l nmos_rvt L=len nfin=n
     Mn5 e g gnd g nmos_rvt L=len nfin=n
+.ends
+
+** 4 bit comparator
+* possivelmente colocar entradas para fazer encadeamento
+.subckt 4b_comp a0 a1 a2 a3 b0 b1 b2 b3 g l e vdd
+
 .ends
