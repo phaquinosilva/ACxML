@@ -6,9 +6,9 @@
 .include params.cir
 
 *sources
-Vvdut vdut gnd vdd
-Vvdd1 vdd1 gnd vdd
-Vvdd2 vdd2 gnd vdd
+Vvdut vdut gnd 0.8
+Vvdd1 vdd1 gnd 0.8
+Vvdd2 vdd2 gnd 0.8
 
 **inputs A and B sources in separate file
 .include sources/sources_sum1022.cir
@@ -87,12 +87,11 @@ XFA51 a5 b5 c51 s51 c61 vdut EXA
 XFA61 a6 b6 c61 s61 c71 vdut EXA
 XFA71 a7 b7 c71 s71 c81 vdut EXA
 *mux
-Xsel c4 nc4 vdut Inv
+Xsel c4 nc4 vdut Inv M=8
 XM4 s40 s41 c4 nc4 s4_in vdut mux21
 XM5 s50 s51 c4 nc4 s5_in vdut mux21
 XM6 s60 s61 c4 nc4 s6_in vdut mux21
 XM7 s70 s71 c4 nc4 s7_in vdut mux21
-XM8 c80 c81 c4 nc4 c8_in vdut mux21
 ********************************
 
 **fan-out
@@ -113,10 +112,6 @@ Xis12 s6_in s6_in1 vdd2 Inv M=4
 Xis13 s6_in1 s6 vdd2 Inv M=4
 Xis14 s7_in s7_in1 vdd2 Inv M=4
 Xis15 s7_in1 s7 vdd2 Inv M=4
-*C
-Xico0 c8_in c8_in1 vdd2 Inv M=4
-Xico1 c8_in1 co vdd2 Inv M=4
-
 
 **time measures depend on the inputs - also in separate files
 .measure tran q_dut integ i(Vvdut) from=0n to=5n
