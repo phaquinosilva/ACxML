@@ -1,0 +1,128 @@
+**8 bit carry select adder
+
+*model
+.include 7nm_FF.pm
+
+.include params.cir
+
+*sources
+Vvdut vdut gnd vdd
+Vvdd1 vdd1 gnd vdd
+Vvdd2 vdd2 gnd vdd
+
+**inputs A and B sources in separate file
+.include sources/sources_sum1022.cir
+
+*carry in
+Vc0 c0_in gnd PWL(0n 0)
+Vtr tr gnd PWL(0n 0 1n 0 1.1n vdd)
+
+*adder
+.include inverter.cir
+.include adders/EXA.cir
+
+*circuit - mux21
+.subckt mux21 a b sel csel q vdd
+  Mp1 a sel q sel pmos_rvt L=len nfin=n
+  Mn1 a csel q csel nmos_rvt L=len nfin=n
+  Mp2 b csel q csel pmos_rvt L=len nfin=n
+  Mn2 b sel q sel nmos_rvt L=len nfin=n
+.ends
+
+
+**load
+*A
+Xia0 a0_in a0_in1 vdd1 Inv
+Xia1 a0_in1 a0 vdd1 Inv
+Xia2 a1_in a1_in1 vdd1 Inv
+Xia3 a1_in1 a1 vdd1 Inv
+Xia4 a2_in a2_in1 vdd1 Inv
+Xia5 a2_in1 a2 vdd1 Inv
+Xia6 a3_in a3_in1 vdd1 Inv
+Xia7 a3_in1 a3 vdd1 Inv
+Xia8 a4_in a4_in1 vdd1 Inv
+Xia9 a4_in1 a4 vdd1 Inv
+Xia10 a5_in a5_in1 vdd1 Inv
+Xia11 a5_in1 a5 vdd1 Inv
+Xia12 a6_in a6_in1 vdd1 Inv
+Xia13 a6_in1 a6 vdd1 Inv
+Xia14 a7_in a7_in1 vdd1 Inv
+Xia15 a7_in1 a7 vdd1 Inv
+*B
+Xib0 b0_in b0_in1 vdd1 Inv
+Xib1 b0_in1 b0 vdd1 Inv
+Xib2 b1_in b1_in1 vdd1 Inv
+Xib3 b1_in1 b1 vdd1 Inv
+Xib4 b2_in b2_in1 vdd1 Inv
+Xib5 b2_in1 b2 vdd1 Inv
+Xib6 b3_in b3_in1 vdd1 Inv
+Xib7 b3_in1 b3 vdd1 Inv
+Xib8 b4_in b4_in1 vdd1 Inv
+Xib9 b4_in1 b4 vdd1 Inv
+Xib10 b5_in b5_in1 vdd1 Inv
+Xib11 b5_in1 b5 vdd1 Inv
+Xib12 b6_in b6_in1 vdd1 Inv
+Xib13 b6_in1 b6 vdd1 Inv
+Xib14 b7_in b7_in1 vdd1 Inv
+Xib15 b7_in1 b7 vdd1 Inv
+*C
+Xic0 c0_in c0_in1 vdd1 Inv
+Xic1 c0_in1 c0 vdd1 Inv
+
+********************************
+**DUT
+*cin
+XFA0 a0 b0 c0 s0_in c1 vdut EXA
+XFA1 a1 b1 c1 s1_in c2 vdut EXA
+XFA2 a2 b2 c2 s2_in c3 vdut EXA
+XFA3 a3 b3 c3 s3_in c4 vdut EXA
+*0
+XFA40 a4 b4 gnd s40 c50 vdut EXA
+XFA50 a5 b5 c50 s50 c60 vdut EXA
+XFA60 a6 b6 c60 s60 c70 vdut EXA
+XFA70 a7 b7 c70 s70 c80 vdut EXA
+*1
+XFA41 a4 b4 vdut s41 c51 vdut EXA
+XFA51 a5 b5 c51 s51 c61 vdut EXA
+XFA61 a6 b6 c61 s61 c71 vdut EXA
+XFA71 a7 b7 c71 s71 c81 vdut EXA
+*mux
+Xsel c4 nc4 vdut Inv
+XM4 s40 s41 c4 nc4 s4_in vdut mux21
+XM5 s50 s51 c4 nc4 s5_in vdut mux21
+XM6 s60 s61 c4 nc4 s6_in vdut mux21
+XM7 s70 s71 c4 nc4 s7_in vdut mux21
+XM8 c80 c81 c4 nc4 c8_in vdut mux21
+********************************
+
+**fan-out
+*S
+Xis0 s0_in s0_in1 vdd2 Inv M=4
+Xis1 s0_in1 s0 vdd2 Inv M=4
+Xis2 s1_in s1_in1 vdd2 Inv M=4
+Xis3 s1_in1 s1 vdd2 Inv M=4
+Xis4 s2_in s2_in1 vdd2 Inv M=4
+Xis5 s2_in1 s2 vdd2 Inv M=4
+Xis6 s3_in s3_in1 vdd2 Inv M=4
+Xis7 s3_in1 s3 vdd2 Inv M=4
+Xis8 s4_in s4_in1 vdd2 Inv M=4
+Xis9 s4_in1 s4 vdd2 Inv M=4
+Xis10 s5_in s5_in1 vdd2 Inv M=4
+Xis11 s5_in1 s5 vdd2 Inv M=4
+Xis12 s6_in s6_in1 vdd2 Inv M=4
+Xis13 s6_in1 s6 vdd2 Inv M=4
+Xis14 s7_in s7_in1 vdd2 Inv M=4
+Xis15 s7_in1 s7 vdd2 Inv M=4
+*C
+Xico0 c8_in c8_in1 vdd2 Inv M=4
+Xico1 c8_in1 co vdd2 Inv M=4
+
+
+**time measures depend on the inputs - also in separate files
+.measure tran q_dut integ i(Vvdut) from=0n to=5n
+.measure tran q_in integ i(Vvdd1) from=0n to=5n
+.measure tran q_out integ i(Vvdd1) from=0n to=5n
+
+.tran 0.1ns 5n
+
+.end
