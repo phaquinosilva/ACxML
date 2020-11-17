@@ -12,7 +12,7 @@ def add(adder, in_a, in_b, cin, n_bits):
     return final
 
 # comparador simples n_bit
-def comparator(adder, in_a, in_b, n_bits):
+def compare(adder, in_a, in_b, n_bits):
     # A > B : A - B > 0
     final = ''
     cin = 1
@@ -25,8 +25,8 @@ def comparator(adder, in_a, in_b, n_bits):
     else:
         return final, True
 
-# calcula soma aproximada para um grupo de FAs
-def approx_sum(op_a, op_b, n_bits, adder):
+# calcula uma operação aproximada para um grupo de FAs
+def approx_operation(op_a, op_b, n_bits, adder, operate, save=True):
     # passo operandos para binario de n_bits
     form = '#0' + str(n_bits + 2) + 'b'
     in_a = format(op_a, form)[2:]
@@ -35,11 +35,11 @@ def approx_sum(op_a, op_b, n_bits, adder):
     results = {
         "a" : op_a,
         "b" : op_b,
-        "exact" : (op_a + op_b) & 0b11111111
+        "exact" : operate(adder, op_a, op_b, n_bits)
         }
     error = []
     for a in adder:
-        final = add(a, in_a, in_b, 0, n_bits)
+        final = operate(a, in_a, in_b, 0, n_bits)
         # já que se adiciona iterativamente do LSB até o MSB, invertemos a bistring do resultado
         final_bin = final[::-1]
         final_dec = int(final_bin, 2)
@@ -51,7 +51,7 @@ def approx_sum(op_a, op_b, n_bits, adder):
 
 # executa a simulação de qualquer conjunto de somas para 
 # qualquer conjunto de somadores definido dentro da função
-def run_simulation(sums, bit_len):
+def run_simulation(operate ,operands, bit_len):
     # lista de funcoes que simulam FAs aproximados
     adders = [sma, ama1, ama2, axa2, axa3, bxfa]
     add_list = [str(i.__name__) for i in adders]
@@ -60,15 +60,15 @@ def run_simulation(sums, bit_len):
     # error list
     e_list = []
 
-    for s in sums:
-        tmp = approx_sum(s[0], s[1], bit_len, adders)
+    for s in operands:
+        tmp = approx_operation(s[0], s[1], bit_len, adders, operate)
         s_list.append(tmp[0])
         [e_list.append(tmp[1][i]) for i in range(len(adders))]
 
     # organizacao e processamento dos resultados
     results = pd.DataFrame(s_list)
     dec_error = decimal_error_analysis(results, add_list)
-    bin_error = bit_error(add_list, e_list, len(sums))
+    bin_error = bit_error(add_list, e_list, len(operands))
     # converte resultados para arquivos csv
     results.to_csv('sums_results.csv')
     dec_error.to_csv("error_analysis.csv")

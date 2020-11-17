@@ -74,10 +74,14 @@ def run_simulation(sums, bit_len):
 def bit_error(adders, e_list, n_op):
     idx = pd.MultiIndex.from_product([adders, range(n_op)])
     e_list_df = pd.DataFrame(e_list, index=idx)
+    print(e_list_df.loc[adders[0]])
     error_df = pd.DataFrame(e_list_df.loc[adders[0]].sum().rename(adders[0]))
+    print(error_df)
     for i in adders[1:]: 
         error_df = error_df.join(e_list_df.loc[i].sum().rename(i))
+    print(error_df)
     mean_df = error_df.div(n_op)
+    print(mean_df)
     return error_df, mean_df
 
 # erro decimal
@@ -88,7 +92,7 @@ def decimal_error_analysis(results, add):
     for adder in add:
         error[adder] = abs(results['exact'].subtract(results[adder]))
         mean_ed[adder] = error[adder].mean()
-        std_dev[adder] = results[adder].std()
+        std_dev[adder] = error[adder].std()
     return pd.DataFrame(mean_ed).join(std_dev)
 
 ## experimento: soma de primos
