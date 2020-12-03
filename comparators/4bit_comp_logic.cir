@@ -3,16 +3,16 @@
 ** 1 bit comparator
 * a, b, greater, lesser, equal
 .subckt 1b_comp a b g l e vdd
-    * inverters
+    * inverters 
     Xa a na vdd Inv
     Xb b nb vdd Inv
     * lesser
-    Mp0 vdd nb l nb pmos_rvt L=len nfin=n
-    Mp1 vdd a l a pmos_rvt L=len nfin=n
-    Mn0 l a x a nmos_rvt L=len nfin=n
-    Mn1 x nb gnd nb nmos_rvt L=len nfin=n
+    Mp0 vdd nb l vdd pmos_rvt L=len nfin=n
+    Mp1 vdd a l vdd pmos_rvt L=len nfin=n
+    Mn0 l a x gnd nmos_rvt L=len nfin=n
+    Mn1 x nb gnd gnd nmos_rvt L=len nfin=n
     * greater
-    Mp2 vdd b g b pmos_rvt L=len nfin=n
+    Mp2 vdd b g  pmos_rvt L=len nfin=n
     Mp3 vdd ab g ab pmos_rvt L=len nfin=n
     Mn2 g ab y ab nmos_rvt L=len nfin=n
     Mn3 y b gnd b nmos_rvt L=len nfin=n
