@@ -71,7 +71,7 @@ void to_binary (int input, int n, int* bin) {
 int to_int (int* bin, int n) {
     int pow2 = 1;
     int value = 0;
-    int largest = bin[n-1];
+    // int largest = bin[n-1];
     for (int i = 0; i < n; i++) {
         if (bin[i] == 1) {
             value += pow2;
@@ -79,8 +79,8 @@ int to_int (int* bin, int n) {
         pow2 *= 2;
     }
     // calcula C2
-    largest *= pow2;
-    value -= largest;
+    // largest *= pow2;
+    // value -= largest;
     
     return value;
 }
