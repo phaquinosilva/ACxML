@@ -1,0 +1,18 @@
+* 4 bit binary reduced logic comparator
+
+** result of a > b in s3
+.subckt 4b_sub_comp a0 a1 a2 a3 b0 b1 b2 b3 gt vdd
+**DUT
+* A xnor B
+
+* not A
+Xa0 a0 na0 vdd Inv
+Xa1 a1 na1 vdd Inv
+Xa2 a2 na2 vdd Inv
+Xa3 a3 na3 vdd Inv
+
+* greater
+
+
+
+.ends

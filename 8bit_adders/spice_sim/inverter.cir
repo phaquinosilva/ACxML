@@ -1,0 +1,18 @@
+**inverter
+
+.include 7nm_FF.pm
+
+* tensao de operacao
+.param vdd = 0.7V
+* gera arquivos de onda
+.option post = 2
+* define saida em .csv
+.option measform= 3
+
+*circuit - inverter
+.subckt Inv in out vdd
+  Mp vdd in out in pmos_rvt nfin=3
+  Mn out in gnd in nmos_rvt nfin=3
+.ends
+
+Xia0 a0_in a0_in1 vdd1 Inv

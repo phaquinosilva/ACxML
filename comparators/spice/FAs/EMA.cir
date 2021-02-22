@@ -1,0 +1,35 @@
+**MIRROR
+
+.subckt EMA a b cin sum cout vdd
+*DUT
+    *PMOS
+        Mp1 vdd a t1 a pmos_rvt nfin=n
+        Mp2 vdd b t1 b pmos_rvt nfin=n
+        Mp3 t1 cin co cin pmos_rvt nfin=n
+        Mp4 vdd b ta b pmos_rvt nfin=n
+        Mp5 ta a co a pmos_rvt nfin=n
+        Mp6 vdd a t2 a pmos_rvt nfin=n
+        Mp7 vdd b t2 b pmos_rvt nfin=n
+        Mp8 vdd cin t2 cin pmos_rvt nfin=n
+        Mp9 t2 co su co pmos_rvt nfin=n
+        Mpa vdd a tb a pmos_rvt nfin=n
+        Mpb tb b tc b pmos_rvt nfin=n
+        Mpc tc cin su cin pmos_rvt nfin=n
+    *NMOS
+        Mn1 co cin t3 cin nmos_rvt nfin=n
+        Mn2 t3 a gnd a nmos_rvt nfin=n
+        Mn3 t3 b gnd b nmos_rvt nfin=n
+        Mn4 co a tb1 a nmos_rvt nfin=n
+        Mn5 tb1 b gnd b nmos_rvt nfin=n
+        Mn6 su co t4 co nmos_rvt nfin=n
+        Mn7 t4 a gnd a nmos_rvt nfin=n
+        Mn8 t4 b gnd b nmos_rvt nfin=n
+        Mn9 t4 cin gnd cin nmos_rvt nfin=n
+        Mnb tb2 b ta2 b nmos_rvt nfin=n
+        Mna su cin tb2 cin nmos_rvt nfin=n
+        Mnc ta2 a gnd a nmos_rvt nfin=n
+
+    *inverters for accurate results
+        Xsum su sum vdd Inv
+        Xcout co cout vdd Inv
+.ends
