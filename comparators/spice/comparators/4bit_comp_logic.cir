@@ -1,8 +1,12 @@
-* 4 bit binary reduced logic comparator
+** 4 bit binary reduced logic comparator
 
-** result of a > b in s3
+* XNOR
+.subckt xnor a b out vdd
+.ends
+
+* result of a > b in s3
 .subckt 4b_sub_comp a0 a1 a2 a3 b0 b1 b2 b3 gt vdd
-**DUT
+*DUT
 * A xnor B
 
 * not A
