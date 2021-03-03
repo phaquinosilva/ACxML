@@ -1,4 +1,4 @@
-**8 bit ripple carry adder
+**8 bit carry select adder
 
 *model
 .include 7nm_FF.pm
@@ -6,21 +6,16 @@
 .include params.cir
 
 *sources
-Vvdut vdut gnd vdd
+Vvdut vdut gnd vdd 
 Vvdd1 vdd1 gnd vdd
 Vvdd2 vdd2 gnd vdd
 
 **inputs A and B sources in separate file
-.include sources/sources_sumXX.cir
-
-*carry in
-Vc0 c0_in gnd PWL(0n 0)
-Vtr tr gnd PWL(0n 0 1n 0 1.1n vdd)
+.include critical_paths/crit_exa.cir
 
 *adder
 .include inverter.cir
-.include adders/ema.cir
-
+.include adders/exa.cir
 
 **load
 *A
@@ -61,39 +56,25 @@ Xib15 b7_in1 b7 vdd1 Inv
 Xic0 c0_in c0_in1 vdd1 Inv
 Xic1 c0_in1 c0 vdd1 Inv
 
-********************************
-**DUT
-XFA0 a0 b0 c0 s0_in c1 vdut ema
-XFA1 a1 b1 c1 s1_in c2 vdut ema
-XFA2 a2 b2 c2 s2_in c3 vdut ema
-XFA3 a3 b3 c3 s3_in c4 vdut ema
-XFA4 a4 b4 c4 s4_in c5 vdut ema
-XFA5 a5 b5 c5 s5_in c6 vdut ema
-XFA6 a6 b6 c6 s6_in c7 vdut ema
-XFA7 a7 b7 c7 s7_in c8_in vdut ema
-********************************
+XFA0 a0 b0 c0 s0 c1 vdut exa
+XFA1 a1 b1 c1 s1 c2 vdut exa
+XFA2 a2 b2 c2 s2 c3 vdut exa
+XFA3 a3 b3 c3 s3 c4 vdut exa
+XFA4 a4 b4 c4 s4 c5 vdut exa
+XFA5 a5 b5 c5 s5 c6 vdut exa
+XFA6 a6 b6 c6 s6 c7 vdut exa
+XFA7 a7 b7 c7 s7 c8 vdut exa
 
 **fan-out
 *S
-Xis0 s0_in s0_in1 vdd2 Inv M=4
-Xis1 s0_in1 s0 vdd2 Inv M=4
-Xis2 s1_in s1_in1 vdd2 Inv M=4
-Xis3 s1_in1 s1 vdd2 Inv M=4
-Xis4 s2_in s2_in1 vdd2 Inv M=4
-Xis5 s2_in1 s2 vdd2 Inv M=4
-Xis6 s3_in s3_in1 vdd2 Inv M=4
-Xis7 s3_in1 s3 vdd2 Inv M=4
-Xis8 s4_in s4_in1 vdd2 Inv M=4
-Xis9 s4_in1 s4 vdd2 Inv M=4
-Xis10 s5_in s5_in1 vdd2 Inv M=4
-Xis11 s5_in1 s5 vdd2 Inv M=4
-Xis12 s6_in s6_in1 vdd2 Inv M=4
-Xis13 s6_in1 s6 vdd2 Inv M=4
-Xis14 s7_in s7_in1 vdd2 Inv M=4
-Xis15 s7_in1 s7 vdd2 Inv M=4
-*C
-Xico0 c8_in c8_in1 vdd2 Inv M=4
-Xic01 c8_in1 co vdd2 Inv M=4
+Cs0 s0 gnd 10f
+Cs1 s1 gnd 10f
+Cs2 s2 gnd 10f
+Cs3 s3 gnd 10f
+Cs4 s4 gnd 10f
+Cs5 s5 gnd 10f
+Cs6 s6 gnd 10f
+Cs7 s7 gnd 10f
 
 **time measures depend on the inputs - also in separate files
 .measure tran q_dut integ i(Vvdut) from=0n to=5n
