@@ -1,0 +1,5 @@
+$DATA1 SOURCE='HSPICE' VERSION='H-2013.03-SP1 32-BIT'
+$OPTION MEASFORM=3
+.TITLE '**8 bit carry select adder'
+tp_crit,q_dut,q_in,q_out,temper,alter#
+1.911e-10,-1.001e-17,-8.972e-15,-8.972e-15,  25.0000,1

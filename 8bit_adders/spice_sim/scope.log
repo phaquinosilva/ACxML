@@ -1,0 +1,139 @@
+ScopeSigMgr:loadpffile /home/pedro/ACxML/8bit_adders/spice_sim/8bit_CSA.tr0 1 openonly
+# PF:1
+wm geometry .sigmgr._PF:1 226x337+623+193
+pf:read PF:1 v(c0)
+# WF:1:1
+Graph addsignal WF:1:1 -region new -yview real(y) -xview real(x) -tracehi 2
+# Signal0
+pf:read PF:1 v(c1) v(c2) v(c3) v(c4)
+# WF:1:2 WF:1:3 WF:1:4 WF:1:5
+Graph addsignal {WF:1:2 WF:1:3 WF:1:4 WF:1:5} -region {new new new new} -yview {real(y) real(y) real(y) real(y)} -xview {real(x) real(x) real(x) real(x)} -tracehi {2 2 2 2}
+# Signal1 Signal2 Signal3 Signal4
+Graph:Select Graph0
+Graph:DSel
+Graph itemselect Signal3 add
+# Signal3
+Graph sigconfig Signal3 -region 4 -rgnindex 1
+Graph:DSel
+Graph itemselect Signal2 add
+# Signal2
+Graph sigconfig Signal2 -region 3 -rgnindex 2
+Graph:DSel
+Graph itemselect Signal0 add
+# Signal0
+Graph sigconfig Signal0 -region 2 -rgnindex 3
+Graph:DSel
+Graph itemselect Signal1 add
+# Signal1
+Graph sigconfig {Signal1 Signal0} -region {1 1} -rgnindex {3 4}
+Graph axisconfig AxisX(0) -range {634.14p 2.1375n}
+Graph axisconfig AxisX(0) -range {902.50847363p 1.3966951342n}
+Graph:DSel
+pf:read PF:1 v(s0) v(s1) v(s2) v(s3) v(s4)
+# WF:1:6 WF:1:7 WF:1:8 WF:1:9 WF:1:10
+Graph addsignal {WF:1:6 WF:1:7 WF:1:8 WF:1:9 WF:1:10} -region {new new new new new} -yview {real(y) real(y) real(y) real(y) real(y)} -xview {real(x) real(x) real(x) real(x) real(x)} -tracehi {2 2 2 2 2}
+# Signal5 Signal6 Signal7 Signal8 Signal9
+Graph:Select Graph0
+Graph:DSel
+Graph itemselect Signal8 add
+# Signal8
+Graph sigconfig Signal8 -region 5 -rgnindex 1
+Graph:DSel
+Graph itemselect Signal7 add
+# Signal7
+Graph sigconfig Signal7 -region 4 -rgnindex 2
+Graph:DSel
+Graph itemselect Signal6 add
+# Signal6
+Graph sigconfig Signal6 -region 3 -rgnindex 3
+Graph:DSel
+Graph itemselect Signal5 add
+# Signal5
+Graph sigconfig Signal5 -region 2 -rgnindex 4
+Graph:DSel
+pf:read PF:1 v(s5) v(s6) v(s7)
+# WF:1:11 WF:1:12 WF:1:13
+Graph addsignal {WF:1:11 WF:1:12 WF:1:13} -region {new new new} -yview {real(y) real(y) real(y)} -xview {real(x) real(x) real(x)} -tracehi {2 2 2}
+# Signal10 Signal11 Signal12
+Graph:Select Graph0
+Graph:DSel
+Graph itemselect Signal10 add
+# Signal10
+Graph itemselect Signal10 add
+# Signal10
+Graph sigconfig {Signal10 Signal8 Signal7 Signal6 Signal5} -region {1 1 1 1 1} -rgnindex {1 2 3 4 5}
+Graph:DSel
+Graph itemselect Signal9 add
+# Signal9
+Graph sigconfig {Signal9 Signal8 Signal7 Signal6 Signal5} -region {1 1 1 1 1} -rgnindex {2 3 4 5 6}
+Graph:DSel
+Graph itemselect Signal11 add
+# Signal11
+Graph sigconfig {Signal11 Signal10 Signal9 Signal8 Signal7 Signal6 Signal5} -region {1 1 1 1 1 1 1} -rgnindex {0 1 2 3 4 5 6}
+Graph:DSel
+Graph itemselect Signal12 add
+# Signal12
+Graph sigconfig {Signal12 Signal11 Signal10 Signal9 Signal8 Signal7 Signal6 Signal5} -region {1 1 1 1 1 1 1 1} -rgnindex {0 1 2 3 4 5 6 7}
+Graph:DSel
+pf:read PF:1 v(s70) v(s71)
+# WF:1:14 WF:1:15
+Graph addsignal {WF:1:14 WF:1:15} -region {new new} -yview {real(y) real(y)} -xview {real(x) real(x)} -tracehi {2 2}
+# Signal13 Signal14
+ScopeSigMgr:Unload 0 {{(1) 8bit_CSA.tr0}}
+ScopeSigMgr:loadpffile /home/pedro/ACxML/8bit_adders/spice_sim/8bit_RCA.tr0 1 openonly
+wm geometry .sigmgr._PF:2 226x337+757+221
+wm geometry .sigmgr._PF:1 226x337+516+198
+ScopeSigMgr:Unload 0 {{(1) 8bit_CSA.tr0}}
+Graph0 delsignal Signal0
+Graph0 delsignal Signal1
+Graph0 delsignal Signal2
+Graph0 delsignal Signal3
+Graph0 delsignal Signal4
+Graph0 delsignal Signal5
+Graph0 delsignal Signal6
+Graph0 delsignal Signal7
+Graph0 delsignal Signal8
+Graph0 delsignal Signal9
+Graph0 delsignal Signal10
+Graph0 delsignal Signal11
+Graph0 delsignal Signal12
+Graph0 delsignal Signal13
+Graph0 delsignal Signal14
+pf:read PF:2 v(c1) v(c2) v(c3) v(c4) v(c5) v(c6) v(c7)
+# WF:2:1 WF:2:2 WF:2:3 WF:2:4 WF:2:5 WF:2:6 WF:2:7
+Graph addsignal {WF:2:1 WF:2:2 WF:2:3 WF:2:4 WF:2:5 WF:2:6 WF:2:7} -region {new new new new new new new} -yview {real(y) real(y) real(y) real(y) real(y) real(y) real(y)} -xview {real(x) real(x) real(x) real(x) real(x) real(x) real(x)} -tracehi {2 2 2 2 2 2 2}
+# Signal0 Signal1 Signal2 Signal3 Signal4 Signal5 Signal6
+pf:read PF:2 v(c0)
+# WF:2:8
+Graph addsignal WF:2:8 -region new -yview real(y) -xview real(x) -tracehi 2
+# Signal7
+Graph:Select Graph0
+Graph:DSel
+Graph itemselect Signal7 add
+# Signal7
+Graph sigconfig Signal7 -region 6 -rgnindex 1
+Graph:DSel
+Graph itemselect Signal5 add
+# Signal5
+Graph sigconfig {Signal5 Signal7} -region {6 6} -rgnindex {1 2}
+Graph:DSel
+Graph itemselect Signal4 add
+# Signal4
+Graph sigconfig {Signal4 Signal5 Signal7} -region {5 5 5} -rgnindex {1 2 3}
+Graph:DSel
+Graph itemselect Signal3 add
+# Signal3
+Graph sigconfig {Signal3 Signal5 Signal7} -region {4 4 4} -rgnindex {2 3 4}
+Graph:DSel
+Graph itemselect Signal2 add
+# Signal2
+Graph sigconfig {Signal2 Signal5 Signal7} -region {3 3 3} -rgnindex {3 4 5}
+Graph:DSel
+Graph itemselect Signal1 add
+# Signal1
+Graph sigconfig {Signal1 Signal2 Signal5 Signal7} -region {2 2 2 2} -rgnindex {3 4 5 6}
+Graph:DSel
+Graph itemselect Signal0 add
+# Signal0
+Graph sigconfig {Signal0 Signal1 Signal2 Signal5 Signal7} -region {1 1 1 1 1} -rgnindex {3 4 5 6 7}
+Graph axisconfig AxisX(0) -range {515.7p 1.973n}
