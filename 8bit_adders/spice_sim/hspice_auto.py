@@ -1,8 +1,9 @@
 import os
 import pandas as pd
+from prime_sums import gen_files
 from pathlib import Path
 from random import sample
-from prime_sums import gen_files
+
 
 ################################# OBSERVACOES #########################################
 # -> coloquei sim_time e voltage para facilitar na hora de realizar reducao de tensao #
@@ -19,7 +20,7 @@ def run_hspice(cell, adder_type, sum):
         f.seek(0)
         f.write(newdata)
 
-    # --> testar se isso funciona legalzinho <--
+    # chamadas de sistema
     os.system('hspice 8bit_' + adder_type + '.cir')
     os.rename("8bit_" + adder_type + ".mt0.csv",  "results/result_" + adder_type + "_" + cell + "_sum_" + str(sum) + ".csv")
     
