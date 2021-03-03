@@ -42,7 +42,8 @@ src =\
 	getnames.c\
 	modelfiles.c\
 	utility.c\
-	xval.c
+	xval.c\
+	ax_adders.c
 
 obj =\
 	 c50.o global.o\

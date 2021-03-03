@@ -33,7 +33,7 @@
 
 #include "defns.i"
 #include "extern.i"
-
+#include "ax_adders.h"
 
 	/* Local data used by MarkActive and RuleClassify.
 	   Note: Active is never deallocated, just grows as required */
@@ -125,7 +125,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 		// @grellert: aqui é feita a comparação
 	    //if ( Dv <= T->Forks )	/*  Make sure not new discrete value  */
 		// @pedro: implementa aqui a chamada pra tua função
-	    if ( leq(Dv, T->Forks ) )	/*  Make sure not new discrete value  */
+	    if ( leq(Dv, T->Forks, exact, 32) )	/*  Make sure not new discrete value  */
 	    {
 		FindLeaf(Case, T->Branch[Dv], T, Fraction);
 	    }
