@@ -10,7 +10,7 @@ Va3 a3_in gnd PWL(0n vdd)
 Va4 a4_in gnd PWL(0n vdd)
 Va5 a5_in gnd PWL(0n vdd)
 Va6 a6_in gnd PWL(0n vdd)
-Va7 a7_in gnd PWL(0n 0)
+Va7 a7_in gnd PWL(0n vdd)
 *8-bit input B
 Vb0 b0_in gnd PWL(0n 0)
 Vb1 b1_in gnd PWL(0n 0)
@@ -22,4 +22,6 @@ Vb6 b6_in gnd PWL(0n 0)
 Vb7 b7_in gnd PWL(0n 0)
 
 *measures
-.measure tran tp_crit trig v(c0) val='0.5*0.7' rise=1 targ v(s7) val='0.5*0.7' rise=1
+.measure tran tp_crit trig v(c0) val='0.5*0.7' rise=1 targ v(s7) val='0.5*0.7' fall=1
+
+
