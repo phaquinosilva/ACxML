@@ -804,6 +804,8 @@ float	    SE(float sum, float sumsq, int no);
 int add(int a, int b, void (*f) (int, int, int, int *), int n);
 // a - b
 int sub(int a, int b, void (*f) (int, int, int, int *), int n);
+// a >= b
+int geq(int a, int b, void (*f) (int, int, int, int *), int n);
 // a <= b
 int leq(int a, int b, void (*f) (int, int, int, int *), int n);
 

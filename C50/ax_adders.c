@@ -144,7 +144,7 @@ int sub(int a, int b, void (*f) (int, int, int, int *), int n) {
     return result;
 }
 
-int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
+int geq(int a, int b, void (*f) (int, int, int, int *), int n) {
     // a, b: operandos (a > b)
     // (*f): nome do FA a ser simulado
     // n: numero de bits
@@ -159,16 +159,20 @@ int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
     int int_out[2];
     int cin = 1;
 
-    // a - b > 0 : a > b -> ultimo bit = 0
-    // a - b <= 0 : a <= b -> ultimo bit = 1
+    // a - b >= 0 : a >= b -> ultimo bit = 0
+    // a - b < 0 : a < b -> ultimo bit = 1
     for (int i = 0; i < n; i++) {
         (*f) (bin_a[i], bin_b[i], cin, int_out);
         bin_out[i] = int_out[0];
         cin = int_out[1];
-    }
+    }    
 
     // retorna resultado em int
-    int result = bin_out[n-1]; // '!' por causa do true e false ser !0 e 0 em C -- so pra me lembrar mesmo
+    int result = !bin_out[n-1]; // '!' por causa do true e false ser !0 e 0 em C -- so pra me lembrar mesmo
     
     return result;
+}
+
+int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
+    return geq(b, a, f, n);
 }
