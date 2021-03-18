@@ -32,7 +32,7 @@ Xb30 b3_in nb3_in vdd inv M=4
 Xb31 nb3_in b3 vdd inv M=4
 
 * DUT
-
+Xcompare a0 a1 a2 a3 b0 b1 b2 b3 geq vdd 4b_comp_sub
 
 * output load
 Cgeq geq gnd 1f
