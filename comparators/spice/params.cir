@@ -1,8 +1,11 @@
 
+* predition model
 .include 7nm_FF.cir
 
+* technology specific
 .param vdd = 0.7V
 .param n = 3
 
+* output formatting - cscope and csv
 .option post = 2
-.option measform= 3
+.option measform = 3
