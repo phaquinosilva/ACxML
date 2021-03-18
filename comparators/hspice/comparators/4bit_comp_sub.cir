@@ -1,6 +1,6 @@
 * 4 bit comparator using subtractors
 
-** A - B --- result of a > b in s3
+** A - B: A >= B in geq: 1 if False
 .subckt 4b_comp_sub a0 a1 a2 a3 b0 b1 b2 b3 geq vdd
 *********************************
 **DUT
