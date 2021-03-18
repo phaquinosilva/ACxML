@@ -50,12 +50,6 @@ void exact(int a, int b, int cin, int output[]) {
 
 /* HELPERS */
 
-void print_bin(int* bin, int n) {
-    for(int i = n; i > -1; i--)
-        printf("%d", bin[i]);
-    printf("\n");
-}
-
 void to_binary (int input, int n, int* bin) {
     int pow2 = 1;
     for (int i = 0; i < n; i++) {

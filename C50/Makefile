@@ -52,7 +52,7 @@ obj =\
 	 formrules.o siftrules.o ruletree.o rules.o\
 	 xval.o\
 	 getnames.o getdata.o implicitatt.o\
-	 mcost.o classify.o confmat.o sort.o\
+	 mcost.o classify.o confmat.o sort.o ax_adders.o\
 	 update.o utility.o\
 	 modelfiles.o\
 	 attwinnow.o\
