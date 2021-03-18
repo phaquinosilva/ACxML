@@ -48,7 +48,7 @@ Xinv nout out vdd Inv
 .ends
 
 * result of a > b in s3
-.subckt 4b_sub_comp a0 a1 a2 a3 b0 b1 b2 b3 gt vdd
+.subckt 4b_sub_comp a0 a1 a2 a3 b0 b1 b2 b3 geq vdd
 *DUT
 * A xnor B
 *Xeq1 a1 b1 eq1 vdd xnor
@@ -71,6 +71,6 @@ Xn2 a2 nb2 eq3 n2 vdd nand3
 Xia0 a1 na1 vdd Inv
 Xia1 na1 n1 vdd Inv
 
-Xgt n3 n2 n1 gt vdd nand3
+Xgeq n3 n2 n1 geq vdd nand3
 
 .ends

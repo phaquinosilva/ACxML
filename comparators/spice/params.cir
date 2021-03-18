@@ -1,0 +1,8 @@
+
+.include 7nm_FF.cir
+
+.param vdd = 0.7V
+.param n = 3
+
+.option post = 2
+.option measform= 3

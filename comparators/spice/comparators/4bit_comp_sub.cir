@@ -1,9 +1,7 @@
 * 4 bit comparator using subtractors
 
-.include 4bRCA.cir
-
 ** A - B --- result of a > b in s3
-.subckt 4b_sub_comp a0 a1 a2 a3 b0 b1 b2 b3 gt vdd
+.subckt 4b_comp_sub a0 a1 a2 a3 b0 b1 b2 b3 geq vdd
 *********************************
 **DUT
 *inverters
@@ -12,6 +10,6 @@ Xb1 b1 nb1 vdd Inv
 Xb2 b2 nb2 vdd Inv
 Xb3 b3 nb3 vdd Inv
 *adders
-Xadd a0 a1 a2 a3 nb0 nb1 nb2 nb3 vdd s0 s1 s2 gt vdd 4bRCA
+Xadd a0 a1 a2 a3 nb0 nb1 nb2 nb3 vdd s0 s1 s2 geq vdd 4bRCA
 ********************************
 .ends
