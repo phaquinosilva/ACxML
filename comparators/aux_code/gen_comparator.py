@@ -10,7 +10,11 @@ def generate_format(a0: int, b0: int, a1: int, b1: int):
 
 
 # recebe a mudanca no valor de 'a' e 'b' -> gera arquivos de estimulos para HSPICE
-def gen_files(a0, b0, a1, b1):
+def gen_files(a0, b0, a1, b1, n):
+    ## a0, b0: valores de 'a' e 'b' antes
+    ## a1, b1: valores de 'a' e 'b' depois
+    ## n: numero de bits
+
     voltage_arc = generate_format(a0, b0, a1, b1)
     # index for measure definitions
     # write input sources in a file
@@ -18,7 +22,7 @@ def gen_files(a0, b0, a1, b1):
     with open("sources/sources_sum" + str(sums.index(i)) + ".cir",'w+') as file:
         file.write("** sources file for sum " + str(sums.index(i))+ '\n\n')
         # writes all input sources for A
-        file.write("*8-bit input A\n")
+        file.write("*n-bit input A\n")
         it = 0
         for bit in i[0][ : :-1]:
             if (bit == '0'):
