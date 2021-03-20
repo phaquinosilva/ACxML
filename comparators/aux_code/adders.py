@@ -23,7 +23,6 @@ def axa3(a, b, c_in):
     c_out = a & b | (a ^ b) & c_in
     return (sum & 1, c_out & 1)
 
-# usado como prova de conceito
 def exact(a, b, c_in):
     sum = a ^ b ^ c_in
     c_out = a & b | (a ^ b) & c_in

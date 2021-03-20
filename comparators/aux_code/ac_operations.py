@@ -31,7 +31,7 @@ def geq(adder, in_a, in_b, n_bits):
         fa = adder(int(in_a[i]), ~int(in_b[i]), cin)
         final += str(fa[0])
         cin = fa[1]
-    return final[::-1], int(final[n_bits-1])
+    return int(final[0])
 
 # calcula uma operação aproximada para um grupo de FAs
 def approx_operation(op_a, op_b, n_bits, adder, operate, save=True):
