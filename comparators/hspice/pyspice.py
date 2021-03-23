@@ -112,7 +112,7 @@ def adders_sim():
         with open('./' + comparator + '.cir', 'w') as f:
             f.seek(0)
             f.write(newdata)            
-        results[fa[i]] = organize_results(5e-9, 0.7, compa, fa[i])
+        results[fa[i]] = organize_results(5e-9, 0.7, comparator, fa[i])
     prime = pd.DataFrame(results)
     prime.to_csv('./results/' + comparator + '_results.csv')
     results = {}
