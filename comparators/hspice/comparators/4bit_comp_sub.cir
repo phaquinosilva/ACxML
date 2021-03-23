@@ -10,6 +10,7 @@ Xb1 b1 nb1 vdd Inv
 Xb2 b2 nb2 vdd Inv
 Xb3 b3 nb3 vdd Inv
 *adders
-Xadd a0 a1 a2 a3 nb0 nb1 nb2 nb3 vdd s0 s1 s2 geq vdd rca4b
+Xadd a0 a1 a2 a3 nb0 nb1 nb2 nb3 vdd s0 s1 s2 ngeq vdd rca4b
+Xinv ngeq geq vdd Inv 
 ********************************
 .ends
