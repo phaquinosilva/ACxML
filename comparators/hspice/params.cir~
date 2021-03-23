@@ -1,6 +1,6 @@
 
 * predition model
-.include 7nm_FF.pm
+.include 7nm_FF.cir
 
 * technology specific
 .param vdd = 0.7V
