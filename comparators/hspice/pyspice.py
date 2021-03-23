@@ -17,7 +17,7 @@ def run_hspice(comparator, comp_num, cell=None):
         source ='source_exact_' + str(comp_num) + '.cir'
     else:
         name = 'results/result_' + comparator + '_' + cell + '_' + str(comp_num) +'.csv'
-        source = 'source_' + cell + str(comp_num) + '.cir'
+        source = 'source_' + cell + '_' + str(comp_num) + '.cir'
     # decide soma a ser executada
     
     with open('./' + comparator + '.cir', 'r') as f:
@@ -27,8 +27,8 @@ def run_hspice(comparator, comp_num, cell=None):
         f.seek(0)
         f.write(newdata)
     # chamadas de sistema pra executar o hspice
-    os.system('hspice '+ comparator + '.cir')
-    os.rename('./' + comparator + '.mt0.csv',  name)
+    #os.system('hspice '+ comparator + '.cir')
+    #os.rename('./' + comparator + '.mt0.csv',  name)
     # retorna arquivo ao formato original
     with open('./' + comparator +'.cir', 'r') as f:
         filedata = f.read()
@@ -102,10 +102,9 @@ def adders_sim():
             run_hspice('comp_subtractor', i, fa[i])
         # retorna arquivo pro original
         post(fa[i])
-        results[fa[i]] = organize_results(5e-9, 0.7, 'comp_subtractor', fa[i])
-    prime = pd.DataFrame(results)
-    prime.to_csv('./results/comp_subtractor_results.csv')
-    results = {}
+        #results[fa[i]] = organize_results(5e-9, 0.7, 'comp_subtractor', fa[i])
+    #prime = pd.DataFrame(results)
+    #prime.to_csv('./results/comp_subtractor_results.csv')
 
 def pre(adder):
     with open('./comp_subtractor.cir', 'r') as f:
@@ -141,10 +140,10 @@ def dedicated_sim():
     # simulação para subtratores
     for i in range(5):
     # for i in range(960):
-        run_hspice(comparator, i)
-    results = organize_results(5e-9, 0.7, comparator)
-    prime = pd.DataFrame(results)
-    prime.to_csv('./results/' + comparator + '_results.csv')
+        run_hspice(comparator=comparator, comp_num=i)
+    #results = organize_results(5e-9, 0.7, comparator)
+    #prime = pd.DataFrame(results)
+    #prime.to_csv('./results/' + comparator + '_results.csv')
 
 if __name__ == '__main__':
     adders_sim()

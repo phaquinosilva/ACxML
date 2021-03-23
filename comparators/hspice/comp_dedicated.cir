@@ -8,7 +8,7 @@
 .include comparators/4bit_comp_dedicated.cir
 
 * sources and timing measures
-.include sources/source_dedicated.cir
+.include sources/source_XX.cir
 
 * load w/ buffers
 Xa00 a0_in na0_in vdd1 inv M=4
