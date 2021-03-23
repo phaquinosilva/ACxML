@@ -26,13 +26,15 @@ def find_diffs(cs, ns, f, n):
     cs, ns = format(cs, form)[2:], format(ns, form)[2:]
     cf, nf = f(cs), f(ns)
     dif_bit = -1
-    for i in range(len(cs)):
+    k = 0
+    for i in range(len(cs)-1, -1, -1):
         if dif_bit == -1 and cs[i] != ns[i]:
-            dif_bit = i
+            dif_bit = k
+        k += 1
     rise = lambda a, b: "fall" if a > b else "rise"
-    if dif_bit < n:
-        return ("a"+str(dif_bit), rise(cs[dif_bit],ns[dif_bit]), rise(cf, nf)) 
-    return ("b"+str(dif_bit-8), rise(cs[dif_bit],ns[dif_bit]), rise(cf, nf))
+    if dif_bit >= n:
+        return ("a"+str(dif_bit-n), rise(cs[dif_bit],ns[dif_bit]), rise(cf, nf)) 
+    return ("b"+str(dif_bit), rise(cs[dif_bit],ns[dif_bit]), rise(cf, nf))
 
 def inputs_of_interest(f, n):
     # f: function to be evaluated
@@ -42,9 +44,7 @@ def inputs_of_interest(f, n):
     return list(inputs)
 
 
-def delay_arcs_per_comparator():
-    adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
-    names = [str(i.__name__) for i in adders]
+def delay_arcs_per_comparator(adders, names):
     k = 0
     infos = {}
     interest = {}
@@ -56,11 +56,26 @@ def delay_arcs_per_comparator():
     return interest, infos
 
 def create_files_comparators():
-    interest, infos = delay_arcs_per_comparator()
+    adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
+    names = [str(i.__name__) for i in adders]
+    interest, infos = delay_arcs_per_comparator(adders, names)
+    # as de 512 transições preciso imprimir em arquivo só uma vez
+    # as de 256 tem que ser todas diferentes
+    for add in names:
+        if len(interest[add]) != 512:
+            k = 0
+            for tup in interest[add]:
+                gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, add+"_"+str(k), infos[add][k])
+                k += 1
+    k = 0
+    for tup in interest["exact"]:
+        gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, str(k), infos["exact"][k])
+        k += 1
+
 
 # recebe a mudanca no valor de 'a' e 'b' -> gera arquivos de estimulos para HSPICE
 # obs: no momento, usar somente com naturais
-def gen_files(a0, b0, a1, b1, n, adder, file_name):
+def gen_files(a0, b0, a1, b1, n, file_name, infos):
     ## a0, b0: valores de 'a' e 'b' antes
     ## a1, b1: valores de 'a' e 'b' depois
     ## n: numero de bits
@@ -105,14 +120,18 @@ def gen_files(a0, b0, a1, b1, n, adder, file_name):
                 it += 1
             
         # write measures
-        (bit, in_rof, out_rof) = differ(a0, b0, a1, b1, adder, n) 
+        (bit, in_rof, out_rof) = infos
         file.write("\n*measures\n")
         type = "hl" if out_rof == "fall" else "lh"
         file.write(".measure tran tp"+type+" trig v("+bit+") val='0.5*vdd' "+ \
                     in_rof+"=1 targ v(geq) val='0.5*vdd' "+ out_rof +"=1\n")
 
 
+adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
+names = [str(i.__name__) for i in adders]
+interest, infos = delay_arcs_per_comparator(adders, names)
 
+# create_files_comparators()
 
 ### TODOs RELEVANTES:
 # gerar os arquivos de fontes e measures para o geq no modo: exato, sma, ama1, ama2, axa2, 
