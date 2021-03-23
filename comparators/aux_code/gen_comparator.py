@@ -59,19 +59,12 @@ def create_files_comparators():
     adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
     names = [str(i.__name__) for i in adders]
     interest, infos = delay_arcs_per_comparator(adders, names)
-    # as de 512 transições preciso imprimir em arquivo só uma vez
-    # as de 256 tem que ser todas diferentes
-    for add in names:
-        if len(interest[add]) != 512:
-            k = 0
-            for tup in interest[add]:
-                gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, add+"_"+str(k), infos[add][k])
-                k += 1
-    k = 0
-    for tup in interest["exact"]:
-        gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, str(k), infos["exact"][k])
-        k += 1
 
+    for add in names:
+        k = 0
+        for tup in interest[add]:
+            gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, add+"_"+str(k), infos[add][k])
+            k += 1
 
 # recebe a mudanca no valor de 'a' e 'b' -> gera arquivos de estimulos para HSPICE
 # obs: no momento, usar somente com naturais

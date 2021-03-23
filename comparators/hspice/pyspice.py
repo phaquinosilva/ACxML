@@ -13,14 +13,15 @@ from random import sample
 def run_hspice(comparator, comp_num, cell=None):
     # sets type of sources file and name of output file
     if cell == None:
-        name = 'results/result_' + comparator + '_' +str(comp_num) +'.csv'
+        name = 'results/result_' + comparator + '_' + str(comp_num) +'.csv'
+        source ='source_exact_' + str(comp_num) + '.cir'
+    elif cell == 'exa' or cell == 'ema':
+        name = 'results/result_' + comparator + '_' + cell + '_' + str(comp_num) +'.csv'
+        source ='source_exact_' + str(comp_num) + '.cir'
     else:
-        name = 'results/result_' + comparator + '_' cell + '_' +str(comp_num) +'.csv'
-    source = 'source_'
-    if cell == "ama1" or cell == "ama2" or cell == "bxfa":
-        source += cell + '_'
-    source += str(comp_num) + '.cir'
-    # decide soma a ser executada 
+        name = 'results/result_' + comparator + '_' + cell + '_' + str(comp_num) +'.csv'
+        source = 'source_' + cell + str(comp_num) + '.cir'
+    # decide soma a ser executada
     with open(comparator, 'r') as f:
         filedata = f.read()
     newdata = filedata.replace('source_XX.cir', source)
@@ -89,34 +90,30 @@ def organize_adders(sim_time, voltage, comparator):
 
 # executa simulações
 def adders_sim():
-    ls_adders = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
+    fas = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
+    sample_sizes = [960, 960, 512, 340, 320, 512, 512]
     comparator = 'comp_subtractor'
     results = {}
     # simulação para subtratores
-    for fa in ls_adders:
-        ## defines amount of sums depending on adder type
-        if cell == "ama1" or cell == "ama2" or cell == "bxfa":
-            n = 256
-        else:
-            n = 512
+    for i in range(7):
         # altera FA no arquivo de simulacao
         with open('./' + comparator + '.cir', 'r') as f:
             filedata = f.read()
-        newdata = filedata.replace('ema', fa)
+        newdata = filedata.replace('ema', fa[i])
         with open('./' + comparator + '.cir', 'w') as f:
             f.seek(0)
             f.write(newdata)
         # executa simulacao nas somas da amostra    
-        for i in range(n):
-            run_hspice(comparator, i, fa)
+        for j in range(sample_sizes[i]):
+            run_hspice(comparator, i, fa[i])
         # retorna arquivo pro original
         with open('./' + comparator + '.cir', 'r') as f:
             filedata = f.read()
-        newdata = filedata.replace(fa, 'ema')
+        newdata = filedata.replace(fa[i], 'ema')
         with open('./' + comparator + '.cir', 'w') as f:
             f.seek(0)
             f.write(newdata)            
-        results[fa] = organize_results(5e-9, 0.7, compa, fa)
+        results[fa[i]] = organize_results(5e-9, 0.7, compa, fa[i])
     prime = pd.DataFrame(results)
     prime.to_csv('./results/' + comparator + '_results.csv')
     results = {}
@@ -125,8 +122,7 @@ def dedicated_sim():
     comparator = 'comp_dedicated'
     results = {}
     # simulação para subtratores
-    n = 512
-    for i in range(n):
+    for i in range(960):
         run_hspice(comparator, i)
     results = organize_results(5e-9, 0.7, comparator)
     prime = pd.DataFrame(results)
