@@ -90,57 +90,56 @@ def adders_sim():
     fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
     n = 5
     sample_sizes = [960, 960, 512, 340, 320, 512, 512]
-    comparator = 
     results = {}
     # simulação para subtratores
     for i in range(7):
         # altera FA no arquivo de simulacao
-        pre(fa[i], 'comp_subtractor')
+        pre(fa[i])
         # executa simulacao nas somas da amostra    
         # for j in range(sample_sizes[i]):
         for j in range(n):
             run_hspice('comp_subtractor', i, fa[i])
         # retorna arquivo pro original
-        post(fa[i], 'comp_subtractor')
+        post(fa[i])
         results[fa[i]] = organize_results(5e-9, 0.7, 'comp_subtractor', fa[i])
     prime = pd.DataFrame(results)
     prime.to_csv('./results/comp_subtractor_results.csv')
     results = {}
 
-def pre(adder, comparator):
-    with open('./' + comparator + '.cir', 'r') as f:
-            filedata = f.read()
-        newdata = filedata.replace('ema', adder)
-    with open('./' + comparator + '.cir', 'w') as f:
-            f.seek(0)
-            f.write(newdata)
+def pre(adder):
+    with open('./comp_subtractor.cir', 'r') as f:
+        file1 = f.read()
+    newdata = file1.replace('ema', adder)
+    with open('./comp_subtractor.cir', 'w') as f:
+        f.seek(0)
+        f.write(newdata)
     with open('./array_adders/4bRCA.cir', 'r') as f:
-            filedata = f.read()
-        newdata = filedata.replace('ema', adder)
-        with open('./' + comparator + '.cir', 'w') as f:
-            f.seek(0)
-            f.write(newdata)
+        filedata = f.read()
+    newdata = filedata.replace('ema', adder)
+    with open('./array_adders/4bRCA.cir', 'w') as f:
+        f.seek(0)
+        f.write(newdata)
             
-def post(adder, comparator):
-    with open('./' + comparator + '.cir', 'r') as f:
-            filedata = f.read()
-        newdata = filedata.replace(adder, 'ema')
-    with open('./' + comparator + '.cir', 'w') as f:
-            f.seek(0)
-            f.write(newdata)  
+def post(adder):
+    with open('./comp_subtractor.cir', 'r') as f:
+        filedata = f.read()
+    newdata = filedata.replace(adder, 'ema')
+    with open('./comp_subtractor.cir', 'w') as f:
+        f.seek(0)
+        f.write(newdata)  
     with open('./array_adders/4bRCA.cir', 'r') as f:
-            filedata = f.read()
-        newdata = filedata.replace(adder, 'ema')
-        with open('./' + comparator + '.cir', 'w') as f:
-            f.seek(0)
-            f.write(newdata)
+        filedata = f.read()
+    newdata = filedata.replace(adder, 'ema')
+    with open('./array_adders/4bRCA.cir', 'w') as f:
+        f.seek(0)
+        f.write(newdata)
 
 def dedicated_sim():
     comparator = 'comp_dedicated'
     results = {}
     # simulação para subtratores
     for i in range(5):
-#    for i in range(960):
+    # for i in range(960):
         run_hspice(comparator, i)
     results = organize_results(5e-9, 0.7, comparator)
     prime = pd.DataFrame(results)
