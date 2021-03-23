@@ -66,7 +66,7 @@ def organize_adders(sim_time, voltage, comparator, cell):
     return {'delay' : delay, 'power' : avg_pow}
 
 
-def organize_adders(sim_time, voltage, comparator):
+def organize_dedicated(sim_time, voltage, comparator):
     results = []
     p = Path('.')
     for csv in list(p.glob('**/*' + comparator + '*.csv')):

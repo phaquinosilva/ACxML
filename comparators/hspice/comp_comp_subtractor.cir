@@ -5,12 +5,12 @@
 
 * subcircuit includes
 .include inverter.cir
-.include fas/exa.cir
+.include fas/ema.cir
 .include array_adders/4bRCA.cir
 .include comparators/4bit_comp_sub.cir
 
 * sources and timing measures
-.include sources/source_exact_0.cir
+.include sources/sources_XX.cir
 
 * load w/ buffers
 Xa00 a0_in na0_in vdd1 inv M=4
