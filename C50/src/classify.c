@@ -150,7 +150,8 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 	    {
 		/*  Find weights for <= and > branches, interpolating if
 		    probabilistic thresholds are used  */
-
+		/* @pedro: aqui eh onde aproximar poderia ter impacto nos atributos discretos, 
+			tanto no interpolate como ali embaixo */
 		BrWt[2] = Interpolate(T, CVal(Case, T->Tested));
 		BrWt[3] = 1 - BrWt[2];
 
@@ -169,8 +170,10 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 
 	    Dv = DVal(Case, T->Tested);	/* > MaxAttVal if unknown */
 
-	    if ( Dv <= MaxAttVal[T->Tested] )
-	    {
+		// @Pedro: aproximacao leq aqui
+	    // if ( Dv <= MaxAttVal[T->Tested] )
+	    if ( leq(Dv, MaxAttVal[T->Tested], exact, 4) )
+		{
 		ForEach(v, 1, T->Forks)
 		{
 		    if ( In(Dv, T->Subset[v]) )
@@ -360,13 +363,17 @@ int FindOutcome(DataRec Case, Condition OneCond)
 
 	    Outcome = ( Unknown(Case, Att) ? -1 :
 			NotApplic(Case, Att) ? 1 :
-			CVal(Case, Att) <= OneCond->Cut ? 2 : 3 );
+			// @Pedro: coloquei minha funcao aproximada aqui
+			// CVal(Case, Att) <= OneCond->Cut ? 2 : 3 );
+			leq(CVal(Case, Att), OneCond->Cut, exact, 4) ? 2 : 3 );
 	    break;
 
 	case BrSubset:  /* subset test on discrete attribute  */
 
 	    v = XDVal(Case, Att);
-	    Outcome = ( v <= MaxAttVal[Att] && In(v, OneCond->Subset) ?
+		// @Pedro: funcao aproximada aqui
+	    // Outcome = ( v <= MaxAttVal[Att] && In(v, OneCond->Subset) ?
+		Outcome = ( leq(v, MaxAttVal[Att], exact, 4) && In(v, OneCond->Subset) ?
 			OneCond->TestValue : 0 );
     }
 
@@ -666,6 +673,7 @@ ClassNo Classify(DataRec Case)
 float Interpolate(Tree T, ContValue Val)
 /*    -----------  */
 {
+	// @Pedro: mudar essas comparacoes tambem?
     return ( Val <= T->Lower ? 1.0 :
 	     Val >= T->Upper ? 0.0 :
 	     Val <= T->Mid ?
