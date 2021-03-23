@@ -66,7 +66,7 @@ def organize_adders(sim_time, voltage, comparator, cell):
     return {'delay' : delay, 'power' : avg_pow}
 
 
-def organize_dedicated(sim_time, voltage, comparator):
+def organize_adders(sim_time, voltage, comparator):
     results = []
     p = Path('.')
     for csv in list(p.glob('**/*' + comparator + '*.csv')):
@@ -90,32 +90,50 @@ def adders_sim():
     fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
     n = 5
     sample_sizes = [960, 960, 512, 340, 320, 512, 512]
-    comparator = 'comp_subtractor'
+    comparator = 
     results = {}
     # simulação para subtratores
     for i in range(7):
         # altera FA no arquivo de simulacao
-        with open('./' + comparator + '.cir', 'r') as f:
-            filedata = f.read()
-        newdata = filedata.replace('ema', fa[i])
-        with open('./' + comparator + '.cir', 'w') as f:
-            f.seek(0)
-            f.write(newdata)
+        pre(fa[i], 'comp_subtractor')
         # executa simulacao nas somas da amostra    
         # for j in range(sample_sizes[i]):
         for j in range(n):
-            run_hspice(comparator, i, fa[i])
+            run_hspice('comp_subtractor', i, fa[i])
         # retorna arquivo pro original
-        with open('./' + comparator + '.cir', 'r') as f:
+        post(fa[i], 'comp_subtractor')
+        results[fa[i]] = organize_results(5e-9, 0.7, 'comp_subtractor', fa[i])
+    prime = pd.DataFrame(results)
+    prime.to_csv('./results/comp_subtractor_results.csv')
+    results = {}
+
+def pre(adder, comparator):
+    with open('./' + comparator + '.cir', 'r') as f:
             filedata = f.read()
-        newdata = filedata.replace(fa[i], 'ema')
+        newdata = filedata.replace('ema', adder)
+    with open('./' + comparator + '.cir', 'w') as f:
+            f.seek(0)
+            f.write(newdata)
+    with open('./array_adders/4bRCA.cir', 'r') as f:
+            filedata = f.read()
+        newdata = filedata.replace('ema', adder)
         with open('./' + comparator + '.cir', 'w') as f:
             f.seek(0)
-            f.write(newdata)            
-        results[fa[i]] = organize_results(5e-9, 0.7, comparator, fa[i])
-    prime = pd.DataFrame(results)
-    prime.to_csv('./results/' + comparator + '_results.csv')
-    results = {}
+            f.write(newdata)
+            
+def post(adder, comparator):
+    with open('./' + comparator + '.cir', 'r') as f:
+            filedata = f.read()
+        newdata = filedata.replace(adder, 'ema')
+    with open('./' + comparator + '.cir', 'w') as f:
+            f.seek(0)
+            f.write(newdata)  
+    with open('./array_adders/4bRCA.cir', 'r') as f:
+            filedata = f.read()
+        newdata = filedata.replace(adder, 'ema')
+        with open('./' + comparator + '.cir', 'w') as f:
+            f.seek(0)
+            f.write(newdata)
 
 def dedicated_sim():
     comparator = 'comp_dedicated'
