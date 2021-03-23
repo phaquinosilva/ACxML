@@ -1,7 +1,7 @@
 * 4 bit comparator using subtractors
 
 ** A - B: A >= B in geq: 1 if False
-.subckt 4b_comp_sub a0 a1 a2 a3 b0 b1 b2 b3 geq vdd
+.subckt comp_sub_4b a0 a1 a2 a3 b0 b1 b2 b3 geq vdd
 *********************************
 **DUT
 *inverters
@@ -10,6 +10,6 @@ Xb1 b1 nb1 vdd Inv
 Xb2 b2 nb2 vdd Inv
 Xb3 b3 nb3 vdd Inv
 *adders
-Xadd a0 a1 a2 a3 nb0 nb1 nb2 nb3 vdd s0 s1 s2 geq vdd 4bRCA
+Xadd a0 a1 a2 a3 nb0 nb1 nb2 nb3 vdd s0 s1 s2 geq vdd rca4b
 ********************************
 .ends

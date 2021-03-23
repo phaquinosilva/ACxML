@@ -10,7 +10,7 @@
 .include comparators/4bit_comp_sub.cir
 
 * sources and timing measures
-.include sources/source_exact_0.cir
+.include sources/source_XX.cir
 
 * load w/ buffers
 Xa00 a0_in na0_in vdd1 inv M=4
@@ -32,7 +32,7 @@ Xb30 b3_in nb3_in vdd1 inv M=4
 Xb31 nb3_in b3 vdd1 inv M=4
 
 * DUT
-Xcompare a0 a1 a2 a3 b0 b1 b2 b3 geq vdut 4b_comp_sub
+Xcompare a0 a1 a2 a3 b0 b1 b2 b3 geq vdut comp_sub_4b
 
 * output load
 Cgeq geq gnd 1f

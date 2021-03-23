@@ -1,6 +1,6 @@
 ** 8 bit Ripple Carry Adder
 
-.subckt 8bRCA a0 a1 a2 a3 a4 a5 a6 a7 b0 b1 b2 b3 b4 b5 b6 b7 c0 s0 s1 s2 s3 s4 s5 s6 s7 vdd
+.subckt rca8b a0 a1 a2 a3 a4 a5 a6 a7 b0 b1 b2 b3 b4 b5 b6 b7 c0 s0 s1 s2 s3 s4 s5 s6 s7 vdd
     XFA0 a0 b0 c0 s0 c1 vdd ema
     XFA1 a1 b1 c1 s1 c2 vdd ema
     XFA2 a2 b2 c2 s2 c3 vdd ema
