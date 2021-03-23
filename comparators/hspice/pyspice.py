@@ -19,6 +19,7 @@ def run_hspice(comparator, comp_num, cell=None):
         name = 'results/result_' + comparator + '_' + cell + '_' + str(comp_num) +'.csv'
         source = 'source_' + cell + str(comp_num) + '.cir'
     # decide soma a ser executada
+    
     with open('./' + comparator + '.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace('source_XX.cir', source)
@@ -31,7 +32,7 @@ def run_hspice(comparator, comp_num, cell=None):
     # retorna arquivo ao formato original
     with open('./' + comparator +'.cir', 'r') as f:
         filedata = f.read()
-    newdata = filedata.replace(source, 'sources_XX.cir')
+    newdata = filedata.replace(source, 'source_XX.cir')
     with open('./comp_'+ comparator +'.cir', 'w') as f:
         f.seek(0)
         f.write(newdata)
