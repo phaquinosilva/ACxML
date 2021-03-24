@@ -4,12 +4,12 @@
 Va0 a0_in gnd PWL(0n 0)
 Va1 a1_in gnd PWL(0n vdd)
 Va2 a2_in gnd PWL(0n 0)
-Va3 a3_in gnd PWL(0n vdd 1n vdd 1.1n 0)
+Va3 a3_in gnd PWL(0n vdd)
 *4-bit input B
 Vb0 b0_in gnd PWL(0n vdd)
-Vb1 b1_in gnd PWL(0n 0)
-Vb2 b2_in gnd PWL(0n vdd)
-Vb3 b3_in gnd PWL(0n 0)
+Vb1 b1_in gnd PWL(0n 0 1n 0 1.1n vdd)
+Vb2 b2_in gnd PWL(0n 0)
+Vb3 b3_in gnd PWL(0n vdd)
 
 *measures
-.measure tran tphl trig v(a3) val='0.5*vdd' fall=1 targ v(geq) val='0.5*vdd' fall=1
+.measure tran tplh trig v(b1) val='0.5*vdd' rise=1 targ v(greater) val='0.5*vdd' rise=1

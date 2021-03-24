@@ -83,8 +83,8 @@ def organize_dedicated(sim_time, voltage, comparator):
 
 # executa simulações
 def adders_sim():
-    fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
-    sample_sizes = [960, 960, 512, 340, 320, 512, 512]
+    fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3', 'bxfa']
+    sample_sizes = [960, 960, 512, 340, 320, 512, 512, 256]
     results = {}
     # simulação para subtratores
     for i in range(7):

@@ -15,19 +15,19 @@ def add(adder, in_a, in_b, n_bits):
 
 # subtracao simples nbit
 def sub(adder, in_a, in_b, n_bits):
-    final = ''
+    final = [0]*n_bits
     cin = 1
     for i in range(n_bits-1, -1, -1):
         fa = adder(int(in_a[i]), ~int(in_b[i]), cin)
-        final += str(fa[0])
+        final[i] = fa[0]
         cin = fa[1]
-    final = final[::-1]
     return final
 
 # comparador simples n_bit: evaluates to 1 if a > b
 def greater(adder, in_a, in_b, n_bits):
     # A >= B : A - B >= 0
     final = sub(adder, in_b, in_a, n_bits)
+    print(final)
     return final[0]
 
 # calcula uma operação aproximada para um grupo de FAs
