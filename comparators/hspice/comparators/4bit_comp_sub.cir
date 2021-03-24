@@ -10,6 +10,6 @@ Xb1 a1 na1 vdd Inv
 Xb2 a2 na2 vdd Inv
 Xb3 a3 na3 vdd Inv
 *adders
-Xadd na0 na1 na2 na3 b0 b1 b2 b3 vdd s0 s1 s2 ngreater vdd rca4b
+Xadd na0 na1 na2 na3 b0 b1 b2 b3 vdd s0 s1 s2 greater vdd rca4b
 ********************************
 .ends

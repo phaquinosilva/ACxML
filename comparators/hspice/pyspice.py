@@ -125,6 +125,6 @@ def dedicated_sim():
     prime = pd.Series(results)
     prime.to_csv('./results/' + comparator + '_results.csv')
 
-if __name__ == '__main__':
-    adders_sim()
-    dedicated_sim()
+# if __name__ == '__main__':
+    # adders_sim()
+    # dedicated_sim()

@@ -1,0 +1,13 @@
+Mdi:ArrangeIcons
+ScopeSigMgr:loadpffile /home/pedro/ACxML/comparators/hspice/comp_dedicated.tr0 1 openonly
+# PF:1
+wm geometry .sigmgr._PF:1 226x337+683+384
+wm geometry .sigmgr._PF:1 226x337+695+308
+wm geometry .sigmgr._PF:1 226x337+695+244
+wm geometry .sigmgr._PF:1 226x337+695+189
+wm geometry .sigmgr._PF:1 226x337+695+177
+pf:read PF:1 v(greater)
+# WF:1:1
+Graph addsignal WF:1:1 -region new -yview real(y) -xview real(x) -tracehi 2
+# Signal0
+ScopeSigMgr:Unload 0 {{(1) comp_dedicated.tr0}}

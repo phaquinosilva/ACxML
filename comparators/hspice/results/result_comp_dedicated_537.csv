@@ -1,0 +1,5 @@
+$DATA1 SOURCE='HSPICE' VERSION='H-2013.03-SP1 32-BIT'
+$OPTION MEASFORM=3
+.TITLE '* 4 bit dedicated greater comparator'
+tphl,q_dut,q_in,temper,alter#
+1.867e-11,-1.650e-15,-1.947e-15,  25.0000,1
