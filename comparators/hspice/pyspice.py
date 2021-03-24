@@ -9,33 +9,28 @@ from random import sample
 # executa simulacoes
 def run_hspice(comparator, comp_num, cell=None):
     # sets type of sources file and name of output file
+    source = '.include '
     if cell == None:
         name = 'results/result_' + comparator + '_' + str(comp_num) +'.csv'
-        source ='source_exact_' + str(comp_num) + '.cir'
+        source +='source_exact_' + str(comp_num) + '.cir'
     elif cell == 'exa' or cell == 'ema':
         name = 'results/result_' + comparator + '_' + cell + '_' + str(comp_num) +'.csv'
-        source ='source_exact_' + str(comp_num) + '.cir'
+        source +='source_exact_' + str(comp_num) + '.cir'
+        adder = '.include fas/' + cell + '.cir\n'
     else:
         name = 'results/result_' + comparator + '_' + cell + '_' + str(comp_num) +'.csv'
-        source = 'source_' + cell + '_' + str(comp_num) + '.cir'
+        source += 'source_' + cell + '_' + str(comp_num) + '.cir'
+        adder = '.include fas/' + cell + '.cir\n'
+    source += '\n'
     # decide soma a ser executada
     
-    with open('./' + comparator + '.cir', 'r') as f:
-        filedata = f.read()
-    newdata = filedata.replace('source_XX.cir', source)
-    with open('./' + comparator + '.cir', 'w') as f:
+    with open('./nondef_params.txt', 'w') as f:
         f.seek(0)
-        f.write(newdata)
+        f.write(source)
+        if cell != None: f.write(adder)
     # chamadas de sistema pra executar o hspice
-    #os.system('hspice '+ comparator + '.cir')
-    #os.rename('./' + comparator + '.mt0.csv',  name)
-    # retorna arquivo ao formato original
-    with open('./' + comparator +'.cir', 'r') as f:
-        filedata = f.read()
-    newdata = filedata.replace(source, 'source_XX.cir')
-    with open('./comp_'+ comparator +'.cir', 'w') as f:
-        f.seek(0)
-        f.write(newdata)
+    os.system('hspice '+ comparator + '.cir')
+    os.rename('./' + comparator + '.mt0.csv',  name)
 
 # organiza dados de um output .csv do HSPICE
 def organize_results(sim_time, voltage, comparator, cell=None):
@@ -107,12 +102,6 @@ def adders_sim():
     #prime.to_csv('./results/comp_subtractor_results.csv')
 
 def pre(adder):
-    with open('./comp_subtractor.cir', 'r') as f:
-        file1 = f.read()
-    newdata = file1.replace('ema', adder)
-    with open('./comp_subtractor.cir', 'w') as f:
-        f.seek(0)
-        f.write(newdata)
     with open('./array_adders/4bRCA.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace('ema', adder)
@@ -120,13 +109,7 @@ def pre(adder):
         f.seek(0)
         f.write(newdata)
             
-def post(adder):
-    with open('./comp_subtractor.cir', 'r') as f:
-        filedata = f.read()
-    newdata = filedata.replace(adder, 'ema')
-    with open('./comp_subtractor.cir', 'w') as f:
-        f.seek(0)
-        f.write(newdata)  
+def post(adder):  
     with open('./array_adders/4bRCA.cir', 'r') as f:
         filedata = f.read()
     newdata = filedata.replace(adder, 'ema')
