@@ -5,10 +5,11 @@
 
 * subcircuit includes
 .include inverter.cir
-.include comparators/4bit_comp_dedicated.cir
 
-* sources and timing measures
-.include sources/source_XX.cir
+* non-default includes
+.include nondef_params.txt
+
+.include comparators/4bit_comp_dedicated.cir
 
 * load w/ buffers
 Xa00 a0_in na0_in vdd1 inv M=4

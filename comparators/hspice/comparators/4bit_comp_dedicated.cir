@@ -21,7 +21,7 @@ Mpb vdd b out b pmos_rvt nfin=3
 Mpc vdd c out c pmos_rvt nfin=3
 Mna out a ab a nmos_rvt nfin=3
 Mnb ab b bc b nmos_rvt nfin=3
-Mnb bc c gnd c nmos_rvt nfin=3
+Mnc bc c gnd c nmos_rvt nfin=3
 .ends
 
 .subckt nor2 a b out vdd

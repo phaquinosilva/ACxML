@@ -97,9 +97,9 @@ def adders_sim():
             run_hspice('comp_subtractor', i, fa[i])
         # retorna arquivo pro original
         post(fa[i])
-        #results[fa[i]] = organize_results(5e-9, 0.7, 'comp_subtractor', fa[i])
-    #prime = pd.DataFrame(results)
-    #prime.to_csv('./results/comp_subtractor_results.csv')
+        results[fa[i]] = organize_results(5e-9, 0.7, 'comp_subtractor', fa[i])
+    prime = pd.DataFrame(results)
+    prime.to_csv('./results/comp_subtractor_results.csv')
 
 def pre(adder):
     with open('./array_adders/4bRCA.cir', 'r') as f:
@@ -124,9 +124,9 @@ def dedicated_sim():
     for i in range(5):
     # for i in range(960):
         run_hspice(comparator=comparator, comp_num=i)
-    #results = organize_results(5e-9, 0.7, comparator)
-    #prime = pd.DataFrame(results)
-    #prime.to_csv('./results/' + comparator + '_results.csv')
+    results = organize_results(5e-9, 0.7, comparator)
+    prime = pd.DataFrame(results)
+    prime.to_csv('./results/' + comparator + '_results.csv')
 
 if __name__ == '__main__':
     adders_sim()
