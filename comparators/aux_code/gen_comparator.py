@@ -124,11 +124,11 @@ def gen_files(a0, b0, a1, b1, n, file_name, infos):
                     in_rof+"=1 targ v(geq) val='0.5*vdd' "+ out_rof +"=1\n")
 
 
-# adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
-# names = [str(i.__name__) for i in adders]
-# interest, infos = delay_arcs_per_comparator(adders, names)
+adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
+names = [str(i.__name__) for i in adders]
+interest, infos = delay_arcs_per_comparator(adders, names)
 
-create_files_comparators()
+# create_files_comparators()
 
 ### TODOs RELEVANTES:
 # gerar os arquivos de fontes e measures para o geq no modo: exato, sma, ama1, ama2, axa2, 

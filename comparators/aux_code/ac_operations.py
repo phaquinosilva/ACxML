@@ -24,11 +24,11 @@ def sub(adder, in_a, in_b, n_bits):
     final = final[::-1]
     return final
 
-# comparador simples n_bit: evaluates to 0 if true
-def geq(adder, in_a, in_b, n_bits):
+# comparador simples n_bit: evaluates to 1 if a > b
+def greater(adder, in_a, in_b, n_bits):
     # A >= B : A - B >= 0
-    final = sub(adder, in_a, in_b, n_bits)
-    return 1 if int(final[0]) == 0 else 0
+    final = sub(adder, in_b, in_a, n_bits)
+    return final[0]
 
 # calcula uma operação aproximada para um grupo de FAs
 def approx_operation(op_a, op_b, n_bits, adder, operate, save=True):
