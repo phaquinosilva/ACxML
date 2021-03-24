@@ -27,14 +27,18 @@ def find_diffs(cs, ns, f, n):
     cf, nf = f(cs), f(ns)
     dif_bit = -1
     k = 0
+    rof_s = ''
+    rof_f = ''
+    rise = lambda a, b: "fall" if a > b else "rise"
     for i in range(len(cs)-1, -1, -1):
         if dif_bit == -1 and cs[i] != ns[i]:
             dif_bit = k
+            rof_s = rise(cs[i],ns[i])
+            rof_f = rise(cf, nf)
         k += 1
-    rise = lambda a, b: "fall" if a > b else "rise"
     if dif_bit >= n:
-        return ("a"+str(dif_bit-n), rise(cs[dif_bit],ns[dif_bit]), rise(cf, nf)) 
-    return ("b"+str(dif_bit), rise(cs[dif_bit],ns[dif_bit]), rise(cf, nf))
+        return ("a"+str(dif_bit-n), rof_s, rof_f) 
+    return ("b"+str(dif_bit), rof_s, rof_s)
 
 def inputs_of_interest(f, n):
     # f: function to be evaluated
@@ -120,11 +124,11 @@ def gen_files(a0, b0, a1, b1, n, file_name, infos):
                     in_rof+"=1 targ v(geq) val='0.5*vdd' "+ out_rof +"=1\n")
 
 
-adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
-names = [str(i.__name__) for i in adders]
-interest, infos = delay_arcs_per_comparator(adders, names)
+# adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
+# names = [str(i.__name__) for i in adders]
+# interest, infos = delay_arcs_per_comparator(adders, names)
 
-# create_files_comparators()
+create_files_comparators()
 
 ### TODOs RELEVANTES:
 # gerar os arquivos de fontes e measures para o geq no modo: exato, sma, ama1, ama2, axa2, 
