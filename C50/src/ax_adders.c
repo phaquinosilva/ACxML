@@ -58,7 +58,7 @@ void to_binary (int input, int n, int* bin) {
         } else {
             bin[i] = 0;
         }
-        pow2 *= 2;
+        pow2 = pow2 << 1;
     }
 }
 
@@ -138,7 +138,7 @@ int sub(int a, int b, void (*f) (int, int, int, int *), int n) {
     return result;
 }
 
-int geq(int a, int b, void (*f) (int, int, int, int *), int n) {
+int greater(int a, int b, void (*f) (int, int, int, int *), int n) {
     // a, b: operandos (a > b)
     // (*f): nome do FA a ser simulado
     // n: numero de bits
@@ -146,8 +146,8 @@ int geq(int a, int b, void (*f) (int, int, int, int *), int n) {
     // conversao inteiro binario
     int bin_a[n];
     int bin_b[n];
-    to_binary(a, n, bin_a);
-    to_binary(~b, n, bin_b); // bitwise not para subtracao
+    to_binary(~a, n, bin_a);
+    to_binary(b, n, bin_b); // bitwise not para subtracao
 
     int bin_out[n];
     int int_out[2];
@@ -159,14 +159,14 @@ int geq(int a, int b, void (*f) (int, int, int, int *), int n) {
         (*f) (bin_a[i], bin_b[i], cin, int_out);
         bin_out[i] = int_out[0];
         cin = int_out[1];
-    }    
+    }
 
     // retorna resultado em int
-    int result = !bin_out[n-1]; // '!' por causa do true e false ser !0 e 0 em C -- so pra me lembrar mesmo
+    int result = bin_out[n-1]; // '!' por causa do true e false ser !0 e 0 em C -- so pra me lembrar mesmo
     
     return result;
 }
 
 int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
-    return geq(b, a, f, n);
+    return !greater(a, b, f, n);
 }
