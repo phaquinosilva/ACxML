@@ -119,12 +119,12 @@ def dedicated_sim():
     comparator = 'comp_dedicated'
     results = {}
     # simulação para subtratores
-    for i in range(960):
-        run_hspice(comparator=comparator, comp_num=i)
+    # for i in range(960):
+    #     run_hspice(comparator=comparator, comp_num=i)
     results = organize_results(5e-9, 0.7, comparator)
     prime = pd.Series(results)
     prime.to_csv('./results/' + comparator + '_results.csv')
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
     # adders_sim()
-    # dedicated_sim()
+    dedicated_sim()
