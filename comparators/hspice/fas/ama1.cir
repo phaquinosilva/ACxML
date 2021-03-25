@@ -16,5 +16,5 @@
         Mn4 tmp1 co gnd co nmos_rvt nfin=n
         Mn5 sum tmp1 gnd tmp1 nmos_rvt nfin=n
     *inverter for correct output
-        Xcout co cout vdd2 Inv
+        Xcout co cout vdd Inv
 .ends

@@ -7,7 +7,7 @@ def add(adder, in_a, in_b, n_bits):
     final = ''
     cin = 0
     for i in range(n_bits-1, -1, -1):
-        fa = adder(int(in_a[i]), int(in_b[i]), cin)
+        fa = adder(int(in_a[i])&1, int(in_b[i])&1, cin)
         final += str(fa[0])
         cin = fa[1]
     final = final[::-1]
@@ -18,7 +18,7 @@ def sub(adder, in_a, in_b, n_bits):
     final = [0]*n_bits
     cin = 1
     for i in range(n_bits-1, -1, -1):
-        fa = adder(int(in_a[i]), ~int(in_b[i]), cin)
+        fa = adder(int(in_a[i])&1, ~int(in_b[i])&1, cin)
         final[i] = fa[0]
         cin = fa[1]
     return final

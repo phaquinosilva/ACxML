@@ -1,6 +1,6 @@
 * 4 bit comparator using subtractors
 
-** A - B: A > B in greater: 1 if True
+** B - A: A > B in greater: 1 if True
 .subckt comp_sub_4b a0 a1 a2 a3 b0 b1 b2 b3 greater vdd
 *********************************
 **DUT
