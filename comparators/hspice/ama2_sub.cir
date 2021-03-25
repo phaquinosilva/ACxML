@@ -7,12 +7,22 @@
 .include inverter.cir
 
 * non-default includes
-.include nondef_params.txt
-
+.include fas/ama2.cir
 .include array_adders/4bRCA.cir
-.include comparators/4bit_comp_sub.cir
-
+*.include comparators/4bit_comp_sub.cir
 .global vdd vdut vdd1
+
+*4-bit input A
+Va0 a0_in gnd PWL(0n vdd)
+Va1 a1_in gnd PWL(0n 0)
+Va2 a2_in gnd PWL(0n 0)
+Va3 a3_in gnd PWL(0n 0)
+*4-bit input B
+Vb0 b0_in gnd PWL(0n vdd)
+Vb1 b1_in gnd PWL(0n 0)
+Vb2 b2_in gnd PWL(0n 0 1n 0 1.1n vdd)
+Vb3 b3_in gnd PWL(0n 0)
+
 * load w/ buffers
 Xa00 a0_in na0_in vdd1 inv M=4
 Xa01 na0_in a0 vdd1 inv M=4
@@ -33,10 +43,18 @@ Xb30 b3_in nb3_in vdd1 inv M=4
 Xb31 nb3_in b3 vdd1 inv M=4
 
 * DUT
-Xcompare a0 a1 a2 a3 b0 b1 b2 b3 greater vdut comp_sub_4b
+*inverters
+Xa0 a0 na0 vdut Inv
+Xa1 a1 na1 vdut Inv
+Xa2 a2 na2 vdut Inv
+Xa3 a3 na3 vdut Inv
+Xadd b0 b1 b2 b3 na0 na1 na2 na3 vdut s0 s1 s2 s3 vdut rca4b
 
 * output load
-Cgreater greater gnd 1f
+Cs0 s0 gnd 1f
+Cs1 s1 gnd 1f
+Cs2 s2 gnd 1f
+Cs3 s3 gnd 1f
 
 * default energy measures 
 .measure tran q_dut integ i(Vvdut) from=0n to=5n
@@ -46,3 +64,4 @@ Cgreater greater gnd 1f
 .tran 0.1ns 5n
 
 .end
+

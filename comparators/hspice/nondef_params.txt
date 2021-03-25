@@ -1,1 +1,2 @@
-.include sources/source_exact_959.cir
+.include sources/source_axa3_511.cir
+.include fas/axa3.cir

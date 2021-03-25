@@ -83,11 +83,13 @@ def organize_dedicated(sim_time, voltage):
 
 # executa simulações
 def adders_sim():
-    fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3', 'bxfa']
-    sample_sizes = [960, 960, 512, 340, 320, 512, 512, 256]
+    fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
+    sample_sizes = [960, 960, 512, 340, 320, 512, 512]
+    # fa = fa[4:5]
+    # sample_sizes = sample_sizes[4:5]
     results = {}
     # simulação para subtratores
-    for i in range(7):
+    for i in range(len(fa)):
         # altera FA no arquivo de simulacao
         pre(fa[i])
         # executa simulacao nas somas da amostra    
@@ -119,12 +121,12 @@ def dedicated_sim():
     comparator = 'comp_dedicated'
     results = {}
     # simulação para subtratores
-    # for i in range(960):
-    #     run_hspice(comparator=comparator, comp_num=i)
+    for i in range(960):
+        run_hspice(comparator=comparator, comp_num=i)
     results = organize_results(5e-9, 0.7, comparator)
     prime = pd.Series(results)
     prime.to_csv('./results/' + comparator + '_results.csv')
 
 if __name__ == '__main__':
-    # adders_sim()
-    dedicated_sim()
+    adders_sim()
+    # dedicated_sim()
