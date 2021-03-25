@@ -33,9 +33,9 @@ def run_hspice(comparator, comp_num, cell=None):
     os.rename('./' + comparator + '.mt0.csv',  name)
 
 # organiza dados de um output .csv do HSPICE
-def organize_results(sim_time, voltage, comparator, cell=None):
-    if cell == None: 
-        return organize_dedicated(sim_time, voltage, comparator)
+def organize_results(sim_time, voltage, comparator=None, cell=None):
+    if cell == None or comparator == None: 
+        return organize_dedicated(sim_time, voltage)
     else:
         return organize_adders(sim_time, voltage, comparator, cell)
 
@@ -62,10 +62,10 @@ def organize_adders(sim_time, voltage, comparator, cell):
     return {'delay' : delay, 'power' : avg_pow}
 
 
-def organize_dedicated(sim_time, voltage, comparator):
+def organize_dedicated(sim_time, voltage):
     results = []
     p = Path('.')
-    for csv in list(p.glob('**/*' + comparator + '*.csv')):
+    for csv in list(p.glob('**/result_comp_dedicated*.csv')):
         res_df = pd.read_csv(csv, skiprows=3, na_values="failed")
         print(res_df)
         # seleciona colunas relevantes
@@ -75,7 +75,7 @@ def organize_dedicated(sim_time, voltage, comparator):
         delay = delay_df.max(axis=1).iloc[0]
         results.append({'delay' : delay, 'power' : power})
         # limpa diretorio para restarem somente os arquivos relevantes
-        os.remove(csv)
+        # os.remove(csv)
     sums_res = pd.DataFrame(results)
     avg_pow = sums_res['power'].mean()
     delay = sums_res['delay'].max(axis=0)
