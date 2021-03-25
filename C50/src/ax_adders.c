@@ -156,7 +156,7 @@ int greater(int a, int b, void (*f) (int, int, int, int *), int n) {
     // a - b >= 0 : a >= b -> ultimo bit = 0
     // a - b < 0 : a < b -> ultimo bit = 1
     for (int i = 0; i < n; i++) {
-        (*f) (bin_a[i], bin_b[i], cin, int_out);
+        (*f) (bin_b[i], bin_a[i], cin, int_out);
         bin_out[i] = int_out[0];
         cin = int_out[1];
     }
