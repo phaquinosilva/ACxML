@@ -1,0 +1,15 @@
+** sources and measures for comparator type: ama1_227
+
+*4-bit input A
+Va0 a0_in gnd PWL(0n 0)
+Va1 a1_in gnd PWL(0n 0)
+Va2 a2_in gnd PWL(0n vdd)
+Va3 a3_in gnd PWL(0n vdd)
+*4-bit input B
+Vb0 b0_in gnd PWL(0n 0)
+Vb1 b1_in gnd PWL(0n 0)
+Vb2 b2_in gnd PWL(0n vdd 1n vdd 1.1n 0)
+Vb3 b3_in gnd PWL(0n vdd)
+
+*measures
+.measure tran tphl trig v(b2) val='0.5*vdd' fall=1 targ v(greater) val='0.5*vdd' fall=1

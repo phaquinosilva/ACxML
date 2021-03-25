@@ -47,6 +47,7 @@ def inputs_of_interest(f, n):
     inputs = filter(lambda tup: differ_test(tup[0], tup[1], f, n), inputs)
     return list(inputs)
 
+
 def delay_arcs_per_comparator(adders, names):
     k = 0
     infos = {}
@@ -59,7 +60,7 @@ def delay_arcs_per_comparator(adders, names):
     return interest, infos
 
 def create_files_comparators():
-    adders = [ama2]
+    adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
     names = [str(i.__name__) for i in adders]
     interest, infos = delay_arcs_per_comparator(adders, names)
 
@@ -120,14 +121,14 @@ def gen_files(a0, b0, a1, b1, n, file_name, infos):
                     in_rof+"=1 targ v(greater) val='0.5*vdd' "+ out_rof +"=1\n")
 
 
-#adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
-#names = [str(i.__name__) for i in adders]
-#interest, infos = delay_arcs_per_comparator(adders, names)
+adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
+names = [str(i.__name__) for i in adders]
+interest, infos = delay_arcs_per_comparator(adders, names)
 
-create_files_comparators()
+# create_files_comparators()
 
 ### TODOs RELEVANTES:
-# gerar os arquivos de fontes e measures para o greater no modo: exato, sma, ama1, ama2, axa2, 
+# gerar os arquivos de fontes e measures para o g'0.5*vdreater no modo: exato, sma, ama1, ama2, axa2, 
 #       axa3, dedicado, dedicados com aproximacoes
 
 ## Comentarios para um eu do futuro que va mexer nisso aqui:

@@ -27,7 +27,7 @@ def sub(adder, in_a, in_b, n_bits):
 def greater(adder, in_a, in_b, n_bits):
     # A >= B : A - B >= 0
     final = sub(adder, in_b, in_a, n_bits)
-    print(final)
+    # print(final)
     return final[0]
 
 # calcula uma operação aproximada para um grupo de FAs
