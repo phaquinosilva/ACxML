@@ -14,13 +14,14 @@ from ac_operations import *
 # comparação aproximada com somadores
 def sim_add(op_a, op_b, adders):
     results = {
+        "default" : 1 if int(op_a,2) > int(op_b,2) else 0,
         "adders_exact" : greater(exact, op_a, op_b, 4)
         }
     error = {}
     for i in adders:
         comp = greater(i, op_a, op_b, 4)
         results[i.__name__] = comp
-        error[i.__name__] = comp ^ results['adders_exact']
+        error[i.__name__] = comp ^ results['default']
     return results, error
 
 def sim_dedicated(op_a, op_b, comparators):
@@ -37,7 +38,7 @@ def sim_dedicated(op_a, op_b, comparators):
 def run_simulation():
     # compare approx adders and comparators with their exact counterparts on all possible outputs
     inputs = [(format(a,'#06b')[2:], format(b,'#06b')[2:]) for a in range(16) for b in range(16)]
-    adders = [sma, ama1, ama2, axa2, axa3]
+    adders = [exact, sma, ama1, ama2, axa2, axa3]
     add_list = [i.__name__ for i in adders]
     comparators = [comp_approx1, comp_approx2, \
                     comp_approx3, comp_approx4, comp_approx5, comp_approx6]

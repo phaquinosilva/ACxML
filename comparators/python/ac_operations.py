@@ -69,8 +69,6 @@ def comp_approx5(a,b):
     # aproximação: trocar lógica dos bits 0 e 1 por a0 e a1
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
-    print(a)
-    print(b)
     # eq1 = ~(a[1] ^ b[1])
     # eq2 = ~(a[2] ^ b[2])
     n0,n1 = a[0], a[1]
@@ -85,8 +83,6 @@ def comp_approx6(a,b):
     # aproximação: tirar lógica com bit 0 e trcar a do bit 1 por a1
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
-    print(a)
-    print(b)
     # eq1 = ~(a[1] ^ b[1])
     # eq2 = ~(a[2] ^ b[2])
     eq3 = ~(a[3] ^ b[3])
