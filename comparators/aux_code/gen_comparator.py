@@ -1,5 +1,5 @@
 # usado para gerar measures
-from ac_operations import greater
+from ac_operations import *
 from adders import *
 
 def differ_test(cs, ns, f, n):
@@ -121,28 +121,31 @@ def gen_files(a0, b0, a1, b1, n, file_name, infos):
                     in_rof+"=1 targ v(greater) val='0.5*vdd' "+ out_rof +"=1\n")
 
 
-adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
-names = [str(i.__name__) for i in adders]
-interest, infos = delay_arcs_per_comparator(adders, names)
+def delay_arcs_dedicated(comparators, names):
+    k = 0
+    infos = {}
+    interest = {}
+    for comp in comparators:
+        interest[names[k]] = inputs_of_interest(lambda g: comp(g[0:4], g[4:]), 4)
+        get_infos = lambda tup: find_diffs(tup[0], tup[1], lambda g: comp(g[0:4], g[4:]), 4)
+        infos[names[k]] = list(map(get_infos, interest[names[k]]))
+        k += 1
+    return interest, infos
+
+def create_files_dedicated():
+    comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
+    names = [str(i.__name__) for i in comparators]
+    interest, infos = delay_arcs_dedicated(comparators, names)
+    for comp in names:
+        k = 0
+        for tup in interest[comp]:
+            gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, comp+"_"+str(k), infos[comp][k])
+            k += 1
 
 # create_files_comparators()
+#create_files_dedicated()
 
-### TODOs RELEVANTES:
-# gerar os arquivos de fontes e measures para o g'0.5*vdreater no modo: exato, sma, ama1, ama2, axa2, 
-#       axa3, dedicado, dedicados com aproximacoes
-
-## Comentarios para um eu do futuro que va mexer nisso aqui:
-# 1. As estruturas das funcoes ficaram meio confusas porque eu estava tratando como operacoes e nao como funcoes logicas.
-#    Se, por exemplo, eu tratasse dos inputs_of_interest como uma funcao booleana generica, nao seria preciso usar duas comprehensions
-#    e ainda ha o beneficio de ser mais modular. Eh uma troca a ser feita no futuro.
-# 2. O tanto de lambda que apareceu so pra interfacear com funcoes antigos so grita o tanto que eu preciso refatorar esse codigo todo D:
-
-### To-dos pra quando eu tiver tempo: 
-# generalizar gen_files para arcos de transicao maiores
-# generalizar differ para, dadas duas linhas de uma tabela verdade, avaliar se sao de interesse para medicao de atraso
-# encontrar todas as transicoes de interesse em uma determinada tabela
-# automatizar o fluxo para: dada uma funcao logica ou tabela verdade, gerar todos os arcos de atraso e seus
-#       arquivos de simulacao usar algum algoritmo de grafos (caminho euleriano, por ex) para definir todos 
-#       os arcos de transicao para uma determinada tabela, removendo arestas ja utilizadas e iterando ate 
-#       encontrar todos os arcos possiveis, e concatena-los junto de arestas que tenham eventualmente sobrado
-
+comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
+names = [str(i.__name__) for i in comparators]
+interest, infos = delay_arcs_dedicated(comparators, names)
+print(list(map(len, infos)))
