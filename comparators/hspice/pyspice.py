@@ -3,7 +3,6 @@ import pandas as pd
 from pathlib import Path
 from random import sample
 
-
 ################################# HSPICE SCRIPT #######################################
 
 # executa simulacoes
@@ -115,7 +114,6 @@ def run_dedicated(comparator, comp_num):
             f.write(source)
         os.system('hspice comp_dedicated_approx.cir')
         os.rename('./comp_dedicated_approx.mt0.csv',  name)
-
 
 def organize_dedicated(sim_time, voltage, comparator):
     comp_results = []
