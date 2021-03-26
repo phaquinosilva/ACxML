@@ -88,22 +88,21 @@ def post(adder):
         f.write(newdata)
 
 def dedicated_sim():
-    comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
-    comparators = [str(i.__name__) for i in comparators]
+    comparators = ['comp_exact', 'comp_approx1', 'comp_approx2', 'comp_approx3', 'comp_approx4', 'comp_approx5', 'comp_approx6']
     sample_sizes = [480, 448, 448, 368, 368, 256, 352]
     results = {}
     for i in range(len(sample_sizes)) :
         # simulação para subtratores
-        for j in range(sample_sizes):
+        for j in range(sample_sizes[i]):
             run_dedicated(comparator=comparators[i], comp_num=j)
         results[comparators[i]] = organize_dedicated(5e-9, 0.7, comparators[i])
     prime = pd.DataFrame(results)
-    prime.to_csv('./results/' + comparator + '_results.csv')
+    prime.to_csv('./results/comp_dedicated_results.csv')
 
 def run_dedicated(comparator, comp_num):
     name = 'results/result_' + comparator + '_' + str(comp_num) +'.csv'
-    source = '.include source'+comparator+'_'+str(comp_num)+'.cir\n'
-    if comparator = 'comp_exact':
+    source = '.include sources/source_'+comparator+'_'+str(comp_num)+'.cir\n'
+    if comparator == 'comp_exact':
         with open('nondef_params.txt', 'w') as f:
             f.seek(0)
             f.write(source)
