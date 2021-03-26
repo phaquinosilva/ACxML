@@ -9,9 +9,6 @@
 * non-default includes
 .include nondef_params.txt
 
-* input sources and timing measures
-.include sources/source_approx?.cir
-
 * load w/ buffers
 Xa00 a0_in na0_in vdd1 inv M=4
 Xa01 na0_in a0 vdd1 inv M=4

@@ -141,11 +141,7 @@ def create_files_dedicated():
         for tup in interest[comp]:
             gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, comp+"_"+str(k), infos[comp][k])
             k += 1
-
+    print([len(interest[i]) for i in names])
+    print(names)
 # create_files_comparators()
-#create_files_dedicated()
-
-comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
-names = [str(i.__name__) for i in comparators]
-interest, infos = delay_arcs_dedicated(comparators, names)
-print(list(map(len, infos)))
+create_files_dedicated()

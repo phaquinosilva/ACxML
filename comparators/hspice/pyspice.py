@@ -62,21 +62,24 @@ def organize_adders(sim_time, voltage, comparator, cell):
     return {'delay' : delay, 'power' : avg_pow}
 
 
-def organize_dedicated(sim_time, voltage):
-    results = []
+def organize_dedicated(sim_time, voltage, comparator, cell):
+    adder_results = []
     p = Path('.')
-    for csv in list(p.glob('**/result_comp_dedicated*.csv')):
+    for csv in list(p.glob('**/result_' + comparator+'_' + cell+'_*.csv')):
         res_df = pd.read_csv(csv, skiprows=3, na_values="failed")
         print(res_df)
         # seleciona colunas relevantes
         delay_df = res_df.filter(regex='tp')
-        power = (-1) * res_df['q_dut'].iloc[0] * voltage / sim_time
+        if cell == "AXA2" or cell == "AXA3" or cell == "EXA":
+            power = (-1) * (res_df['q_dut'].iloc[0] + res_df['q_in'].iloc[0]) * voltage / sim_time
+        else:
+            power = (-1) * res_df['q_dut'].iloc[0] * voltage / sim_time
         # pior caso de atraso
         delay = delay_df.max(axis=1).iloc[0]
-        results.append({'delay' : delay, 'power' : power})
+        adder_results.append({'delay' : delay, 'power' : power})
         # limpa diretorio para restarem somente os arquivos relevantes
-        # os.remove(csv)
-    sums_res = pd.DataFrame(results)
+        os.remove(csv)
+    sums_res = pd.DataFrame(adder_results)
     avg_pow = sums_res['power'].mean()
     delay = sums_res['delay'].max(axis=0)
     return {'delay' : delay, 'power' : avg_pow}
@@ -118,13 +121,16 @@ def post(adder):
         f.write(newdata)
 
 def dedicated_sim():
-    comparator = 'comp_dedicated'
+    comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
+    comparators = [str(i.__name__) for i in comparators]
+    sample_sizes = [480, 448, 448, 368, 368, 256, 352]
     results = {}
-    # simulação para subtratores
-    for i in range(960):
-        run_hspice(comparator=comparator, comp_num=i)
-    results = organize_results(5e-9, 0.7, comparator)
-    prime = pd.Series(results)
+    for i in range(len(sample_sizes)) :
+        # simulação para subtratores
+        for j in range(sample_sizes):
+            run_hspice(comparator=comparators[i], comp_num=j)
+        results = organize_results(5e-9, 0.7, comparators[i])
+    prime = pd.DataFrame(results)
     prime.to_csv('./results/' + comparator + '_results.csv')
 
 if __name__ == '__main__':
