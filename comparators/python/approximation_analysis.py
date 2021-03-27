@@ -60,11 +60,11 @@ def run_simulation():
     #results_adders = pd.DataFrame(r_add)
     error_adders = error_analysis(pd.DataFrame(e_add), add_list)
     #results_adders.to_csv('results_adders.csv')
-    #error_adders.to_csv('error_adders.csv')
+    error_adders.to_csv('error_adders.csv')
     #results_dedicated = pd.DataFrame(r_ded)
     error_dedicated = error_analysis(pd.DataFrame(e_ded), comp_names)
     #results_dedicated.to_csv('results_dedicated.csv')
-    #error_dedicated.to_csv('error_dedicated.csv')
+    error_dedicated.to_csv('error_dedicated.csv')
 
 # erro bit a bit
 def error_analysis(errors, names):
