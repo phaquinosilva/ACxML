@@ -102,7 +102,7 @@ def add(adder, in_a, in_b, n_bits):
         final += str(fa[0])
         cin = fa[1]
     final = final[::-1]
-    return final
+    return final, cin
 
 # subtracao simples nbit
 def sub(adder, in_a, in_b, n_bits):
@@ -112,14 +112,18 @@ def sub(adder, in_a, in_b, n_bits):
         fa = adder(int(in_a[i])&1, ~int(in_b[i])&1, cin)
         final[i] = fa[0]
         cin = fa[1]
-    return final
+    return final, cin
 
 # comparador simples n_bit: evaluates to 1 if a > b
-def greater(adder, in_a, in_b, n_bits):
+def geq(adder, in_a, in_b, n_bits):
     # A >= B : A - B >= 0
-    final = sub(adder, in_b, in_a, n_bits)
-    # print(final)
-    return final[0]
+    final, cout = sub(adder, in_a, in_b, n_bits)
+    print(final, cout)
+    return cout&1
+
+def leq(adder, in_a, in_b, n_bits):
+    final, cout, = sub(adder, in_b, in_a, n_bits)
+    return cout
 
 # calcula uma operação aproximada para um grupo de FAs
 def approx_operation(op_a, op_b, n_bits, adder, operate, save=True):

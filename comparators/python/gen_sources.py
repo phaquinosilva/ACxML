@@ -67,12 +67,12 @@ def create_files_comparators():
     for add in names:
         k = 0
         for tup in interest[add]:
-            gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, add+"_"+str(k), infos[add][k])
+            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, add+"_"+str(k), infos[add][k])
             k += 1
 
 # recebe a mudanca no valor de 'a' e 'b' -> gera arquivos de estimulos para HSPICE
 # obs: no momento, usar somente com naturais
-def gen_files(a0, b0, a1, b1, n, file_name, infos):
+def write_files(a0, b0, a1, b1, n, file_name, infos):
     ## a0, b0: valores de 'a' e 'b' antes
     ## a1, b1: valores de 'a' e 'b' depois
     ## n: numero de bits
@@ -139,9 +139,10 @@ def create_files_dedicated():
     for comp in names:
         k = 0
         for tup in interest[comp]:
-            gen_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, comp+"_"+str(k), infos[comp][k])
+            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, comp+"_"+str(k), infos[comp][k])
             k += 1
     print([len(interest[i]) for i in names])
     print(names)
+ 
 # create_files_comparators()
 create_files_dedicated()
