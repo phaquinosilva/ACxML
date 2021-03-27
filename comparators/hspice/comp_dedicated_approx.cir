@@ -1,4 +1,4 @@
-* 4 bit dedicated ap greater comparator
+* 4 bit dedicated ap leq comparator
 
 * default settings and sources
 .include params.cir
@@ -29,10 +29,10 @@ Xb30 b3_in nb3_in vdd1 inv M=4
 Xb31 nb3_in b3 vdd1 inv M=4
 
 * DUT
-Xcompare a0 a1 a2 a3 b0 b1 b2 b3 greater vdut comp_approx_4b
+Xcompare a0 a1 a2 a3 b0 b1 b2 b3 leq vdut comp_approx_4b
 
 * output load
-Cgreater greater gnd 1f
+Cleq leq gnd 1f
 
 * default energy measures
 .measure tran q_dut integ i(Vvdut) from=0n to=5n

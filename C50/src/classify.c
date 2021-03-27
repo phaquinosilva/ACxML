@@ -150,7 +150,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 	    {
 		/*  Find weights for <= and > branches, interpolating if
 		    probabilistic thresholds are used  */
-		/* @pedro: aqui eh onde aproximar poderia ter impacto nos atributos discretos, 
+		/* @pedro: aqui eh onde aproximar poderia ter impacto nos atributos continuos, 
 			tanto no interpolate como ali embaixo */
 		BrWt[2] = Interpolate(T, CVal(Case, T->Tested));
 		BrWt[3] = 1 - BrWt[2];
@@ -172,7 +172,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 
 		// @Pedro: aproximacao leq aqui
 	    // if ( Dv <= MaxAttVal[T->Tested] )
-	    if ( leq(Dv, MaxAttVal[T->Tested], exact, 4) )
+	    if ( leq(Dv, MaxAttVal[T->Tested], exact, 5) )
 		{
 		ForEach(v, 1, T->Forks)
 		{
