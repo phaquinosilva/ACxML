@@ -2,7 +2,7 @@ import pandas as pd
 # from bitstring import BitArray
 from adders import *
 
-## funções para comparação com os dedicados aproximados
+## funções para <= com os dedicados aproximados
 def comp_exact(a,b):
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
@@ -13,7 +13,7 @@ def comp_exact(a,b):
     n2 = ~(a[2] & ~b[2] & eq3)
     n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
-    return ~(n0 & n1 & n2 & n3) & 1
+    return (n0 & n1 & n2 & n3) & 1
 
 def comp_approx1(a, b):
     ## primeira aproximação: sem nand a0 ~b0
@@ -26,7 +26,7 @@ def comp_approx1(a, b):
     n2 = ~(a[2] & ~b[2] & eq3)
     n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     n0 = ~(eq3 & eq2 & eq1)
-    return ~(n0 & n1 & n2 & n3) & 1
+    return (n0 & n1 & n2 & n3) & 1
 
 def comp_approx2(a,b):
     ## aprrox 2: tirar a lógica do bit 0
@@ -39,7 +39,7 @@ def comp_approx2(a,b):
     n2 = ~(a[2] & ~b[2] & eq3)
     n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     # n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
-    return ~(n1 & n2 & n3) & 1
+    return (n1 & n2 & n3) & 1
 
 def comp_approx3(a,b):
     ## substituir as portas com a0 por um buffer a0
@@ -50,7 +50,7 @@ def comp_approx3(a,b):
     n3 = ~(a[3] & ~b[3])
     n2 = ~(a[2] & ~b[2] & eq3)
     n1 = ~(a[1] & ~b[1] & eq3 & eq2)
-    return ~(a[0] & n1 & n2 & n3) & 1
+    return (a[0] & n1 & n2 & n3) & 1
 
 def comp_approx4(a,b):
     # aproximação: trocar portas logicas com a1 por só a1
@@ -63,7 +63,7 @@ def comp_approx4(a,b):
     n2 = ~(a[2] & ~b[2] & eq3)
     # n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     n0 = ~(a[0] & ~b[0] & eq3 & eq2 & a[1])
-    return ~(n0 & a[1] & n2 & n3) & 1
+    return (n0 & a[1] & n2 & n3) & 1
 
 def comp_approx5(a,b):
     # aproximação: trocar lógica dos bits 0 e 1 por a0 e a1
@@ -77,7 +77,7 @@ def comp_approx5(a,b):
     n2 = ~(a[2] & ~b[2] & eq3)
     # n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     # n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
-    return ~(n0 & n1 & n2 & n3) & 1
+    return (n0 & n1 & n2 & n3) & 1
 
 def comp_approx6(a,b):
     # aproximação: tirar lógica com bit 0 e trcar a do bit 1 por a1
@@ -91,7 +91,7 @@ def comp_approx6(a,b):
     n1 = a[1]
     # n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     # n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
-    return ~(n1 & n2 & n3) & 1
+    return (n1 & n2 & n3) & 1
 
 # soma simples nbit
 def add(adder, in_a, in_b, n_bits):
@@ -114,13 +114,14 @@ def sub(adder, in_a, in_b, n_bits):
         cin = fa[1]
     return final, cin
 
-# comparador simples n_bit: evaluates to 1 if a > b
+# a >= b
 def geq(adder, in_a, in_b, n_bits):
     # A >= B : A - B >= 0
     final, cout = sub(adder, in_a, in_b, n_bits)
     print(final, cout)
     return cout&1
 
+# a <= b
 def leq(adder, in_a, in_b, n_bits):
     final, cout, = sub(adder, in_b, in_a, n_bits)
     return cout

@@ -5,7 +5,9 @@ from random import sample
 
 ################################# HSPICE SCRIPT #######################################
 
-# executa simulacoes
+## SUBTRACTOR CIRCUITS ##
+
+# executa hspice
 def run_adders(comparator, comp_num, cell):
     # sets type of sources file and name of output file
     source = '.include sources/'
@@ -27,7 +29,7 @@ def run_adders(comparator, comp_num, cell):
     # chamadas de sistema pra executar o hspice
     os.system('hspice '+ comparator + '.cir')
     os.rename('./' + comparator + '.mt0.csv',  name)
-
+# processa resultados
 def organize_adders(sim_time, voltage, comparator, cell):
     adder_results = []
     p = Path('.')
@@ -54,10 +56,7 @@ def organize_adders(sim_time, voltage, comparator, cell):
 def adders_sim():
     fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
     sample_sizes = [960, 960, 512, 340, 320, 512, 512]
-    # fa = fa[4:5]
-    # sample_sizes = sample_sizes[4:5]
     results = {}
-    # simulação para subtratores
     for i in range(len(fa)):
         # altera FA no arquivo de simulacao
         pre(fa[i])
@@ -86,6 +85,9 @@ def post(adder):
         f.seek(0)
         f.write(newdata)
 
+
+## DEDICATED CIRCUITS ##
+# executa simulações
 def dedicated_sim():
     comparators = ['comp_exact', 'comp_approx1', 'comp_approx2', 'comp_approx3', 'comp_approx4', 'comp_approx5', 'comp_approx6']
     sample_sizes = [480, 448, 448, 368, 368, 256, 352]
@@ -97,7 +99,7 @@ def dedicated_sim():
         results[comparators[i]] = organize_dedicated(5e-9, 0.7, comparators[i])
     prime = pd.DataFrame(results)
     prime.to_csv('./results/comp_dedicated_results.csv')
-
+# executa hspice
 def run_dedicated(comparator, comp_num):
     name = 'results/result_' + comparator + '_' + str(comp_num) +'.csv'
     source = '.include sources/source_'+comparator+'_'+str(comp_num)+'.cir\n'
@@ -114,7 +116,7 @@ def run_dedicated(comparator, comp_num):
             f.write(source)
         os.system('hspice comp_dedicated_approx.cir')
         os.rename('./comp_dedicated_approx.mt0.csv',  name)
-
+# processa resultados
 def organize_dedicated(sim_time, voltage, comparator):
     comp_results = []
     p = Path('.')
@@ -135,5 +137,5 @@ def organize_dedicated(sim_time, voltage, comparator):
     return {'delay' : delay, 'power' : avg_pow}
 
 if __name__ == '__main__':
-    # adders_sim()
+    adders_sim()
     dedicated_sim()

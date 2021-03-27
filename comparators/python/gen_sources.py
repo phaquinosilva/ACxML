@@ -47,32 +47,55 @@ def inputs_of_interest(f, n):
     inputs = filter(lambda tup: differ_test(tup[0], tup[1], f, n), inputs)
     return list(inputs)
 
-
-def delay_arcs_per_comparator(adders, names):
+## generates arcs and files for subtractor comparators simulation
+def delay_arcs_adders(adders, names):
     k = 0
     infos = {}
     interest = {}
     for adder in adders:
-        interest[names[k]] = inputs_of_interest((lambda g: greater(adder, g[0:4], g[4:], 4)), 4)
-        get_infos = lambda tup: find_diffs(tup[0], tup[1], (lambda g: greater(adder, g[0:4], g[4:], 4)), 4)
+        interest[names[k]] = inputs_of_interest((lambda g: leq(adder, g[0:4], g[4:], 4)), 4)
+        get_infos = lambda tup: find_diffs(tup[0], tup[1], (lambda g: leq(adder, g[0:4], g[4:], 4)), 4)
         infos[names[k]] = list(map(get_infos, interest[names[k]]))
         k += 1
     return interest, infos
 
-def create_files_comparators():
+def create_files_adders():
     adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
     names = [str(i.__name__) for i in adders]
     interest, infos = delay_arcs_per_comparator(adders, names)
-
     for add in names:
         k = 0
         for tup in interest[add]:
-            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, add+"_"+str(k), infos[add][k])
+            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 'leq', 4, add+"_"+str(k), infos[add][k])
             k += 1
 
+## generates arcs and files for dedicated comparators simulation
+def delay_arcs_dedicated(comparators, names):
+    k = 0
+    infos = {}
+    interest = {}
+    for comp in comparators:
+        interest[names[k]] = inputs_of_interest(lambda g: comp(g[0:4], g[4:]), 4)
+        get_infos = lambda tup: find_diffs(tup[0], tup[1], lambda g: comp(g[0:4], g[4:]), 4)
+        infos[names[k]] = list(map(get_infos, interest[names[k]]))
+        k += 1
+    return interest, infos
+
+def create_files_dedicated():
+    comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
+    names = [str(i.__name__) for i in comparators]
+    interest, infos = delay_arcs_dedicated(comparators, names)
+    for comp in names:
+        k = 0
+        for tup in interest[comp]:
+            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 'leq', 4, comp+"_"+str(k), infos[comp][k])
+            k += 1
+    print([len(interest[i]) for i in names])
+    print(names)
+ 
 # recebe a mudanca no valor de 'a' e 'b' -> gera arquivos de estimulos para HSPICE
 # obs: no momento, usar somente com naturais
-def write_files(a0, b0, a1, b1, n, file_name, infos):
+def write_files(a0, b0, a1, b1, output, n, file_name, infos):
     ## a0, b0: valores de 'a' e 'b' antes
     ## a1, b1: valores de 'a' e 'b' depois
     ## n: numero de bits
@@ -81,7 +104,6 @@ def write_files(a0, b0, a1, b1, n, file_name, infos):
     tups.append((format(a0, form)[2:][::-1], format(a1,form)[2:][::-1], format(b0,form)[2:][::-1], format(b1,form)[2:][::-1]))
     # index for measure definitions
     # write input sources in a file
-
     with open("sources/source_" + file_name + ".cir",'w+') as file:
         file.write("** sources and measures for comparator type: "+file_name+"\n\n")
         for k in range(len(tups)):
@@ -112,37 +134,14 @@ def write_files(a0, b0, a1, b1, n, file_name, infos):
                         file.write("Vb" + str(i) + " b" + str(i) +"_in gnd PWL(0n vdd 1n vdd 1.1n 0)\n")
                     else:
                         file.write("Vb" + str(i) + " b" + str(i) +"_in gnd PWL(0n vdd)\n")
-            
         # write measures
         (bit, in_rof, out_rof) = infos
         file.write("\n*measures\n")
         type = "hl" if out_rof == "fall" else "lh"
         file.write(".measure tran tp"+type+" trig v("+bit+") val='0.5*vdd' "+ \
-                    in_rof+"=1 targ v(greater) val='0.5*vdd' "+ out_rof +"=1\n")
+                    in_rof+"=1 targ v("+output+") val='0.5*vdd' "+ out_rof +"=1\n")
 
 
-def delay_arcs_dedicated(comparators, names):
-    k = 0
-    infos = {}
-    interest = {}
-    for comp in comparators:
-        interest[names[k]] = inputs_of_interest(lambda g: comp(g[0:4], g[4:]), 4)
-        get_infos = lambda tup: find_diffs(tup[0], tup[1], lambda g: comp(g[0:4], g[4:]), 4)
-        infos[names[k]] = list(map(get_infos, interest[names[k]]))
-        k += 1
-    return interest, infos
-
-def create_files_dedicated():
-    comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
-    names = [str(i.__name__) for i in comparators]
-    interest, infos = delay_arcs_dedicated(comparators, names)
-    for comp in names:
-        k = 0
-        for tup in interest[comp]:
-            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 4, comp+"_"+str(k), infos[comp][k])
-            k += 1
-    print([len(interest[i]) for i in names])
-    print(names)
- 
-# create_files_comparators()
-create_files_dedicated()
+if __name__ == '__main__':
+    create_files_adders()
+    create_files_dedicated()
