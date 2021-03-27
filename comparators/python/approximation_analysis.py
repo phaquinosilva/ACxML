@@ -14,8 +14,7 @@ from ac_operations import *
 # comparação aproximada com somadores
 def sim_add(op_a, op_b, adders):
     results = {
-        "default" : 1 if int(op_a,2) <= int(op_b,2) else 0,
-        "adders_exact" : leq(exact, op_a, op_b, 4)
+        "default" : 1 if int(op_a,2) <= int(op_b,2) else 0
         }
     error = {}
     for i in adders:
@@ -26,13 +25,13 @@ def sim_add(op_a, op_b, adders):
 
 def sim_dedicated(op_a, op_b, comparators):
     results = {
-        "dedicated_exact" : comp_exact(op_a, op_b)
+        "default" : 1 if int(op_a,2) <= int(op_b,2) else 0
         }
     error = {}
     for i in comparators:
         comp = i(op_a, op_b)
         results[i.__name__] = comp
-        error[i.__name__] = comp ^ results['dedicated_exact']
+        error[i.__name__] = comp ^ results['default']
     return results, error
 
 def run_simulation():
@@ -40,7 +39,7 @@ def run_simulation():
     inputs = [(format(a,'#06b')[2:], format(b,'#06b')[2:]) for a in range(16) for b in range(16)]
     adders = [exact, sma, ama1, ama2, axa2, axa3]
     add_list = [i.__name__ for i in adders]
-    comparators = [comp_approx1, comp_approx2, \
+    comparators = [comp_exact, comp_approx1, comp_approx2, \
                     comp_approx3, comp_approx4, comp_approx5, comp_approx6]
     comp_names = [i.__name__ for i in comparators]
     # result lists
