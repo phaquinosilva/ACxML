@@ -12,4 +12,4 @@ Vb2 b2_in gnd PWL(0n 0)
 Vb3 b3_in gnd PWL(0n 0)
 
 *measures
-.measure tran tplh trig v(a3) val='0.5*vdd' rise=1 targ v(greater) val='0.5*vdd' rise=1
+.measure tran tphl trig v(a3) val='0.5*vdd' rise=1 targ v(leq) val='0.5*vdd' fall=1
