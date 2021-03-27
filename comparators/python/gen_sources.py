@@ -62,12 +62,13 @@ def delay_arcs_adders(adders, names):
 def create_files_adders():
     adders = [exact, sma, ama1, ama2, axa2, axa3, bxfa]
     names = [str(i.__name__) for i in adders]
-    interest, infos = delay_arcs_per_comparator(adders, names)
-    for add in names:
-        k = 0
-        for tup in interest[add]:
-            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 'leq', 4, add+"_"+str(k), infos[add][k])
-            k += 1
+    interest, infos = delay_arcs_adders(adders, names)
+    # for add in names:
+    #     k = 0
+    #     for tup in interest[add]:
+    #         write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 'leq', 4, add+"_"+str(k), infos[add][k])
+    #         k += 1
+    print([len(interest[i]) for i in names])
 
 ## generates arcs and files for dedicated comparators simulation
 def delay_arcs_dedicated(comparators, names):
@@ -85,13 +86,12 @@ def create_files_dedicated():
     comparators = [comp_exact, comp_approx1, comp_approx2, comp_approx3, comp_approx4, comp_approx5, comp_approx6]
     names = [str(i.__name__) for i in comparators]
     interest, infos = delay_arcs_dedicated(comparators, names)
-    for comp in names:
-        k = 0
-        for tup in interest[comp]:
-            write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 'leq', 4, comp+"_"+str(k), infos[comp][k])
-            k += 1
+    # for comp in names:
+    #     k = 0
+    #     for tup in interest[comp]:
+    #         write_files(tup[0]>>4, tup[0]&15, tup[1]>>4, tup[1]&15, 'leq', 4, comp+"_"+str(k), infos[comp][k])
+    #         k += 1
     print([len(interest[i]) for i in names])
-    print(names)
  
 # recebe a mudanca no valor de 'a' e 'b' -> gera arquivos de estimulos para HSPICE
 # obs: no momento, usar somente com naturais
