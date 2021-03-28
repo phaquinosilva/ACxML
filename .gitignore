@@ -4,3 +4,4 @@
 *scope*
 *.bak*
 *~
+.tmp
