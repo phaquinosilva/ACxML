@@ -124,7 +124,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 		// @grellert: aqui é feita a comparação
 	    // if ( Dv <= T->Forks )	/*  Make sure not new discrete value  */
 		// @pedro: implementa aqui a chamada pra tua função
-	    if ( leq(Dv, T->Forks, exact, 4) )	/*  Make sure not new discrete value  */
+	    if ( leq(Dv, T->Forks, axa2, 4) )	/*  Make sure not new discrete value  */
 	    {
 		FindLeaf(Case, T->Branch[Dv], T, Fraction);
 	    }
@@ -172,7 +172,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 
 		// @Pedro: aproximacao leq aqui
 	    // if ( Dv <= MaxAttVal[T->Tested] )
-	    if ( leq(Dv, MaxAttVal[T->Tested], exact, 5) )
+	    if ( leq(Dv, MaxAttVal[T->Tested], axa2, 4) )
 		{
 		ForEach(v, 1, T->Forks)
 		{
@@ -364,16 +364,14 @@ int FindOutcome(DataRec Case, Condition OneCond)
 	    Outcome = ( Unknown(Case, Att) ? -1 :
 			NotApplic(Case, Att) ? 1 :
 			// @Pedro: coloquei minha funcao aproximada aqui
-			// CVal(Case, Att) <= OneCond->Cut ? 2 : 3 );
-			leq(CVal(Case, Att), OneCond->Cut, exact, 4) ? 2 : 3 );
-	    break;
+			CVal(Case, Att) <= OneCond->Cut ? 2 : 3 );
+		break;
 
 	case BrSubset:  /* subset test on discrete attribute  */
 
 	    v = XDVal(Case, Att);
 		// @Pedro: funcao aproximada aqui
-	    // Outcome = ( v <= MaxAttVal[Att] && In(v, OneCond->Subset) ?
-		Outcome = ( leq(v, MaxAttVal[Att], exact, 4) && In(v, OneCond->Subset) ?
+	    Outcome = ( v <= MaxAttVal[Att] && In(v, OneCond->Subset) ?
 			OneCond->TestValue : 0 );
     }
 

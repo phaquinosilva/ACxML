@@ -789,8 +789,13 @@ float	    SE(float sum, float sumsq, int no);
 
 int add(int a, int b, void (*f) (int, int, int, int *), int n);
 int sub(int a, int b, void (*f) (int, int, int, int *), int n);
-int geq(int a, int b, void (*f) (int, int, int, int *), int n);
 int leq(int a, int b, void (*f) (int, int, int, int *), int n);
+int leq_a1(int a, int b);
+int leq_a2(int a, int b);
+int leq_a3(int a, int b);
+int leq_a4(int a, int b);
+int leq_a5(int a, int b);
+int leq_a6(int a, int b);
 void sma(int a, int b, int cin, int output[]);
 void ama1(int a, int b, int cin, int output[]);
 void ama2(int a, int b, int cin, int output[]);

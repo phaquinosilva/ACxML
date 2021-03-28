@@ -5,36 +5,43 @@
 /* DEFINICOES FA*/
 
 void sma(int a, int b, int cin, int output[]) {
-    int sum = cin & !(a ^ b);
-    int c_out = b | a & cin;
-    output[0] = sum & 1;
-    output[1] = c_out & 1;
+    int sum[8] = {0,1,0,0,0,0,0,1};
+    int cout[8] = {0,0,1,1,0,1,1,1};
+    int pos = ((a<<2) + (b<<1) + cin);
+    output[0] = sum[pos];
+    output[1] = cout[pos];
 }
 
 void ama1(int a, int b, int cin, int output[]) {
-    int c_out = b | a & cin;
-    output[0] = !c_out & 1;
-    output[1] = c_out & 1;
+    int sum[8] = {1,1,0,0,1,0,0,0};
+    int cout[8] = {0,0,1,1,0,1,1,1};
+    int pos = ((a<<2) + (b<<1) + cin);
+    output[0] = sum[pos];
+    output[1] = cout[pos];
 }
 
 void ama2(int a, int b, int cin, int output[]) {
-    int sum = cin & (!a | b);
-    output[0] = sum & 1;
-    output[1] = a & 1;
+    int sum[8] = {0,1,0,1,0,0,0,1};
+    int cout[8] = {0,0,0,0,1,1,1,1};
+    int pos = ((a<<2) + (b<<1) + cin);
+    output[0] = sum[pos];
+    output[1] = cout[pos];
 }
 
 void axa2(int a, int b, int cin, int output[]) {
-    int sum = !(a ^ b);
-    int c_out = a & b | (a ^ b) & cin;
-    output[0] = sum & 1;
-    output[1] = c_out & 1;
+    int sum[8] = {1,1,0,0,0,0,1,1};
+    int cout[8] = {0,0,0,1,0,1,1,1};
+    int pos = ((a<<2) + (b<<1) + cin);
+    output[0] = sum[pos];
+    output[1] = cout[pos];
 }
 
 void axa3(int a, int b, int cin, int output[]) {
-    int sum = cin & !(a ^ b);
-    int c_out = a & b | (a ^ b) & cin;
-    output[0] = sum & 1;
-    output[1] = c_out & 1;
+    int sum[8] = {0,1,0,0,0,0,0,1};
+    int cout[8] = {0,0,0,1,0,1,1,1};
+    int pos = ((a<<2) + (b<<1) + cin);
+    output[0] = sum[pos];
+    output[1] = cout[pos];
 }
 
 void buf(int a, int b, int cin, int output[]) {
@@ -43,8 +50,11 @@ void buf(int a, int b, int cin, int output[]) {
 }
 
 void exact(int a, int b, int cin, int output[]) {
-    output[0] = a ^ b ^ cin;
-    output[1] = (a & b) | (cin & (a ^ b));
+    int sum[8] = {0,1,1,0,1,0,0,1};
+    int cout[8] = {0,0,0,1,0,1,1,1};
+    int pos = ((a<<2) + (b<<1) + cin);
+    output[0] = sum[pos];
+    output[1] = cout[pos];
 }
 
 
@@ -138,8 +148,8 @@ int sub(int a, int b, void (*f) (int, int, int, int *), int n) {
     return result;
 }
 
-int greater(int a, int b, void (*f) (int, int, int, int *), int n) {
-    // a, b: operandos (a > b)
+int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
+    // a, b: operandos (a <= b)
     // (*f): nome do FA a ser simulado
     // n: numero de bits
     
@@ -162,11 +172,110 @@ int greater(int a, int b, void (*f) (int, int, int, int *), int n) {
     }
 
     // retorna resultado em int
-    int result = bin_out[n-1]; // '!' por causa do true e false ser !0 e 0 em C -- so pra me lembrar mesmo
-    
+    int result = cin; 
     return result;
 }
 
-int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
-    return !greater(a, b, f, n);
+int leq_exact(int a, int b) {
+    int bin_a[4];
+    int bin_b[4];
+    to_binary(~a, 4, bin_a);
+    to_binary(b, 4, bin_b);
+    int eq1 = ~(bin_a[1] ^ bin_b[1]);
+    int eq2 = ~(bin_a[2] ^ bin_b[2]);
+    int eq3 = ~(bin_a[3] ^ bin_b[3]);
+    int n3 = ~(bin_a[3] & ~bin_b[3]);
+    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+    int n0 = ~(n0 & n1 & eq3 & eq2 & eq1);
+    return (n0 & n1 & n2 & n3) & 1;
+}
+int leq_a1(int a, int b) {
+    int bin_a[4];
+    int bin_b[4];
+    to_binary(~a, 4, bin_a);
+    to_binary(b, 4, bin_b);
+    int eq1 = ~(bin_a[1] ^ bin_b[1]);
+    int eq2 = ~(bin_a[2] ^ bin_b[2]);
+    int eq3 = ~(bin_a[3] ^ bin_b[3]);
+    int n3 = ~(bin_a[3] & ~bin_b[3]);
+    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+    int n0 = ~(eq3 & eq2 & eq1);
+    return (n0 & n1 & n2 & n3) & 1;
+}
+
+int leq_a2(int a, int b) {
+    int bin_a[4];
+    int bin_b[4];
+    to_binary(~a, 4, bin_a);
+    to_binary(b, 4, bin_b);
+    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+    int eq2 = ~(bin_a[2] ^ bin_b[2]);
+    int eq3 = ~(bin_a[3] ^ bin_b[3]);
+    int n3 = ~(bin_a[3] & ~bin_b[3]);
+    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+    return (n1 & n2 & n3) & 1;
+}
+
+int leq_a3(int a, int b) {
+    int bin_a[4];
+    int bin_b[4];
+    to_binary(~a, 4, bin_a);
+    to_binary(b, 4, bin_b);
+    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+    int eq2 = ~(bin_a[2] ^ bin_b[2]);
+    int eq3 = ~(bin_a[3] ^ bin_b[3]);
+    int n3 = ~(bin_a[3] & ~bin_b[3]);
+    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+    return (bin_a[0] & n1 & n2 & n3) & 1;
+}
+
+int leq_a4(int a, int b) {
+    int bin_a[4];
+    int bin_b[4];
+    to_binary(~a, 4, bin_a);
+    to_binary(b, 4, bin_b);
+    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+    int eq2 = ~(bin_a[2] ^ bin_b[2]);
+    int eq3 = ~(bin_a[3] ^ bin_b[3]);
+    int n3 = ~(bin_a[3] & ~bin_b[3]);
+    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+    // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+    int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & bin_a[1]);
+    return (n0 & bin_a[1] & n2 & n3) & 1;
+}
+
+int leq_a5(int a, int b) {
+    int bin_a[4];
+    int bin_b[4];
+    to_binary(~a, 4, bin_a);
+    to_binary(b, 4, bin_b);
+    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+    // int eq2 = ~(bin_a[2] ^ bin_b[2]);
+    int eq3 = ~(bin_a[3] ^ bin_b[3]);
+    int n3 = ~(bin_a[3] & ~bin_b[3]);
+    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+    // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+    return (bin_a[0] & bin_a[1] & n2 & n3) & 1;
+}
+
+int leq_a6(int a, int b) {
+    int bin_a[4];
+    int bin_b[4];
+    to_binary(~a, 4, bin_a);
+    to_binary(b, 4, bin_b);
+    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+    // int eq2 = ~(bin_a[2] ^ bin_b[2]);
+    int eq3 = ~(bin_a[3] ^ bin_b[3]);
+    int n3 = ~(bin_a[3] & ~bin_b[3]);
+    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+    // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+    return (bin_a[1] & n2 & n3) & 1;
 }
