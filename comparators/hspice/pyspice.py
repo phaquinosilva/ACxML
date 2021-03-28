@@ -55,14 +55,14 @@ def organize_adders(sim_time, voltage, comparator, cell):
 # executa simulações
 def adders_sim():
     fa = ['ema', 'exa', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
-    sample_sizes = [480, 340, 340, 256, 480, 480, 256]
+    sample_sizes = [480, 480, 340, 340, 256, 480, 480]
     results = {}
     for i in range(len(fa)):
         # altera FA no arquivo de simulacao
         pre(fa[i])
         # executa simulacao nas somas da amostra    
         for j in range(sample_sizes[i]):
-            run_hspice('comp_subtractor', j, fa[i])
+            run_adders('comp_subtractor', j, fa[i])
         # retorna arquivo pro original
         post(fa[i])
         results[fa[i]] = organize_adders(5e-9, 0.7, 'comp_subtractor', fa[i])
