@@ -124,7 +124,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 		// @grellert: aqui é feita a comparação
 	    // if ( Dv <= T->Forks )	/*  Make sure not new discrete value  */
 		// @pedro: implementa aqui a chamada pra tua função
-	    if ( leq(Dv, T->Forks, axa2, 4) )	/*  Make sure not new discrete value  */
+	    if ( leq(Dv, T->Forks, axa3, 4) )	/*  Make sure not new discrete value  */
 	    {
 		FindLeaf(Case, T->Branch[Dv], T, Fraction);
 	    }
@@ -172,7 +172,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 
 		// @Pedro: aproximacao leq aqui
 	    // if ( Dv <= MaxAttVal[T->Tested] )
-	    if ( leq(Dv, MaxAttVal[T->Tested], axa2, 4) )
+	    if ( leq(Dv, MaxAttVal[T->Tested], axa3, 4 ) )
 		{
 		ForEach(v, 1, T->Forks)
 		{
