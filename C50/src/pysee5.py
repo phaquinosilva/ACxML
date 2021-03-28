@@ -1,5 +1,3 @@
-
-# %%
 import os
 import pandas as pd
 from pathlib import Path
@@ -30,9 +28,6 @@ def sim_adders():
         with open('classify.c', 'w') as f:
             f.seek(0)
             f.write(classify)
-        ## run approximate versions on datasets
-        run_dataset = lambda dataset: os.system('../discrete-only/c5.0_fa_'+adder+' -f ../'+dataset+'/'+dataset+' > ../discrete-only/trees/'+dataset+'.output')
-        map(run_dataset, datasets)
 
 def sim_dedicated():
     comparators = ['leq_exact', 'leq_a1', 'leq_a2', 'leq_a3', 'leq_a4', 'leq_a5', 'leq_a6']
@@ -57,8 +52,15 @@ def sim_dedicated():
         with open('classify.c', 'w') as f:
             f.seek(0)
             f.write(classify)
-        ## run approximate versions on datasets
-        run_dataset = lambda dataset: os.system('../discrete-only/c5.0_'+comp+' ../discrete-only/trees/'+dataset)
-        map(run_dataset, datasets)
 
-# %%
+def train():
+    adders = ['exact', 'sma', 'ama1', 'ama2', 'axa2', 'axa3']
+    comparators = ['leq_exact', 'leq_a1', 'leq_a2', 'leq_a3', 'leq_a4', 'leq_a5', 'leq_a6']
+    datasets = ['mushroom', 'car', 'kr-vs-kp', 'splice', 'tic-tac-toe']
+    for dataset in datasets:
+        os.mkdir('../'+dataset+'/trees')
+        os.system('../discrete-only/c5.0_default -f ../'+dataset+'/'+dataset+' > ../'+dataset+'/trees/'+dataset+'_default'+'.output')
+        for adder in adders:
+            os.system('../discrete-only/c5.0_fa_'+adder+' -f ../'+dataset+'/'+dataset+' > ../'+dataset+'/trees/'+dataset+'_'+adder+'.output')
+        for comp in comparators:
+            os.system('../discrete-only/c5.0_'+comp+' -f ../'+dataset+'/'+dataset+' > ../'+dataset+'/trees/'+dataset+'_'+comp+'.output')
