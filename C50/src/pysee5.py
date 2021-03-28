@@ -58,7 +58,7 @@ def train():
     comparators = ['leq_exact', 'leq_a1', 'leq_a2', 'leq_a3', 'leq_a4', 'leq_a5', 'leq_a6']
     datasets = ['mushroom', 'car', 'kr-vs-kp', 'splice', 'tic-tac-toe']
     for dataset in datasets:
-        os.mkdir('../'+dataset+'/trees')
+        # os.mkdir('../'+dataset+'/trees')
         os.system('../discrete-only/c5.0_default -f ../'+dataset+'/'+dataset+' > ../'+dataset+'/trees/'+dataset+'_default'+'.output')
         for adder in adders:
             os.system('../discrete-only/c5.0_fa_'+adder+' -f ../'+dataset+'/'+dataset+' > ../'+dataset+'/trees/'+dataset+'_'+adder+'.output')

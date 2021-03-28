@@ -1,5 +1,5 @@
 
-C5.0 [Release 2.07 GPL Edition]  	Sun Mar 28 15:28:40 2021
+C5.0 [Release 2.07 GPL Edition]  	Sun Mar 28 15:40:34 2021
 -------------------------------
 
     Options:
@@ -7,160 +7,124 @@ C5.0 [Release 2.07 GPL Edition]  	Sun Mar 28 15:28:40 2021
 
 Class specified by attribute `class'
 
-Read 958 cases (10 attributes) from ../tic-tac-toe/tic-tac-toe.data
+Read 770 cases (10 attributes) from ../tic-tac-toe/tic-tac-toe.data
 
 Decision tree:
 
-middle-middle-square = b:
-:...top-left-square = b:
-:   :...bottom-right-square = b: positive (0)
-:   :   bottom-right-square = x: positive (20)
-:   :   bottom-right-square = o: negative (8)
-:   top-left-square = x:
-:   :...bottom-right-square in {x,b}: positive (36)
-:   :   bottom-right-square = o:
-:   :   :...top-right-square = x: positive (20/3)
+top-left-square = x: positive (304/9)
+top-left-square = o:
+:...middle-middle-square = o:
+:   :...bottom-right-square in {o,b}: negative (48)
+:   :   bottom-right-square = x:
+:   :   :...top-right-square = o: negative (10/3)
+:   :       top-right-square = b: positive (6/2)
+:   :       top-right-square = x:
+:   :       :...middle-right-square in {x,b}: positive (18/2)
+:   :           middle-right-square = o: negative (5/1)
+:   middle-middle-square = b:
+:   :...bottom-right-square in {o,b}: negative (11)
+:   :   bottom-right-square = x:
+:   :   :...top-right-square = x: positive (18/3)
 :   :       top-right-square = o:
-:   :       :...middle-right-square in {x,b}: positive (6/1)
-:   :       :   middle-right-square = o: negative (7)
+:   :       :...top-middle-square = b: negative (0)
+:   :       :   top-middle-square = x: positive (3/1)
+:   :       :   top-middle-square = o: negative (7)
 :   :       top-right-square = b:
 :   :       :...bottom-left-square = b: positive (0)
-:   :           bottom-left-square = x: positive (6)
+:   :           bottom-left-square = x: positive (4)
 :   :           bottom-left-square = o: negative (3)
-:   top-left-square = o:
-:   :...bottom-right-square in {o,b}: negative (12)
-:       bottom-right-square = x:
-:       :...top-right-square = x: positive (20/3)
-:           top-right-square = o:
-:           :...top-middle-square in {x,b}: positive (6/1)
-:           :   top-middle-square = o: negative (7)
-:           top-right-square = b:
-:           :...bottom-left-square = b: positive (0)
-:               bottom-left-square = x: positive (6)
-:               bottom-left-square = o: negative (3)
-middle-middle-square = x:
-:...top-left-square = x:
-:   :...bottom-right-square in {x,b}: positive (110)
-:   :   bottom-right-square = o:
-:   :   :...top-right-square = x:
-:   :       :...bottom-left-square in {x,b}: positive (13)
-:   :       :   bottom-left-square = o:
-:   :       :   :...top-middle-square = x: positive (3)
-:   :       :       top-middle-square in {o,b}: negative (7)
-:   :       top-right-square = o:
-:   :       :...middle-right-square = o: negative (12)
-:   :       :   middle-right-square = b: positive (5/1)
-:   :       :   middle-right-square = x:
-:   :       :   :...middle-left-square = x: positive (5)
-:   :       :       middle-left-square in {o,b}: negative (4/1)
-:   :       top-right-square = b:
-:   :       :...bottom-left-square in {x,b}: positive (5)
-:   :           bottom-left-square = o:
-:   :           :...bottom-middle-square in {x,b}: positive (3)
-:   :               bottom-middle-square = o: negative (5)
-:   top-left-square = o:
+:   middle-middle-square = x:
 :   :...top-right-square = o:
-:   :   :...top-middle-square in {x,b}: positive (37/6)
-:   :   :   top-middle-square = o: negative (21)
-:   :   top-right-square = b:
-:   :   :...middle-left-square in {x,b}: positive (26)
-:   :   :   middle-left-square = o:
-:   :   :   :...bottom-left-square in {x,b}: positive (7)
-:   :   :       bottom-left-square = o: negative (7)
-:   :   top-right-square = x:
-:   :   :...bottom-left-square in {x,b}: positive (54)
-:   :       bottom-left-square = o:
-:   :       :...middle-left-square = o: negative (12)
-:   :           middle-left-square = b: positive (5/1)
-:   :           middle-left-square = x:
-:   :           :...middle-right-square = x: positive (5)
-:   :               middle-right-square in {o,b}: negative (4/1)
-:   top-left-square = b:
-:   :...bottom-right-square in {x,b}: positive (50)
-:       bottom-right-square = o:
-:       :...middle-right-square = x: positive (23/3)
-:           middle-right-square = o:
-:           :...top-right-square in {x,b}: positive (13/1)
-:           :   top-right-square = o: negative (7)
-:           middle-right-square = b:
-:           :...bottom-left-square in {x,b}: positive (9)
-:               bottom-left-square = o:
-:               :...bottom-middle-square = b: positive (0)
-:                   bottom-middle-square = x: positive (3)
-:                   bottom-middle-square = o: negative (3)
-middle-middle-square = o:
-:...top-left-square = b:
-    :...top-middle-square = x: negative (26/5)
-    :   top-middle-square = o:
-    :   :...bottom-middle-square in {x,b}: positive (13/1)
-    :   :   bottom-middle-square = o: negative (12)
-    :   top-middle-square = b:
-    :   :...bottom-right-square = o: positive (0)
-    :       bottom-right-square = x: positive (16/5)
-    :       bottom-right-square = b: negative (2)
-    top-left-square = x:
-    :...top-right-square = o:
-    :   :...bottom-left-square in {o,b}: negative (33)
-    :   :   bottom-left-square = x:
-    :   :   :...middle-left-square in {x,b}: positive (21/2)
-    :   :       middle-left-square = o: negative (6/2)
-    :   top-right-square = b:
-    :   :...bottom-left-square in {o,b}: negative (9)
-    :   :   bottom-left-square = x:
-    :   :   :...middle-left-square = x: positive (14)
-    :   :       middle-left-square in {o,b}: negative (10/2)
-    :   top-right-square = x:
-    :   :...top-middle-square = x: positive (38)
-    :       top-middle-square = o:
-    :       :...bottom-middle-square in {x,o}: negative (19/2)
-    :       :   bottom-middle-square = b: positive (5/1)
-    :       top-middle-square = b:
-    :       :...middle-left-square in {x,b}: positive (5/1)
-    :           middle-left-square = o:
-    :           :...middle-right-square = b: negative (0)
-    :               middle-right-square = x: positive (2)
-    :               middle-right-square = o: negative (6)
-    top-left-square = o:
-    :...bottom-right-square in {o,b}: negative (55)
-        bottom-right-square = x:
-        :...top-middle-square = b: positive (15/1)
-            top-middle-square = o:
-            :...top-right-square in {x,b}: positive (11/2)
-            :   top-right-square = o: negative (2)
-            top-middle-square = x:
-            :...bottom-left-square = o: negative (8/2)
-                bottom-left-square = b: positive (3/1)
-                bottom-left-square = x:
-                :...bottom-middle-square = x: positive (5)
-                    bottom-middle-square in {o,b}: negative (4/1)
+:       :...top-middle-square = x: positive (26/4)
+:       :   top-middle-square in {o,b}: negative (23)
+:       top-right-square = b:
+:       :...middle-left-square in {x,b}: positive (20)
+:       :   middle-left-square = o:
+:       :   :...bottom-left-square in {x,b}: positive (6)
+:       :       bottom-left-square = o: negative (7)
+:       top-right-square = x:
+:       :...bottom-left-square in {x,b}: positive (50)
+:           bottom-left-square = o:
+:           :...middle-left-square = o: negative (10)
+:               middle-left-square = b: positive (5/1)
+:               middle-left-square = x:
+:               :...middle-right-square = b: positive (0)
+:                   middle-right-square = x: positive (5)
+:                   middle-right-square = o: negative (3/1)
+top-left-square = b:
+:...middle-middle-square = b:
+    :...bottom-right-square = b: positive (0)
+    :   bottom-right-square = x: positive (14)
+    :   bottom-right-square = o: negative (8)
+    middle-middle-square = o:
+    :...bottom-right-square in {o,b}: negative (17)
+    :   bottom-right-square = x:
+    :   :...top-right-square = x:
+    :       :...middle-right-square = x: positive (12)
+    :       :   middle-right-square in {o,b}: negative (10/2)
+    :       top-right-square = o:
+    :       :...bottom-left-square = b: negative (0)
+    :       :   bottom-left-square = x: positive (5/1)
+    :       :   bottom-left-square = o: negative (10)
+    :       top-right-square = b:
+    :       :...bottom-middle-square = x: positive (4/1)
+    :           bottom-middle-square in {o,b}: negative (4)
+    middle-middle-square = x:
+    :...bottom-right-square in {x,b}: positive (43)
+        bottom-right-square = o:
+        :...bottom-middle-square = x: positive (22/3)
+            bottom-middle-square = o:
+            :...bottom-left-square in {x,b}: positive (10/1)
+            :   bottom-left-square = o: negative (7)
+            bottom-middle-square = b:
+            :...top-right-square in {x,b}: positive (7)
+                top-right-square = o:
+                :...middle-right-square = b: negative (0)
+                    middle-right-square = x: positive (2)
+                    middle-right-square = o: negative (3)
 
 
-Evaluation on training data (958 cases):
+Evaluation on training data (770 cases):
 
 	    Decision Tree   
 	  ----------------  
 	  Size      Errors  
 
-	    67   88( 9.2%)   <<
+	    38   66( 8.6%)   <<
 
 
 	   (a)   (b)    <-classified as
 	  ----  ----
-	   595    31    (a): class positive
-	    57   275    (b): class negative
+	   555     8    (a): class positive
+	    58   149    (b): class negative
 
 
 	Attribute usage:
 
 	    100%  top-left-square
-	    100%  middle-middle-square
-	     83%  top-right-square
-	     64%  bottom-right-square
-	     59%  top-middle-square
-	     59%  bottom-left-square
-	     38%  middle-left-square
-	     27%  middle-right-square
-	     24%  bottom-middle-square
+	     61%  middle-middle-square
+	     54%  top-right-square
+	     40%  bottom-right-square
+	     33%  bottom-left-square
+	     23%  middle-right-square
+	     22%  top-middle-square
+	     18%  middle-left-square
+	     12%  bottom-middle-square
+
+
+Evaluation on test data (188 cases):
+
+	    Decision Tree   
+	  ----------------  
+	  Size      Errors  
+
+	    38  132(70.2%)   <<
+
+
+	   (a)   (b)    <-classified as
+	  ----  ----
+	    47    16    (a): class positive
+	   116     9    (b): class negative
 
 
 Time: 0.0 secs
