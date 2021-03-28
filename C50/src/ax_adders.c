@@ -179,7 +179,7 @@ int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
 int leq_exact(int a, int b) {
     int bin_a[4];
     int bin_b[4];
-    to_binary(~a, 4, bin_a);
+    to_binary(a, 4, bin_a);
     to_binary(b, 4, bin_b);
     int eq1 = ~(bin_a[1] ^ bin_b[1]);
     int eq2 = ~(bin_a[2] ^ bin_b[2]);
@@ -194,7 +194,7 @@ int leq_exact(int a, int b) {
 int leq_a1(int a, int b) {
     int bin_a[4];
     int bin_b[4];
-    to_binary(~a, 4, bin_a);
+    to_binary(a, 4, bin_a);
     to_binary(b, 4, bin_b);
     int eq1 = ~(bin_a[1] ^ bin_b[1]);
     int eq2 = ~(bin_a[2] ^ bin_b[2]);
@@ -209,7 +209,7 @@ int leq_a1(int a, int b) {
 int leq_a2(int a, int b) {
     int bin_a[4];
     int bin_b[4];
-    to_binary(~a, 4, bin_a);
+    to_binary(a, 4, bin_a);
     to_binary(b, 4, bin_b);
     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
     int eq2 = ~(bin_a[2] ^ bin_b[2]);
@@ -224,7 +224,7 @@ int leq_a2(int a, int b) {
 int leq_a3(int a, int b) {
     int bin_a[4];
     int bin_b[4];
-    to_binary(~a, 4, bin_a);
+    to_binary(a, 4, bin_a);
     to_binary(b, 4, bin_b);
     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
     int eq2 = ~(bin_a[2] ^ bin_b[2]);
@@ -239,7 +239,7 @@ int leq_a3(int a, int b) {
 int leq_a4(int a, int b) {
     int bin_a[4];
     int bin_b[4];
-    to_binary(~a, 4, bin_a);
+    to_binary(a, 4, bin_a);
     to_binary(b, 4, bin_b);
     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
     int eq2 = ~(bin_a[2] ^ bin_b[2]);
@@ -254,7 +254,7 @@ int leq_a4(int a, int b) {
 int leq_a5(int a, int b) {
     int bin_a[4];
     int bin_b[4];
-    to_binary(~a, 4, bin_a);
+    to_binary(a, 4, bin_a);
     to_binary(b, 4, bin_b);
     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
     // int eq2 = ~(bin_a[2] ^ bin_b[2]);
@@ -269,7 +269,7 @@ int leq_a5(int a, int b) {
 int leq_a6(int a, int b) {
     int bin_a[4];
     int bin_b[4];
-    to_binary(~a, 4, bin_a);
+    to_binary(a, 4, bin_a);
     to_binary(b, 4, bin_b);
     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
     // int eq2 = ~(bin_a[2] ^ bin_b[2]);
@@ -280,3 +280,12 @@ int leq_a6(int a, int b) {
     // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
     return (bin_a[1] & n2 & n3) & 1;
 }
+
+
+// int main(int argc, char *argv[]) {
+//     int test1 = leq_exact(11, 12); //1
+//     int test2 = leq_exact(12,12); //1
+//     int test3 = leq_exact(13,12); //0
+//     printf("%d\n%d\n%d\n", test1, test2, test3);
+//     return 0;
+// }
