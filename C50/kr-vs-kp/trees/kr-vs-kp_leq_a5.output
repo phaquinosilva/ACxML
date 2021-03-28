@@ -1,0 +1,140 @@
+
+C5.0 [Release 2.07 GPL Edition]  	Sun Mar 28 15:28:39 2021
+-------------------------------
+
+    Options:
+	Application `../kr-vs-kp/kr-vs-kp'
+
+Class specified by attribute `class'
+
+Read 2576 cases (37 attributes) from ../kr-vs-kp/kr-vs-kp.data
+
+Decision tree:
+
+rimmx in {n,l,g,w,b}: won (0)
+rimmx = t: won (584)
+rimmx = f:
+:...wknck in {n,l,g,w,b}: nowin (0)
+    wknck = f:
+    :...bxqsq in {n,l,g,w,b}: won (0)
+    :   bxqsq = t: nowin (274)
+    :   bxqsq = f:
+    :   :...wkna8 in {n,l,g,w,b}: won (0)
+    :       wkna8 = t: nowin (123/3)
+    :       wkna8 = f:
+    :       :...hdchk in {n,l,g,w,b}: won (0)
+    :           hdchk = t: nowin (8)
+    :           hdchk = f:
+    :           :...bkxbq in {n,l,g,w,b}: won (0)
+    :               bkxbq = t: won (417)
+    :               bkxbq = f:
+    :               :...wkpos in {n,l,g,w,b}: won (0)
+    :                   wkpos = f:
+    :                   :...bkblk in {n,l,g,w,b}: nowin (0)
+    :                   :   bkblk = t: won (42/1)
+    :                   :   bkblk = f:
+    :                   :   :...katri in {t,f,l,g}: nowin (0)
+    :                   :       katri in {n,b}: nowin (95/2)
+    :                   :       katri = w: won (30)
+    :                   wkpos = t:
+    :                   :...katri in {t,f,l,g}: won (0)
+    :                       katri = w: won (20)
+    :                       katri = b:
+    :                       :...bkblk in {n,l,g,w,b}: nowin (0)
+    :                       :   bkblk = t: won (8/1)
+    :                       :   bkblk = f: nowin (20)
+    :                       katri = n:
+    :                       :...rxmsq in {n,l,g,w,b}: won (0)
+    :                           rxmsq = f: won (170/2)
+    :                           rxmsq = t:
+    :                           :...qxmsq in {n,l,g,w,b}: won (0)
+    :                               qxmsq = t: won (25)
+    :                               qxmsq = f: nowin (15)
+    wknck = t:
+    :...r2ar8 in {n,l,g,w,b}: nowin (0)
+        r2ar8 = t: nowin (539/5)
+        r2ar8 = f:
+        :...bkxcr in {n,l,g,w,b}: nowin (0)
+            bkxcr = t: nowin (87)
+            bkxcr = f:
+            :...skrxp in {n,l,g,w,b}: nowin (0)
+                skrxp = t: nowin (36)
+                skrxp = f:
+                :...mulch in {n,l,g,w,b}: nowin (0)
+                    mulch = t: nowin (18)
+                    mulch = f:
+                    :...bxqsq in {n,l,g,w,b}: nowin (0)
+                        bxqsq = t: nowin (14)
+                        bxqsq = f:
+                        :...thrsk in {n,l,g,w,b}: nowin (0)
+                            thrsk = t: nowin (7)
+                            thrsk = f:
+                            :...bkona in {n,l,g,w,b}: won (0)
+                                bkona = t: nowin (6)
+                                bkona = f:
+                                :...reskr in {n,l,g,w,b}: won (0)
+                                    reskr = t: nowin (6)
+                                    reskr = f:
+                                    :...blxwp in {n,l,g,w,b}: won (0)
+                                        blxwp = t: nowin (3)
+                                        blxwp = f:
+                                        :...bkon8 in {n,l,g,w,b}: won (0)
+                                            bkon8 = t: nowin (2)
+                                            bkon8 = f: won (27/2)
+
+
+Evaluation on training data (2576 cases):
+
+	    Decision Tree   
+	  ----------------  
+	  Size      Errors  
+
+	    25  594(23.1%)   <<
+
+
+	   (a)   (b)    <-classified as
+	  ----  ----
+	  1267    60    (a): class won
+	   534   715    (b): class nowin
+
+
+	Attribute usage:
+
+	    100%  bkblk
+	    100%  bkxbq
+	    100%  bxqsq
+	    100%  hdchk
+	    100%  katri
+	    100%  rimmx
+	    100%  wkna8
+	    100%  wknck
+	    100%  wkpos
+	     69%  rxmsq
+	     41%  bkon8
+	     41%  bkona
+	     41%  bkxcr
+	     41%  blxwp
+	     41%  mulch
+	     41%  r2ar8
+	     41%  reskr
+	     41%  skrxp
+	     41%  thrsk
+	      4%  qxmsq
+
+
+Evaluation on test data (620 cases):
+
+	    Decision Tree   
+	  ----------------  
+	  Size      Errors  
+
+	    25  121(19.5%)   <<
+
+
+	   (a)   (b)    <-classified as
+	  ----  ----
+	   334     8    (a): class won
+	   113   165    (b): class nowin
+
+
+Time: 0.0 secs

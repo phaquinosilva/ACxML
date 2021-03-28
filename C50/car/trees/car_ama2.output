@@ -1,0 +1,159 @@
+
+C5.0 [Release 2.07 GPL Edition]  	Sun Mar 28 15:28:39 2021
+-------------------------------
+
+    Options:
+	Application `../car/car'
+
+Class specified by attribute `class'
+
+Read 1383 cases (7 attributes) from ../car/car.data
+
+Decision tree:
+
+safety = low: unacc (461)
+safety = med:
+:...persons = 2: unacc (153)
+:   persons = 4:
+:   :...lug_boot = med:
+:   :   :...doors in {2,3}: unacc (25/10)
+:   :   :   doors in {4,5more}: acc (26/8)
+:   :   lug_boot = small:
+:   :   :...buying in {vhigh,high}: unacc (19)
+:   :   :   buying = med:
+:   :   :   :...maint in {vhigh,high}: unacc (8)
+:   :   :   :   maint in {med,low}: acc (8)
+:   :   :   buying = low:
+:   :   :   :...maint = vhigh: unacc (4)
+:   :   :       maint in {high,med,low}: acc (12)
+:   :   lug_boot = big:
+:   :   :...maint = high: acc (12)
+:   :       maint = vhigh:
+:   :       :...buying = vhigh: acc (0)
+:   :       :   buying = high: unacc (4)
+:   :       :   buying in {med,low}: acc (8)
+:   :       maint = med:
+:   :       :...buying = vhigh: acc (0)
+:   :       :   buying in {high,med}: acc (8)
+:   :       :   buying = low: good (4)
+:   :       maint = low:
+:   :       :...buying in {vhigh,high}: acc (7)
+:   :           buying in {med,low}: good (8)
+:   persons = more:
+:   :...lug_boot = med: acc (52/20)
+:       lug_boot = small:
+:       :...buying in {vhigh,high}: unacc (19)
+:       :   buying = low: acc (16/7)
+:       :   buying = med:
+:       :   :...maint in {vhigh,high}: unacc (8)
+:       :       maint in {med,low}: acc (8/2)
+:       lug_boot = big:
+:       :...maint = high: acc (12)
+:           maint = vhigh:
+:           :...buying = vhigh: acc (0)
+:           :   buying = high: unacc (4)
+:           :   buying in {med,low}: acc (8)
+:           maint = med:
+:           :...buying = vhigh: acc (0)
+:           :   buying in {high,med}: acc (8)
+:           :   buying = low: good (4)
+:           maint = low:
+:           :...buying in {vhigh,high}: acc (8)
+:               buying in {med,low}: good (8)
+safety = high:
+:...persons = 2: unacc (153)
+    persons = 4:
+    :...buying = vhigh: acc (9)
+    :   buying = high:
+    :   :...maint = vhigh: unacc (12)
+    :   :   maint in {high,med,low}: acc (36)
+    :   buying = med:
+    :   :...maint in {vhigh,high}: acc (24)
+    :   :   maint = med:
+    :   :   :...lug_boot in {small,med}: acc (8/2)
+    :   :   :   lug_boot = big: vgood (4)
+    :   :   maint = low:
+    :   :   :...lug_boot in {small,med}: good (8/2)
+    :   :       lug_boot = big: vgood (4)
+    :   buying = low:
+    :   :...maint = vhigh: acc (12)
+    :       maint = high:
+    :       :...lug_boot in {small,med}: acc (8/2)
+    :       :   lug_boot = big: vgood (4)
+    :       maint = med:
+    :       :...lug_boot in {small,med}: good (8/2)
+    :       :   lug_boot = big: vgood (4)
+    :       maint = low:
+    :       :...lug_boot in {small,med}: good (8/2)
+    :           lug_boot = big: vgood (4)
+    persons = more:
+    :...buying = vhigh: acc (11)
+        buying = high:
+        :...maint = vhigh: unacc (12)
+        :   maint in {high,med,low}: acc (36/3)
+        buying = med:
+        :...maint in {vhigh,high}: acc (24/2)
+        :   maint = med:
+        :   :...lug_boot = small: acc (4/1)
+        :   :   lug_boot in {med,big}: vgood (8/1)
+        :   maint = low:
+        :   :...lug_boot = small: good (4/1)
+        :       lug_boot in {med,big}: vgood (8/1)
+        buying = low:
+        :...maint = vhigh: acc (12/1)
+            maint = high:
+            :...lug_boot = small: acc (4/1)
+            :   lug_boot in {med,big}: vgood (8/1)
+            maint = med:
+            :...lug_boot = small: good (4/1)
+            :   lug_boot in {med,big}: vgood (8/1)
+            maint = low:
+            :...lug_boot = small: good (4/1)
+                lug_boot in {med,big}: vgood (8/1)
+
+
+Evaluation on training data (1383 cases):
+
+	    Decision Tree   
+	  ----------------  
+	  Size      Errors  
+
+	    59  478(34.6%)   <<
+
+
+	   (a)   (b)   (c)   (d)    <-classified as
+	  ----  ----  ----  ----
+	   905                      (a): class unacc
+	   344                      (b): class acc
+	    69                      (c): class good
+	    65                      (d): class vgood
+
+
+	Attribute usage:
+
+	    100%  buying
+	    100%  maint
+	    100%  doors
+	    100%  persons
+	    100%  lug_boot
+	    100%  safety
+
+
+Evaluation on test data (345 cases):
+
+	    Decision Tree   
+	  ----------------  
+	  Size      Errors  
+
+	    59   40(11.6%)   <<
+
+
+	   (a)   (b)   (c)   (d)    <-classified as
+	  ----  ----  ----  ----
+	   305                      (a): class unacc
+	    40                      (b): class acc
+	                            (c): class good
+	                            (d): class vgood
+
+
+Time: 0.0 secs

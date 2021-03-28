@@ -1,5 +1,5 @@
 
-C5.0 [Release 2.07 GPL Edition]  	Sat Mar 27 23:25:54 2021
+C5.0 [Release 2.07 GPL Edition]  	Sun Mar 28 15:28:39 2021
 -------------------------------
 
     Options:
@@ -118,25 +118,25 @@ Evaluation on training data (1383 cases):
 	  ----------------  
 	  Size      Errors  
 
-	    59  478(34.6%)   <<
+	    59   73( 5.3%)   <<
 
 
 	   (a)   (b)   (c)   (d)    <-classified as
 	  ----  ----  ----  ----
-	   905                      (a): class unacc
-	   344                      (b): class acc
-	    69                      (c): class good
-	    65                      (d): class vgood
+	   872    30     3          (a): class unacc
+	    10   332           2    (b): class acc
+	          15    51     3    (c): class good
+	           4     6    55    (d): class vgood
 
 
 	Attribute usage:
 
-	    100%  buying
-	    100%  maint
-	    100%  doors
-	    100%  persons
-	    100%  lug_boot
 	    100%  safety
+	     67%  persons
+	     35%  buying
+	     32%  maint
+	     31%  lug_boot
+	      4%  doors
 
 
 Evaluation on test data (345 cases):
@@ -145,13 +145,13 @@ Evaluation on test data (345 cases):
 	  ----------------  
 	  Size      Errors  
 
-	    59   40(11.6%)   <<
+	    59   79(22.9%)   <<
 
 
 	   (a)   (b)   (c)   (d)    <-classified as
 	  ----  ----  ----  ----
-	   305                      (a): class unacc
-	    40                      (b): class acc
+	   226    79                (a): class unacc
+	          40                (b): class acc
 	                            (c): class good
 	                            (d): class vgood
 
