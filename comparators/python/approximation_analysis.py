@@ -48,23 +48,32 @@ def run_simulation():
     # error lists
     e_add = []
     e_ded = []
-    for in_ in inputs:
+    ranges_add = []
+    # ranges_ded = []
+    for i in range(len(inputs)):
         # adders
+        in_ = inputs[i]
         tmp = sim_add(in_[0], in_[1], adders)
         r_add.append(tmp[0])
         e_add.append(tmp[1])
+        # ranges_add.append()
         # dedicated
         tmp = sim_dedicated(in_[0], in_[1], comparators)
         r_ded.append(tmp[0])
         e_ded.append(tmp[1])
-    #results_adders = pd.DataFrame(r_add)
-    error_adders = error_analysis(pd.DataFrame(e_add), add_list)
-    #results_adders.to_csv('results_adders.csv')
-    error_adders.to_csv('error_adders.csv')
-    #results_dedicated = pd.DataFrame(r_ded)
-    error_dedicated = error_analysis(pd.DataFrame(e_ded), comp_names)
-    #results_dedicated.to_csv('results_dedicated.csv')
-    error_dedicated.to_csv('error_dedicated.csv')
+        # ranges_add.append(ranges[2])
+
+    # print(pd.Dataframe(ranges_add))
+    # print(pd.DataFrame(ranges_ded))
+    results_adders = pd.DataFrame(r_add)
+    # error_adders = error_analysis(pd.DataFrame(e_add), add_list)
+    # results_adders.to_csv('results_adders.csv')
+    # error_adders.to_csv('error_adders.csv')
+    results_dedicated = pd.DataFrame(r_ded)
+    # error_dedicated = error_analysis(pd.DataFrame(e_ded), comp_names)
+    # results_dedicated.to_csv('results_dedicated.csv')
+    # error_dedicated.to_csv('error_dedicated.csv')
+    return pd.DataFrame(e_add), pd.DataFrame(e_ded)
 
 # erro bit a bit
 def error_analysis(errors, names):
