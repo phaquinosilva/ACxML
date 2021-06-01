@@ -123,8 +123,13 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 
 		// @grellert: aqui é feita a comparação
 		// @pedro: implementa aqui a chamada pra tua função
-	    if ( leq(Dv, T->Forks, ama2, 4) )	/*  Make sure not new discrete value  */
+		// @pedro: criação dos logs de comparação
+	    if ( Dv <= T->Forks )	/*  Make sure not new discrete value  */
 	    {
+		FILE *F = GetFile(".comp", "w");
+		fprintf(F, "discrete,%d,%d", Dv, MaxAttVal[T->Tested]);
+		fflush(F);
+		fclose(F);
 		FindLeaf(Case, T->Branch[Dv], T, Fraction);
 	    }
 	    else
@@ -169,8 +174,12 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 	    Dv = DVal(Case, T->Tested);	/* > MaxAttVal if unknown */
 
 		// @Pedro: aproximacao leq aqui
-	    if ( leq(Dv,  MaxAttVal[T->Tested], ama2, 4) )
+	    if ( Dv <=  MaxAttVal[T->Tested] )
 		{
+		FILE *F = GetFile(".comp", "w");
+		fprintf(F, "discrete,%d,%d", Dv, MaxAttVal[T->Tested]);
+		fflush(F);
+		fclose(F);
 		ForEach(v, 1, T->Forks)
 		{
 		    if ( In(Dv, T->Subset[v]) )
@@ -660,7 +669,7 @@ ClassNo Classify(DataRec Case)
 /*								   	 */
 /*	Interpolate a single value between Lower, Mid and Upper		 */
 /*	(All these have the same value unless using probabilistic	 */
-/*	thresholds.)							 */
+/*	thresholds.) @pedro: certificar que está desabilitado por padrão*/
 /*								   	 */
 /*************************************************************************/
 

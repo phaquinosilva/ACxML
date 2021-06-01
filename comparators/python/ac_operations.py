@@ -1,21 +1,23 @@
 import pandas as pd
 # from bitstring import BitArray
 from adders import *
-
+#%%
 ## funções para <= com os dedicados aproximados
-def comp_exact(a,b):
+def edc(a,b):
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
     eq1 = ~(a[1] ^ b[1])
     eq2 = ~(a[2] ^ b[2])
     eq3 = ~(a[3] ^ b[3])
+    eq0 = ~(a[0] ^ b[0])  # mais uma xnor
     n3 = ~(a[3] & ~b[3])
     n2 = ~(a[2] & ~b[2] & eq3)
     n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
-    return (n0 & n1 & n2 & n3) & 1
+    return (n0 & n1 & n2 & n3) & 1 #, (eq0 & eq1 & eq2 & eq3) & 1 # mais uma and
 
-def comp_approx1(a, b):
+#%%
+def adc1(a, b):
     ## primeira aproximação: sem nand a0 ~b0
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
@@ -28,7 +30,7 @@ def comp_approx1(a, b):
     n0 = ~(eq3 & eq2 & eq1)
     return (n0 & n1 & n2 & n3) & 1
 
-def comp_approx2(a,b):
+def adc2(a,b):
     ## aprrox 2: tirar a lógica do bit 0
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
@@ -41,7 +43,7 @@ def comp_approx2(a,b):
     # n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
     return (n1 & n2 & n3) & 1
 
-def comp_approx3(a,b):
+def adc3(a,b):
     ## substituir as portas com a0 por um buffer a0
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
@@ -50,9 +52,10 @@ def comp_approx3(a,b):
     n3 = ~(a[3] & ~b[3])
     n2 = ~(a[2] & ~b[2] & eq3)
     n1 = ~(a[1] & ~b[1] & eq3 & eq2)
-    return (a[0] & n1 & n2 & n3) & 1
+    # return (a[0] & n1 & n2 & n3) & 1
+    return (b[0] & n1 & n2 & n3) & 1
 
-def comp_approx4(a,b):
+def adc4(a,b):
     # aproximação: trocar portas logicas com a1 por só a1
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
@@ -62,24 +65,26 @@ def comp_approx4(a,b):
     n3 = ~(a[3] & ~b[3])
     n2 = ~(a[2] & ~b[2] & eq3)
     # n1 = ~(a[1] & ~b[1] & eq3 & eq2)
-    n0 = ~(a[0] & ~b[0] & eq3 & eq2 & a[1])
-    return (n0 & a[1] & n2 & n3) & 1
+    # n0 = ~(a[0] & ~b[0] & eq3 & eq2 & a[1])
+    # return (n0 & a[1] & n2 & n3) & 1
+    n0 = ~(a[0] & ~b[0] & eq3 & eq2 & b[1])
+    return (n0 & b[1] & n2 & n3) & 1
 
-def comp_approx5(a,b):
+def adc5(a,b):
     # aproximação: trocar lógica dos bits 0 e 1 por a0 e a1
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
     # eq1 = ~(a[1] ^ b[1])
     # eq2 = ~(a[2] ^ b[2])
-    n0,n1 = a[0], a[1]
+    n0,n1 = b[0], b[1]
     eq3 = ~(a[3] ^ b[3])
-    n3 = ~(a[3] & ~b[3])
+    n3 = ~(a[3] & ~b[3])dd
     n2 = ~(a[2] & ~b[2] & eq3)
     # n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     # n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
     return (n0 & n1 & n2 & n3) & 1
 
-def comp_approx6(a,b):
+def adc6(a,b):
     # aproximação: tirar lógica com bit 0 e trcar a do bit 1 por a1
     a = [int(i) for i in a][::-1]
     b = [int(i) for i in b][::-1]
@@ -88,11 +93,11 @@ def comp_approx6(a,b):
     eq3 = ~(a[3] ^ b[3])
     n3 = ~(a[3] & ~b[3])
     n2 = ~(a[2] & ~b[2] & eq3)
-    n1 = a[1]
+    n1 = b[1]
     # n1 = ~(a[1] & ~b[1] & eq3 & eq2)
     # n0 = ~(a[0] & ~b[0] & eq3 & eq2 & eq1)
     return (n1 & n2 & n3) & 1
-
+#%%
 # soma simples nbit
 def add(adder, in_a, in_b, n_bits):
     final = ''
@@ -196,3 +201,4 @@ def decimal_error_analysis(results, add):
         mean_ed[adder] = error[adder].mean()
         std_dev[adder] = results[adder].std()
     return pd.DataFrame(mean_ed).join(std_dev)
+# %%

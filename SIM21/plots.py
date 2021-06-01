@@ -1,14 +1,4 @@
-#%% 
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import matplotlib.colors as colors
-import numpy as np
 
-sim_data = pd.read_csv('/home/pedro/Documentos/ECLab/ACxML/SIM21/approximate 4bit comparators_decision trees - comparator characterization.csv', index_col=0)
-sim_data = sim_data.rename(columns={'delay (ps)' : 'Delay (ps)'})
-sim_data = sim_data.rename(columns={'power (nW)':'Power (nW)'})
-sim_data
 # %% 
 scatter_with_xnor = sim_data.plot.scatter(x='ED', y='PDP (aJ)', s=40, c='purple')
 # %%
@@ -18,14 +8,14 @@ graph = sim_data[['ED', 'PDP (aJ)']].iloc[0:11,].plot(x='ED', y='PDP (aJ)',
                                         kind='scatter', s=60, ax=ax,
                                         linewidth=1, c=range(len(sim_data.iloc[0:11,])),
                                         colormap=cmap)
-# for k, v in sim_data[['ED', 'PDP (aJ)']].iloc[0:11,].iterrows():
-    # ax.annotate(k, v, xytext=(10,-8), textcoords='offset points',
-    # family='sans-serif', fontsize=12, color='darkslategrey')
-
-fig.savefig('pdp_ed_no_xnors.pdf')
+for k, v in sim_data[['ED', 'PDP (aJ)']].iloc[0:11,].iterrows():
+    ax.annotate(k, v, xytext=(10,-8), textcoords='offset points',
+    family='sans-serif', fontsize=12, color='darkslategrey')
+fig.show()
+# fig.savefig('pdp_ed_no_xnors.pdf')
 #%%
 sim_data_noEXA = sim_data.drop(labels=['EXA'], axis=0, inplace=False)
-
+#%%
 fig, ax = plt.subplots()
 cmap = cm.get_cmap('seismic')
 graph = sim_data_noEXA[['ED', 'PDP (aJ)']].plot(x='ED', y='PDP (aJ)', 
@@ -76,8 +66,8 @@ for i, c in enumerate(colorlist):
 ax.legend(ncol=3, fontsize=11)
 ax.set_xlabel('ED', fontsize=13)
 ax.set_ylabel('PDP (aJ)', fontsize=13)
-# plt.show()
-plt.savefig('pdpxed_noEXA.pdf')
+plt.show()
+# plt.savefig('pdpxed_noEXA.png')
 #%%
 sim_data['ED']
 sim_data.index[0]
