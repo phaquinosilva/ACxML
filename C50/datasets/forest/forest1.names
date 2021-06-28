@@ -1,0 +1,16 @@
+classes.
+
+day             :   continuous.
+month           :   continuous.
+year            :   continuous.
+Temperature     :   continuous.
+RH              :   continuous.
+Ws              :   continuous.
+Rain            :   continuous.
+FFMC            :   continuous.
+DMC             :   continuous.
+DC              :   continuous.
+ISI             :   continuous.
+BUI             :   continuous.
+FWI             :   continuous.
+classes         :   fire, not fire.

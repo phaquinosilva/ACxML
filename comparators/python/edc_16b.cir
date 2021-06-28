@@ -1,0 +1,58 @@
+* 16-bit Exact Dedicated Comparator
+
+.include gates.cir
+
+.subckt edc16b a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 b11 b12 b13 b14 b15 leq vdd
+   Xeq1 a1 b1 eq1 vdd xnor
+   Xeq2 a2 b2 eq2 vdd xnor
+   Xeq3 a3 b3 eq3 vdd xnor
+   Xeq4 a4 b4 eq4 vdd xnor
+   Xeq5 a5 b5 eq5 vdd xnor
+   Xeq6 a6 b6 eq6 vdd xnor
+   Xeq7 a7 b7 eq7 vdd xnor
+   Xeq8 a8 b8 eq8 vdd xnor
+   Xeq9 a9 b9 eq9 vdd xnor
+   Xeq10 a10 b10 eq10 vdd xnor
+   Xeq11 a11 b11 eq11 vdd xnor
+   Xeq12 a12 b12 eq12 vdd xnor
+   Xeq13 a13 b13 eq13 vdd xnor
+   Xeq14 a14 b14 eq14 vdd xnor
+   Xeq15 a15 b15 eq15 vdd xnor
+
+   Xnb0 b0 nb0 vdd inv
+   Xnb1 b1 nb1 vdd inv
+   Xnb2 b2 nb2 vdd inv
+   Xnb3 b3 nb3 vdd inv
+   Xnb4 b4 nb4 vdd inv
+   Xnb5 b5 nb5 vdd inv
+   Xnb6 b6 nb6 vdd inv
+   Xnb7 b7 nb7 vdd inv
+   Xnb8 b8 nb8 vdd inv
+   Xnb9 b9 nb9 vdd inv
+   Xnb10 b10 nb10 vdd inv
+   Xnb11 b11 nb11 vdd inv
+   Xnb12 b12 nb12 vdd inv
+   Xnb13 b13 nb13 vdd inv
+   Xnb14 b14 nb14 vdd inv
+   Xnb15 b15 nb15 vdd inv
+
+   Xn15 a15 nb15  n15 vdd nand2
+   Xn14 a14 nb14 eq15 n14 vdd nand3
+   Xn13 a13 nb13 eq15 eq14 n13 vdd nand4
+   Xn12 a12 nb12 eq15 eq14 eq13 n12 vdd nand5
+   Xn11 a11 nb11 eq15 eq14 eq13 eq12 n11 vdd nand6
+   Xn10 a10 nb10 eq15 eq14 eq13 eq12 eq11 n10 vdd nand7
+   Xn9 a9 nb9 eq15 eq14 eq13 eq12 eq11 eq10 n9 vdd nand8
+   Xn8 a8 nb8 eq15 eq14 eq13 eq12 eq11 eq10 eq9 n8 vdd nand9
+   Xn7 a7 nb7 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 n7 vdd nand10
+   Xn6 a6 nb6 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 eq7 n6 vdd nand11
+   Xn5 a5 nb5 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 eq7 eq6 n5 vdd nand12
+   Xn4 a4 nb4 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 eq7 eq6 eq5 n4 vdd nand13
+   Xn3 a3 nb3 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 eq7 eq6 eq5 eq4 n3 vdd nand14
+   Xn2 a2 nb2 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 eq7 eq6 eq5 eq4 eq3 n2 vdd nand15
+   Xn1 a1 nb1 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 eq7 eq6 eq5 eq4 eq3 eq2 n1 vdd nand16
+   Xn0 a0 nb0 eq15 eq14 eq13 eq12 eq11 eq10 eq9 eq8 eq7 eq6 eq5 eq4 eq3 eq2 eq1 n0 vdd nand17
+
+   Xgr n0 n1 n2 n3 n4 n5 n6 n7 n8 n9 n10 n11 n12 n13 n14 n15 gr vdd nand16
+   Xleq gr leq vdd inv
+.ends

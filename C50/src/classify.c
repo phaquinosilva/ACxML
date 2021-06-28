@@ -81,6 +81,7 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
     DiscrValue	v, Dv;
     ClassNo	c;
     float	NewFrac, BrWt[4];
+	FILE *F = 0;
 
     /*  Special case for winnowing cycles  */
 
@@ -124,15 +125,16 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 		// @grellert: aqui é feita a comparação
 		// @pedro: implementa aqui a chamada pra tua função
 		// @pedro: criação dos logs de comparação
+		if ( F = GetFile(".comp", "a") ) {  /* Save values in comparison */
+			fprintf(F, "%d,%d\n", Dv, T->Forks);
+			fflush(F);
+			fclose(F);
+		}
 	    if ( Dv <= T->Forks )	/*  Make sure not new discrete value  */
-	    {
-		FILE *F = GetFile(".comp", "w");
-		fprintf(F, "discrete,%d,%d", Dv, MaxAttVal[T->Tested]);
-		fflush(F);
-		fclose(F);
-		FindLeaf(Case, T->Branch[Dv], T, Fraction);
-	    }
-	    else
+		{
+			FindLeaf(Case, T->Branch[Dv], T, Fraction);
+		}
+		else
 	    {
 		FollowAllBranches(Case, T, Fraction);
 	    }
@@ -154,13 +156,20 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 	    {
 		/*  Find weights for <= and > branches, interpolating if
 		    probabilistic thresholds are used  */
-		/* @pedro: aqui é onde aproximar poderia ter impacto nos continuos */
+		
+		// peso para o ramo <= calculado a partir do interpolate
 		BrWt[2] = Interpolate(T, CVal(Case, T->Tested));
+		// peso para o ramo > calculado pelo resto probabilistico
 		BrWt[3] = 1 - BrWt[2];
 
 		ForEach(v, 2, 3)
 		{
-		    if ( (NewFrac = Fraction * BrWt[v]) >= 0.01 )
+			/* @pedro: aqui é onde aproximar poderia ter impacto nos continuos na predição */
+			/* talvez printar num arquivo os valores de Fraction, e BrWt */ 
+			// aqui ele testa o peso do ramo (<= OU >) multiplicado por Fraction -- o que é Fraction?
+		    // Fraction é de fato a fração do atributo que está sendo testada, 
+			// então o teste do valor continuo em si é aproximado nas probabilidades do Interpolate
+			if ( (NewFrac = Fraction * BrWt[v]) >= 0.01 )
 		    {
 			FindLeaf(Case, T->Branch[v], T, NewFrac);
 		    }
@@ -172,14 +181,18 @@ void FindLeaf(DataRec Case, Tree T, Tree PT, float Fraction)
 	case BrSubset:  /* subset test on discrete attribute  */
 
 	    Dv = DVal(Case, T->Tested);	/* > MaxAttVal if unknown */
-
+		
 		// @Pedro: aproximacao leq aqui
+		/* Save values in comparison */
+		if ( F = GetFile(".comp", "a") ) {
+			fprintf(F, "%d,%d\n", Dv, MaxAttVal[T->Tested]);
+			fflush(F);
+			fclose(F);
+		}
+		
 	    if ( Dv <=  MaxAttVal[T->Tested] )
 		{
-		FILE *F = GetFile(".comp", "w");
-		fprintf(F, "discrete,%d,%d", Dv, MaxAttVal[T->Tested]);
-		fflush(F);
-		fclose(F);
+		
 		ForEach(v, 1, T->Forks)
 		{
 		    if ( In(Dv, T->Subset[v]) )
@@ -225,7 +238,6 @@ void FollowAllBranches(DataRec Case, Tree T, float Fraction)
 	}
     }
 }
-
 
 
 /*************************************************************************/
@@ -678,11 +690,14 @@ float Interpolate(Tree T, ContValue Val)
 /*    -----------  */
 {
 	// @Pedro: mudar essas comparacoes tambem?
-    return ( Val <= T->Lower ? 1.0 :
-	     Val >= T->Upper ? 0.0 :
-	     Val <= T->Mid ?
-		1 - 0.5 * (Val - T->Lower) / (T->Mid - T->Lower + 1E-6) :
-		0.5 - 0.5 * (Val - T->Mid) / (T->Upper - T->Mid + 1E-6) );
+	// mapeia os valores originais pra um range [0,1]
+	// imprimir o valor e o retorno
+    return 
+		(Val <= T->Lower ? 1.0 :
+			Val >= T->Upper ? 0.0 :
+	    		Val <= T->Mid ? 
+					1 - 0.5 * (Val - T->Lower) / (T->Mid - T->Lower + 1E-6) :
+					0.5 - 0.5 * (Val - T->Mid) / (T->Upper - T->Mid + 1E-6));
 }
 
 

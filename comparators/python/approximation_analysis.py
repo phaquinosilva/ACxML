@@ -63,9 +63,7 @@ def run_simulation():
         r_ded.append(tmp[0])
         e_ded.append(tmp[1])
         # ranges_add.append(ranges[2])
-    # print(pd.Dataframe(ranges_add))
-    # print(pd.DataFrame(ranges_ded))
-    # results_adders = pd.DataFrame(r_add)
+     # results_adders = pd.DataFrame(r_add)
     # error_adders = error_analysis(pd.DataFrame(e_add), add_list)
     # results_adders.to_csv('results_adders.csv')
     # error_adders.to_csv('error_adders.csv')
@@ -84,12 +82,3 @@ def error_analysis(errors, names):
     error = error.transpose()
     print(error)
     return error
-
-def package_truthtables():
-    # generate inputs dataframe
-    inputs = list(map(lambda x: list(map(int,format(x,'#010b')[2:])),[i for i in range(256)]))
-    inputs = pd.DataFrame(inputs, columns=['A3', 'A2', 'A1', 'A0', 'B3', 'B2', 'B1', 'B0'])
-    # generate inputs
-    add, err = run_simulation()
-    # separate each adder and dedicated
-    

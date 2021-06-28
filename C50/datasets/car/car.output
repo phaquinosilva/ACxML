@@ -1,5 +1,5 @@
 
-C5.0 [Release 2.07 GPL Edition]  	Tue Jun  1 16:02:40 2021
+C5.0 [Release 2.07 GPL Edition]  	Tue Jun  1 16:36:44 2021
 -------------------------------
 
     Options:
@@ -156,4 +156,4 @@ Evaluation on test data (345 cases):
 	                            (d): class vgood
 
 
-Time: 0.2 secs
+Time: 0.1 secs

@@ -43,8 +43,7 @@ src =\
 	modelfiles.c\
 	utility.c\
 	xval.c\
-	ax_adders.c\
-	write_log.c\
+	ax_adders.c
 
 obj =\
 	 c50.o global.o\
@@ -55,7 +54,7 @@ obj =\
 	 getnames.o getdata.o implicitatt.o\
 	 mcost.o classify.o confmat.o sort.o ax_adders.o\
 	 update.o utility.o\
-	 modelfiles.o write_log.o\
+	 modelfiles.o\
 	 attwinnow.o\
 
 all:
