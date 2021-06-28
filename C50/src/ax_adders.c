@@ -176,116 +176,180 @@ int leq(int a, int b, void (*f) (int, int, int, int *), int n) {
     return result;
 }
 
-int leq_exact(int a, int b) {
-    int bin_a[4];
-    int bin_b[4];
-    to_binary(a, 4, bin_a);
-    to_binary(b, 4, bin_b);
-    int eq1 = ~(bin_a[1] ^ bin_b[1]);
-    int eq2 = ~(bin_a[2] ^ bin_b[2]);
-    int eq3 = ~(bin_a[3] ^ bin_b[3]);
-    int n3 = ~(bin_a[3] & ~bin_b[3]);
-    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
-    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
-    int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
-    return (n0 & n1 & n2 & n3) & 1;
+/* n-bit dedicated comparators */
+
+int n_edc(int a, int b, int n) {
+    int bin_a[n];
+    int bin_b[n];
+    int i;
+    to_binary(a, n, bin_a);
+    to_binary(b, n, bin_b);
+    int eq[n];
+    for (i = 1; i < n; i++)
+        eq[i] = ~(bin_a[i] ^ bin_b[i]);
+    int g[n];
+    int temp;
+    for (i = 0; i < n; i++) {
+        temp = 1;
+        for (int k = i+1; k < n; k++)
+            temp &= eq[k];
+        g[i] = temp & bin_a[i] & ~bin_b[i];
+    }
+    int greater = 0;
+    for (i = 0; i < n; i++)
+        greater |= g[i];
+    return ~greater&1;
 }
 
-int leq_a1(int a, int b) {
-    int bin_a[4];
-    int bin_b[4];
-    to_binary(a, 4, bin_a);
-    to_binary(b, 4, bin_b);
-    int eq1 = ~(bin_a[1] ^ bin_b[1]);
-    int eq2 = ~(bin_a[2] ^ bin_b[2]);
-    int eq3 = ~(bin_a[3] ^ bin_b[3]);
-    int n3 = ~(bin_a[3] & ~bin_b[3]);
-    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
-    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
-    int n0 = ~(eq3 & eq2 & eq1);
-    return (n0 & n1 & n2 & n3) & 1;
+int n_adc2(int a, int b, int n) {
+    int bin_a[n];
+    int bin_b[n];
+    int i;
+    to_binary(a, n, bin_a);
+    to_binary(b, n, bin_b);
+    int eq[n];
+    for (i = n/4+1; i < n; i++)
+        eq[i] = ~(bin_a[i] ^ bin_b[i]);
+    int g[n];
+    int temp;
+    for (i = n/4; i < n; i++) {
+        temp = 1;
+        for (int k = i+1; k < n; k++)
+            temp &= eq[k];
+        g[i] = temp & bin_a[i] & ~bin_b[i];
+    }
+    int greater = 0;
+    for (i = n/4; i < n; i++)
+        greater |= g[i];
+    return ~greater&1;
 }
 
-int leq_a2(int a, int b) {
-    int bin_a[4];
-    int bin_b[4];
-    to_binary(a, 4, bin_a);
-    to_binary(b, 4, bin_b);
-    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
-    int eq2 = ~(bin_a[2] ^ bin_b[2]);
-    int eq3 = ~(bin_a[3] ^ bin_b[3]);
-    int n3 = ~(bin_a[3] & ~bin_b[3]);
-    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
-    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
-    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
-    return (n1 & n2 & n3) & 1;
+int n_adc6(int a, int b, int n) {
+    int bin_a[n];
+    int bin_b[n];
+    int i;
+    to_binary(a, n, bin_a);
+    to_binary(b, n, bin_b);
+    int eq[n];
+    for (i = n/2+1; i < n; i++)
+        eq[i] = ~(bin_a[i] ^ bin_b[i]);
+    int g[n];
+    int temp;
+    for (i = n/2; i < n; i++) {
+        temp = 1;
+        for (int k = i+1; k < n; k++)
+            temp &= eq[k];
+        g[i] = temp & bin_a[i] & ~bin_b[i];
+    }
+    int greater = 0;
+    for (i = n/4; i < n/2; i++)
+        greater |= bin_b[i];
+    for (i = n/2; i < n; i++)
+        greater |= g[i];
+    return ~greater&1;
 }
-
-int leq_a3(int a, int b) {
-    int bin_a[4];
-    int bin_b[4];
-    to_binary(a, 4, bin_a);
-    to_binary(b, 4, bin_b);
-    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
-    int eq2 = ~(bin_a[2] ^ bin_b[2]);
-    int eq3 = ~(bin_a[3] ^ bin_b[3]);
-    int n3 = ~(bin_a[3] & ~bin_b[3]);
-    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
-    int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
-    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
-    return (bin_a[0] & n1 & n2 & n3) & 1;
-}
-
-int leq_a4(int a, int b) {
-    int bin_a[4];
-    int bin_b[4];
-    to_binary(a, 4, bin_a);
-    to_binary(b, 4, bin_b);
-    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
-    int eq2 = ~(bin_a[2] ^ bin_b[2]);
-    int eq3 = ~(bin_a[3] ^ bin_b[3]);
-    int n3 = ~(bin_a[3] & ~bin_b[3]);
-    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
-    // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
-    int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & bin_a[1]);
-    return (n0 & bin_a[1] & n2 & n3) & 1;
-}
-
-int leq_a5(int a, int b) {
-    int bin_a[4];
-    int bin_b[4];
-    to_binary(a, 4, bin_a);
-    to_binary(b, 4, bin_b);
-    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
-    // int eq2 = ~(bin_a[2] ^ bin_b[2]);
-    int eq3 = ~(bin_a[3] ^ bin_b[3]);
-    int n3 = ~(bin_a[3] & ~bin_b[3]);
-    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
-    // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
-    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
-    return (bin_a[0] & bin_a[1] & n2 & n3) & 1;
-}
-
-int leq_a6(int a, int b) {
-    int bin_a[4];
-    int bin_b[4];
-    to_binary(a, 4, bin_a);
-    to_binary(b, 4, bin_b);
-    // int eq1 = ~(bin_a[1] ^ bin_b[1]);
-    // int eq2 = ~(bin_a[2] ^ bin_b[2]);
-    int eq3 = ~(bin_a[3] ^ bin_b[3]);
-    int n3 = ~(bin_a[3] & ~bin_b[3]);
-    int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
-    // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
-    // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
-    return (bin_a[1] & n2 & n3) & 1;
-}
-
-
-// int main(int argc, char *argv[]) {
-//     int test1 = leq_exact(11, 12); //1
-//     int test2 = leq_exact(12,12); //1
-//     int test3 = leq_exact(13,12); //0
-//     printf("%d\n%d\n%d\n", test1, test2, test3);
-//     return 0;
+// int leq_exact(int a, int b) {
+//     int bin_a[4];
+//     int bin_b[4];
+//     to_binary(a, 4, bin_a);
+//     to_binary(b, 4, bin_b);
+//     int eq1 = ~(bin_a[1] ^ bin_b[1]);
+//     int eq2 = ~(bin_a[2] ^ bin_b[2]);
+//     int eq3 = ~(bin_a[3] ^ bin_b[3]);
+//     int n3 = ~(bin_a[3] & ~bin_b[3]);
+//     int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+//     int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+//     int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+//     return (n0 & n1 & n2 & n3) & 1;
 // }
+
+// int leq_a1(int a, int b) {
+//     int bin_a[4];
+//     int bin_b[4];
+//     to_binary(a, 4, bin_a);
+//     to_binary(b, 4, bin_b);
+//     int eq1 = ~(bin_a[1] ^ bin_b[1]);
+//     int eq2 = ~(bin_a[2] ^ bin_b[2]);
+//     int eq3 = ~(bin_a[3] ^ bin_b[3]);
+//     int n3 = ~(bin_a[3] & ~bin_b[3]);
+//     int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+//     int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+//     int n0 = ~(eq3 & eq2 & eq1);
+//     return (n0 & n1 & n2 & n3) & 1;
+// }
+
+// int leq_a2(int a, int b) {
+//     int bin_a[4];
+//     int bin_b[4];
+//     to_binary(a, 4, bin_a);
+//     to_binary(b, 4, bin_b);
+//     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+//     int eq2 = ~(bin_a[2] ^ bin_b[2]);
+//     int eq3 = ~(bin_a[3] ^ bin_b[3]);
+//     int n3 = ~(bin_a[3] & ~bin_b[3]);
+//     int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+//     int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+//     // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+//     return (n1 & n2 & n3) & 1;
+// }
+
+// int leq_a3(int a, int b) {
+//     int bin_a[4];
+//     int bin_b[4];
+//     to_binary(a, 4, bin_a);
+//     to_binary(b, 4, bin_b);
+//     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+//     int eq2 = ~(bin_a[2] ^ bin_b[2]);
+//     int eq3 = ~(bin_a[3] ^ bin_b[3]);
+//     int n3 = ~(bin_a[3] & ~bin_b[3]);
+//     int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+//     int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+//     // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+//     return (bin_a[0] & n1 & n2 & n3) & 1;
+// }
+
+// int leq_a4(int a, int b) {
+//     int bin_a[4];
+//     int bin_b[4];
+//     to_binary(a, 4, bin_a);
+//     to_binary(b, 4, bin_b);
+//     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+//     int eq2 = ~(bin_a[2] ^ bin_b[2]);
+//     int eq3 = ~(bin_a[3] ^ bin_b[3]);
+//     int n3 = ~(bin_a[3] & ~bin_b[3]);
+//     int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+//     // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+//     int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & bin_a[1]);
+//     return (n0 & bin_a[1] & n2 & n3) & 1;
+// }
+
+// int leq_a5(int a, int b) {
+//     int bin_a[4];
+//     int bin_b[4];
+//     to_binary(a, 4, bin_a);
+//     to_binary(b, 4, bin_b);
+//     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+//     // int eq2 = ~(bin_a[2] ^ bin_b[2]);
+//     int eq3 = ~(bin_a[3] ^ bin_b[3]);
+//     int n3 = ~(bin_a[3] & ~bin_b[3]);
+//     int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+//     // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+//     // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+//     return (bin_a[0] & bin_a[1] & n2 & n3) & 1;
+// }
+
+// int leq_a6(int a, int b) {
+//     int bin_a[4];
+//     int bin_b[4];
+//     to_binary(a, 4, bin_a);
+//     to_binary(b, 4, bin_b);
+//     // int eq1 = ~(bin_a[1] ^ bin_b[1]);
+//     // int eq2 = ~(bin_a[2] ^ bin_b[2]);
+//     int eq3 = ~(bin_a[3] ^ bin_b[3]);
+//     int n3 = ~(bin_a[3] & ~bin_b[3]);
+//     int n2 = ~(bin_a[2] & ~bin_b[2] & eq3);
+//     // int n1 = ~(bin_a[1] & ~bin_b[1] & eq3 & eq2);
+//     // int n0 = ~(bin_a[0] & ~bin_b[0] & eq3 & eq2 & eq1);
+//     return (bin_a[1] & n2 & n3) & 1;
+// }
+

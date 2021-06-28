@@ -5,7 +5,7 @@
 ## -> Approximate Dedicated Comparator 6 (ADC6)
 ## -> 4-bit Reduced Chain Comparator (RCC4)
 ## -> 8-bit Reduced Chain Comparator (RCC8)
-
+#%%
 #!! Exact Dedicated Comparator (EDC)
 def n_edc(a, b, n):
     # formatting stuff
@@ -28,8 +28,8 @@ def n_edc(a, b, n):
     greater = 0
     for i in range(n):
         greater |= g[i]
-    return greater&1 == 1
-
+    return ~greater&1 == 1
+#%%
 
 #!! Approximate Dedicated Comparator 2 (ADC2)
 def n_adc2(a, b, n):
@@ -53,7 +53,7 @@ def n_adc2(a, b, n):
     greater = 0
     for i in range(n/4,n):
         greater |= g[i]
-    return greater&1 == 1
+    return ~greater&1 == 1
 
 #!! Approximate Dedicated Comparator 6 (ADC6)
 def n_adc6(a, b, n):
@@ -67,7 +67,7 @@ def n_adc6(a, b, n):
     for i in range(n/2+1,n):
         eq[i] = ~(a[i] ^ b[i])
     # compute greater for each bit
-    g = [0]*(n/2)
+    g = [0]*n
     for i in range(n/2, n):
         temp = 1
         for k in range(i+1, n):
@@ -79,7 +79,7 @@ def n_adc6(a, b, n):
         greater |= b[i]
     for i in range(n/2, n):
         greater |= g[i]
-    return greater&1 == 1
+    return ~greater&1 == 1
 
 #!! 4-bit Reduced Chain Comparator (RCC4)
 def rcc4(a,b):
