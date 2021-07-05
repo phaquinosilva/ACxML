@@ -692,12 +692,22 @@ float Interpolate(Tree T, ContValue Val)
 	// @Pedro: mudar essas comparacoes tambem?
 	// mapeia os valores originais pra um range [0,1]
 	// imprimir o valor e o retorno
-    return 
-		(Val <= T->Lower ? 1.0 :
-			Val >= T->Upper ? 0.0 :
-	    		Val <= T->Mid ? 
-					1 - 0.5 * (Val - T->Lower) / (T->Mid - T->Lower + 1E-6) :
-					0.5 - 0.5 * (Val - T->Mid) / (T->Upper - T->Mid + 1E-6));
+	// @grellert na real ele está discretizando os atributos contínuos aqui
+	// Val <= T->Lower tem que ser aproximado
+	// aqui estamos na classificação, não na construção
+	
+    float returnable;
+	// if (Val <= T->Lower)
+	if (n_edc(Val, T->Lower))
+		returnable = 1.0;
+	else if (n_edc(T->Upper, Val))
+		returnable = 0.0;
+	else if (Val <= T->Mid)
+		returnable = 1 - 0.5 * (Val - T->Lower) / (T->Mid - T->Lower + 1E-6);
+	else
+		returnable = 0.5 - 0.5 * (Val - T->Mid) / (T->Upper - T->Mid + 1E-6);
+
+	return returnable;
 }
 
 
